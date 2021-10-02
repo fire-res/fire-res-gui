@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.component.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TitledPane fx:id="component" contentDisplay="RIGHT" minWidth="322.0" prefWidth="322.0" text="Общие параметры" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1" fx:controller="io.github.fireres.gui.controller.unheated.surface.groups.first.FirstGroupParams">
+
+    <padding>
+        <Insets top="15.0" />
+    </padding>
+    <VBox>
+        <GridPane>
+
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints />
+            </rowConstraints>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Количество термопар:" />
+
+            <ContextlessSpinner fx:id="thermocouples" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" />
+
+            <Label prefWidth="30.0" text="шт." GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <padding>
+                    <Insets left="5.0" />
+                </padding>
+            </Label>
+
+        </GridPane>
+        <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+        </padding>
+    </VBox>
+</TitledPane>

@@ -1,0 +1,15 @@
+{
+  "description": "Противопожарные нормально открытые клапаны",
+  "properties": {
+    "io.github.fireres.firemode.properties.FireModeProperties" : {
+      "thermocoupleCount": 3,
+      "fireModeType": "LOG",
+      "_class": "io.github.fireres.firemode.properties.FireModeProperties"
+    },
+    "io.github.fireres.excess.pressure.properties.ExcessPressureProperties" : {
+      "delta": 5,
+      "basePressure": 70,
+      "_class": "io.github.fireres.excess.pressure.properties.ExcessPressureProperties"
+    }
+  }
+}

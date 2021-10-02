@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane stylesheets="/io/github/fireres/gui/controller/css/style.css"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:id="component"
+            fx:controller="io.github.fireres.gui.controller.common.MainScene">
+
+    <top>
+        <AnchorPane prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
+            <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+                  AnchorPane.topAnchor="0.0">
+                <fx:include fx:id="topMenuBar" source="../top-menu/topMenuBar.fxml"/>
+                <Pane fx:id="mainSceneSeparator" prefHeight="7.0"/>
+            </VBox>
+        </AnchorPane>
+    </top>
+
+    <center>
+        <AnchorPane maxHeight="5000" maxWidth="5000.0" prefHeight="800.0" prefWidth="1200.0"
+                    BorderPane.alignment="CENTER">
+            <VBox fx:id="centerPane" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                  AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                <fx:include fx:id="generalParams" source="generalParams.fxml"/>
+                <fx:include fx:id="samplesTabPane" source="samplesTabPane.fxml"/>
+            </VBox>
+        </AnchorPane>
+    </center>
+
+</BorderPane>

@@ -1,0 +1,13 @@
+{
+  "description": "Вентиляторы",
+  "properties": {
+    "io.github.fireres.firemode.properties.FireModeProperties" : {
+      "thermocoupleCount": 3,
+      "fireModeType": "LOG",
+      "temperaturesMaintaining": 400,
+      "showBounds": false,
+      "showMeanTemperature": false,
+      "_class": "io.github.fireres.firemode.properties.FireModeProperties"
+    }
+  }
+}

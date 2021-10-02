@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.component.*?>
+<?import javafx.geometry.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<TitledPane fx:id="component"
+            minWidth="322.0"
+            prefWidth="322.0"
+            text="Параметры избыточного давления"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.fireres.gui.controller.excess.pressure.ExcessPressureParams">
+
+    <VBox prefWidth="322.0">
+        <GridPane>
+
+            <columnConstraints>
+                <ColumnConstraints />
+                <ColumnConstraints />
+                <ColumnConstraints />
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints />
+                <RowConstraints />
+                <RowConstraints />
+            </rowConstraints>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Базовое давление:" />
+
+            <ContextlessSpinner fx:id="basePressure" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" />
+
+            <Label prefWidth="30.0" text="Па" GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <padding>
+                    <Insets left="5.0" />
+                </padding>
+            </Label>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Дельта:" GridPane.rowIndex="1">
+                <GridPane.margin>
+                    <Insets top="15.0" />
+                </GridPane.margin>
+            </Label>
+
+            <ContextlessSpinner fx:id="delta" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <GridPane.margin>
+                    <Insets top="15.0" />
+                </GridPane.margin>
+            </ContextlessSpinner>
+
+            <Label prefWidth="15.0" text="Δ" GridPane.columnIndex="2" GridPane.rowIndex="1">
+                <padding>
+                    <Insets left="5.0" top="15.0" />
+                </padding>
+            </Label>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Коэффициент дисперсии:" GridPane.rowIndex="2">
+                <GridPane.margin>
+                    <Insets top="15.0" />
+                </GridPane.margin>
+            </Label>
+
+            <ContextlessSpinner fx:id="dispersionCoefficient" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <GridPane.margin>
+                    <Insets top="15.0" />
+                </GridPane.margin>
+            </ContextlessSpinner>
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+
+        </GridPane>
+        <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+        </padding>
+    </VBox>
+    <padding>
+        <Insets top="15.0" />
+    </padding>
+</TitledPane>
