@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.component.ScrollPaneWithoutFocus?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="component"
+      fx:controller="io.github.fireres.gui.controller.modal.export.ExportGroupColumn">
+    <Label alignment="CENTER" styleClass="exportHeaderFont" text="Группы">
+        <VBox.margin>
+            <Insets bottom="5.0" top="5.0"/>
+        </VBox.margin>
+    </Label>
+    <ScrollPaneWithoutFocus fitToWidth="true">
+        <VBox prefHeight="500.0" fx:id="groupsVbox"/>
+    </ScrollPaneWithoutFocus>
+</VBox>

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.component.ScrollPaneWithoutFocus?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox focusTraversable="true"
+      xmlns="http://javafx.com/javafx/10.0.2-internal"
+      xmlns:fx="http://javafx.com/fxml/1"
+      fx:id="component"
+      fx:controller="io.github.fireres.gui.controller.heat.flow.HeatFlow">
+
+    <fx:include fx:id="toolBar" source="../common/reportToolBar.fxml"/>
+
+    <HBox prefHeight="5000.0">
+        <ScrollPaneWithoutFocus fitToHeight="true" minWidth="-Infinity" prefWidth="360.0">
+            <VBox fx:id="paramsVbox" focusTraversable="true">
+                <fx:include fx:id="heatFlowParams" source="heatFlowParams.fxml"/>
+                <fx:include fx:id="functionParams" source="../common/functionParams.fxml"/>
+                <fx:include fx:id="boundsShiftParams" source="../common/boundsShiftParams.fxml"/>
+                <padding>
+                    <Insets left="15.0"/>
+                </padding>
+            </VBox>
+        </ScrollPaneWithoutFocus>
+
+        <fx:include fx:id="heatFlowChart" source="heatFlowChart.fxml"/>
+
+        <padding>
+            <Insets bottom="15.0" left="15.0" top="15.0" right="15"/>
+        </padding>
+    </HBox>
+</VBox>
+
+

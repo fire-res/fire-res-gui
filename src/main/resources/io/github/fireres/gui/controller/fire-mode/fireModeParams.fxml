@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.Label?>
+<?import io.github.fireres.gui.component.ContextlessSpinner?>
+<?import javafx.scene.control.ChoiceBox?>
+<?import javafx.scene.control.CheckBox?>
+
+<TitledPane fx:id="component"
+            minWidth="322.0"
+            prefWidth="322.0"
+            text="Параметры режима пожара"
+            xmlns="http://javafx.com/javafx/10.0.2-internal"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.fireres.gui.controller.fire.mode.FireModeParams">
+
+    <VBox>
+        <padding>
+            <Insets bottom="15.0" left="15.0" right="15.0" top="15.0"/>
+        </padding>
+        <GridPane>
+
+            <columnConstraints>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+                <ColumnConstraints/>
+            </columnConstraints>
+
+            <rowConstraints>
+                <RowConstraints/>
+            </rowConstraints>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Количество термопар:" GridPane.rowIndex="0"/>
+
+            <ContextlessSpinner fx:id="thermocouples" editable="true" prefHeight="26.0" prefWidth="80.0"
+                                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+
+            <Label prefWidth="30.0" text="шт." GridPane.columnIndex="2" GridPane.rowIndex="0">
+                <padding>
+                    <Insets left="5.0"/>
+                </padding>
+            </Label>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Тип режима пожара:" GridPane.rowIndex="1">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </Label>
+
+            <ChoiceBox fx:id="fireModeType" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </ChoiceBox>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Поддержание температур:" GridPane.rowIndex="2">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </Label>
+
+            <ContextlessSpinner fx:id="temperatureMaintaining" editable="true"
+                                prefHeight="26.0" prefWidth="80.0"
+                                GridPane.columnIndex="1" GridPane.rowIndex="2">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </ContextlessSpinner>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Показывать границы:" GridPane.rowIndex="3">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </Label>
+
+            <CheckBox fx:id="showBounds"
+                      prefHeight="26.0" prefWidth="80.0"
+                      GridPane.columnIndex="1" GridPane.rowIndex="3">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </CheckBox>
+
+            <Label prefHeight="16.0" prefWidth="165.0" text="Показывать ср. темп.:" GridPane.rowIndex="4">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </Label>
+
+            <CheckBox fx:id="showMeanTemperature"
+                      prefHeight="26.0" prefWidth="80.0"
+                      GridPane.columnIndex="1" GridPane.rowIndex="4">
+                <GridPane.margin>
+                    <Insets top="15"/>
+                </GridPane.margin>
+            </CheckBox>
+
+        </GridPane>
+    </VBox>
+    <padding>
+        <Insets top="15.0"/>
+    </padding>
+</TitledPane>

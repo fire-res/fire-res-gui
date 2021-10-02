@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<Tab onClosed="#closeSample"
+     xmlns="http://javafx.com/javafx/10.0.2-internal"
+     xmlns:fx="http://javafx.com/fxml/1"
+     fx:id="component"
+     fx:controller="io.github.fireres.gui.controller.common.SampleTab">
+
+    <TabPane fx:id="reportsTabPane" prefHeight="5000.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE"
+             xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+        <tabs>
+            <Tab fx:id="fireModeTab" styleClass="fireModeTab" text="Режим пожара">
+                <AnchorPane focusTraversable="true" prefHeight="625.0">
+                    <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <fx:include fx:id="fireMode" source="../fire-mode/fireMode.fxml"/>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+            <Tab fx:id="excessPressureTab" styleClass="excessPressureTab" text="Избыточное давление">
+                <AnchorPane focusTraversable="true" prefHeight="625.0">
+                    <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <fx:include fx:id="excessPressure" source="../excess-pressure/excessPressure.fxml"/>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+            <Tab fx:id="heatFlowTab" styleClass="heatFlowPressureTab" text="Тепловой поток">
+                <AnchorPane focusTraversable="true" prefHeight="625.0">
+                    <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <fx:include fx:id="heatFlow" source="../heat-flow/heatFlow.fxml"/>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+            <Tab fx:id="unheatedSurfaceTab" styleClass="unheatedSurfaceTab" text="Необогреваемая поверхность">
+                <AnchorPane focusTraversable="true" prefHeight="625.0">
+                    <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+                          AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+                        <fx:include fx:id="unheatedSurface" source="../unheated-surface/unheatedSurface.fxml"/>
+                    </VBox>
+                </AnchorPane>
+            </Tab>
+        </tabs>
+    </TabPane>
+
+</Tab>
