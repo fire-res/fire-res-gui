@@ -2,18 +2,18 @@ package io.github.fireres.gui.controller.unheated.surface;
 
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.GenerationProperties;
+import io.github.fireres.gui.annotation.GenerateReport;
 import io.github.fireres.gui.configurer.report.UnheatedSurfaceParametersConfigurer;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
-import io.github.fireres.gui.controller.ReportCreator;
+import io.github.fireres.gui.controller.Refreshable;
 import io.github.fireres.gui.controller.ReportInclusionChanger;
 import io.github.fireres.gui.controller.common.SampleTab;
 import io.github.fireres.gui.controller.unheated.surface.groups.first.FirstGroup;
 import io.github.fireres.gui.controller.unheated.surface.groups.second.SecondGroup;
 import io.github.fireres.gui.controller.unheated.surface.groups.third.ThirdGroup;
-import io.github.fireres.gui.model.ReportTask;
 import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.gui.service.ReportExecutorService;
 import io.github.fireres.unheated.surface.report.UnheatedSurfaceReport;
@@ -26,9 +26,6 @@ import lombok.val;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
-import java.util.List;
-import java.util.UUID;
-
 import static io.github.fireres.core.properties.ReportType.UNHEATED_SURFACE;
 import static io.github.fireres.gui.util.TabUtils.disableTab;
 import static io.github.fireres.gui.util.TabUtils.enableTab;
@@ -38,9 +35,10 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(scopeName = SCOPE_PROTOTYPE)
 public class UnheatedSurface extends AbstractComponent<ScrollPane>
-        implements UnheatedSurfaceReportContainer, ReportInclusionChanger, ReportCreator, PresetChanger {
+        implements UnheatedSurfaceReportContainer, ReportInclusionChanger, PresetChanger, Refreshable {
 
     @Getter
+    @GenerateReport
     private UnheatedSurfaceReport report;
 
     @FXML
@@ -68,35 +66,17 @@ public class UnheatedSurface extends AbstractComponent<ScrollPane>
     }
 
     @Override
-    public void createReport() {
-        val reportId = UUID.randomUUID();
-
-        val task = ReportTask.builder()
-                .updatingElementId(reportId)
-                .chartContainers(List.of(
-                        getFirstGroup().getChartContainer(),
-                        getSecondGroup().getChartContainer(),
-                        getThirdGroup().getChartContainer()))
-                .nodesToLock(List.of(
-                        getFirstGroup().getParamsVbox(),
-                        getSecondGroup().getParamsVbox(),
-                        getThirdGroup().getParamsVbox()))
-                .action(() -> {
-                    this.report = unheatedSurfaceService.createReport(reportId, getSample());
-
-                    if (!generationProperties.getGeneral().getIncludedReports().contains(UNHEATED_SURFACE)) {
-                        excludeReport();
-                    }
-                })
-                .build();
-
-        reportExecutorService.runTask(task);
-    }
-
-    @Override
     public void postConstruct() {
         unheatedSurfaceParametersConfigurer.config(this,
                 ((PresetContainer) getParent()).getPreset());
+
+        excludeReportIfNeeded();
+    }
+
+    private void excludeReportIfNeeded() {
+        if (!generationProperties.getGeneral().getIncludedReports().contains(UNHEATED_SURFACE)) {
+            excludeReport();
+        }
     }
 
     @Override
@@ -119,6 +99,11 @@ public class UnheatedSurface extends AbstractComponent<ScrollPane>
     public void changePreset(Preset preset) {
         unheatedSurfaceParametersConfigurer.config(this, preset);
 
+        refresh();
+    }
+
+    @Override
+    public void refresh() {
         getFirstGroup().refresh();
         getSecondGroup().refresh();
         getThirdGroup().refresh();

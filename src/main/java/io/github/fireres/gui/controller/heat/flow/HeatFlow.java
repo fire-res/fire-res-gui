@@ -3,6 +3,7 @@ package io.github.fireres.gui.controller.heat.flow;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.GenerationProperties;
 import io.github.fireres.excel.report.HeatFlowExcelReportsBuilder;
+import io.github.fireres.gui.annotation.GenerateReport;
 import io.github.fireres.gui.component.DataViewer;
 import io.github.fireres.gui.configurer.report.HeatFlowParametersConfigurer;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
@@ -10,7 +11,6 @@ import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
 import io.github.fireres.gui.controller.Refreshable;
-import io.github.fireres.gui.controller.ReportCreator;
 import io.github.fireres.gui.controller.ReportDataCollector;
 import io.github.fireres.gui.controller.ReportInclusionChanger;
 import io.github.fireres.gui.controller.Resettable;
@@ -18,7 +18,6 @@ import io.github.fireres.gui.controller.common.BoundsShiftParams;
 import io.github.fireres.gui.controller.common.FunctionParams;
 import io.github.fireres.gui.controller.common.ReportToolBar;
 import io.github.fireres.gui.controller.common.SampleTab;
-import io.github.fireres.gui.model.ReportTask;
 import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.gui.service.ReportExecutorService;
 import io.github.fireres.heatflow.model.HeatFlowPoint;
@@ -49,15 +48,15 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Scope(scopeName = SCOPE_PROTOTYPE)
 public class HeatFlow extends AbstractReportUpdaterComponent<VBox>
         implements HeatFlowReportContainer, ReportInclusionChanger,
-        ReportCreator, Resettable, ReportDataCollector, Refreshable, PresetChanger {
+        Resettable, ReportDataCollector, Refreshable, PresetChanger {
 
     @FXML
     @Getter
     private VBox paramsVbox;
 
     @Getter
+    @GenerateReport
     private HeatFlowReport report;
-
 
     @FXML
     private HeatFlowParams heatFlowParamsController;
@@ -116,34 +115,24 @@ public class HeatFlow extends AbstractReportUpdaterComponent<VBox>
     }
 
     @Override
-    public void createReport() {
-        val reportId = UUID.randomUUID();
-
-        val task = ReportTask.builder()
-                .updatingElementId(reportId)
-                .chartContainers(singletonList(getChartContainer()))
-                .nodesToLock(singletonList(paramsVbox))
-                .action(() -> {
-                    this.report = heatFlowService.createReport(reportId, getSample());
-
-                    if (!generationProperties.getGeneral().getIncludedReports().contains(HEAT_FLOW)) {
-                        excludeReport();
-                    }
-                })
-                .build();
-
-        reportExecutorService.runTask(task);
-    }
-
-    @Override
     public void postConstruct() {
         heatFlowParametersConfigurer.config(this,
                 ((PresetContainer) getParent()).getPreset());
+
+        excludeReportIfNeeded();
+    }
+
+    private void excludeReportIfNeeded() {
+        if (!generationProperties.getGeneral().getIncludedReports().contains(HEAT_FLOW)) {
+            excludeReport();
+        }
     }
 
     @Override
     public void refresh() {
-        createReport();
+        updateReport(
+                () -> this.report = heatFlowService.createReport(report.getId(), getSample()),
+                getParamsVbox());
     }
 
     @Override

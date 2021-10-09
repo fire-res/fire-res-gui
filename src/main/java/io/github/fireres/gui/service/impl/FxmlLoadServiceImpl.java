@@ -52,10 +52,15 @@ public class FxmlLoadServiceImpl implements FxmlLoadService {
 
         preConstructAction.accept(component);
         initializeComponentHierarchy(component, parent);
-        annotationProcessors.forEach(processor -> processor.process(component));
+        applyAnnotationProcessors(component);
         callPostConstruct(component);
 
         return component;
+    }
+
+    private <C extends ExtendedComponent<?>> void applyAnnotationProcessors(C component) {
+        component.getChildren().forEach(this::applyAnnotationProcessors);
+        annotationProcessors.forEach(processor -> processor.process(component));
     }
 
     private <C> C load(Class<C> componentClass, String fxml) {

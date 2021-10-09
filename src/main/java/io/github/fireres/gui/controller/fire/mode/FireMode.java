@@ -7,6 +7,7 @@ import io.github.fireres.excel.report.FireModeExcelReportsBuilder;
 import io.github.fireres.firemode.properties.FireModeProperties;
 import io.github.fireres.firemode.report.FireModeReport;
 import io.github.fireres.firemode.service.FireModeService;
+import io.github.fireres.gui.annotation.GenerateReport;
 import io.github.fireres.gui.component.DataViewer;
 import io.github.fireres.gui.configurer.report.FireModeParametersConfigurer;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
@@ -14,7 +15,6 @@ import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
 import io.github.fireres.gui.controller.Refreshable;
-import io.github.fireres.gui.controller.ReportCreator;
 import io.github.fireres.gui.controller.ReportDataCollector;
 import io.github.fireres.gui.controller.ReportInclusionChanger;
 import io.github.fireres.gui.controller.Resettable;
@@ -22,7 +22,6 @@ import io.github.fireres.gui.controller.common.BoundsShiftParams;
 import io.github.fireres.gui.controller.common.FunctionParams;
 import io.github.fireres.gui.controller.common.ReportToolBar;
 import io.github.fireres.gui.controller.common.SampleTab;
-import io.github.fireres.gui.model.ReportTask;
 import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.gui.service.ReportExecutorService;
 import javafx.fxml.FXML;
@@ -50,15 +49,15 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Scope(scopeName = SCOPE_PROTOTYPE)
 public class FireMode extends AbstractReportUpdaterComponent<VBox>
         implements FireModeReportContainer, ReportInclusionChanger,
-        ReportCreator, Resettable, ReportDataCollector, Refreshable, PresetChanger {
+        Resettable, ReportDataCollector, Refreshable, PresetChanger {
 
     @FXML
     @Getter
     private VBox paramsVbox;
 
     @Getter
+    @GenerateReport
     private FireModeReport report;
-
 
     @FXML
     private FireModeParams fireModeParamsController;
@@ -126,34 +125,24 @@ public class FireMode extends AbstractReportUpdaterComponent<VBox>
     }
 
     @Override
-    public void createReport() {
-        val reportId = UUID.randomUUID();
-
-        val task = ReportTask.builder()
-                .updatingElementId(reportId)
-                .chartContainers(singletonList(getChartContainer()))
-                .nodesToLock(singletonList(paramsVbox))
-                .action(() -> {
-                    this.report = fireModeService.createReport(reportId, getSample());
-
-                    if (!generationProperties.getGeneral().getIncludedReports().contains(FIRE_MODE)) {
-                        excludeReport();
-                    }
-                })
-                .build();
-
-        reportExecutorService.runTask(task);
-    }
-
-    @Override
     public void postConstruct() {
         fireModeParametersConfigurer.config(this,
                 ((PresetContainer) getParent()).getPreset());
+
+        excludeReportIfNeeded();
+    }
+
+    private void excludeReportIfNeeded() {
+        if (!generationProperties.getGeneral().getIncludedReports().contains(FIRE_MODE)) {
+            excludeReport();
+        }
     }
 
     @Override
     public void refresh() {
-        createReport();
+        updateReport(
+                () -> this.report = fireModeService.createReport(report.getId(), getSample()),
+                getParamsVbox());
     }
 
     @Override

@@ -47,7 +47,7 @@ public class GeneralParams extends AbstractComponent<TitledPane> {
         handleSpinnerLostFocus(focusValue, time, () -> {
             generationProperties.getGeneral().setTime(time.getValue() + 1);
 
-            findComponents(SampleTab.class).forEach(SampleTab::generateReports);
+            findComponents(SampleTab.class).forEach(SampleTab::refresh);
         });
     }
 
@@ -55,7 +55,7 @@ public class GeneralParams extends AbstractComponent<TitledPane> {
         handleSpinnerLostFocus(focusValue, environmentTemperature, () -> {
             generationProperties.getGeneral().setEnvironmentTemperature(environmentTemperature.getValue());
 
-            findComponents(SampleTab.class).forEach(SampleTab::generateReports);
+            findComponents(SampleTab.class).forEach(SampleTab::refresh);
         });
     }
 

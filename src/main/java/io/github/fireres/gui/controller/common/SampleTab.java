@@ -4,6 +4,7 @@ import io.github.fireres.core.model.Sample;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
+import io.github.fireres.gui.controller.Refreshable;
 import io.github.fireres.gui.controller.SampleContainer;
 import io.github.fireres.gui.controller.excess.pressure.ExcessPressure;
 import io.github.fireres.gui.controller.fire.mode.FireMode;
@@ -39,7 +40,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @Component
 @Scope(scopeName = SCOPE_PROTOTYPE)
 public class SampleTab extends AbstractComponent<Tab>
-        implements SampleContainer, PresetContainer, PresetChanger {
+        implements SampleContainer, PresetContainer, PresetChanger, Refreshable {
 
     @FXML
     @Getter
@@ -85,7 +86,7 @@ public class SampleTab extends AbstractComponent<Tab>
     @Override
     public void postConstruct() {
         initializeSampleTabContextMenu();
-        generateReports();
+        refresh();
     }
 
     @Override
@@ -113,11 +114,11 @@ public class SampleTab extends AbstractComponent<Tab>
     }
 
     @Override
-    public void generateReports() {
-        getFireMode().createReport();
-        getExcessPressure().createReport();
-        getHeatFlow().createReport();
-        getUnheatedSurface().createReport();
+    public void refresh() {
+        getFireMode().refresh();
+        getExcessPressure().refresh();
+        getHeatFlow().refresh();
+        getUnheatedSurface().refresh();
     }
 
     private void initializeSampleTabContextMenu() {
