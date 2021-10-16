@@ -3,9 +3,11 @@ package io.github.fireres.gui.controller.heat.flow;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.GenerationProperties;
 import io.github.fireres.excel.report.HeatFlowExcelReportsBuilder;
+import io.github.fireres.gui.annotation.Initialize;
 import io.github.fireres.gui.annotation.GenerateReport;
 import io.github.fireres.gui.component.DataViewer;
-import io.github.fireres.gui.configurer.report.HeatFlowParametersConfigurer;
+import io.github.fireres.gui.initializer.report.HeatFlowInitializer;
+import io.github.fireres.gui.preset.impl.HeatFlowPresetApplier;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.PresetChanger;
@@ -19,9 +21,6 @@ import io.github.fireres.gui.controller.common.FunctionParams;
 import io.github.fireres.gui.controller.common.ReportToolBar;
 import io.github.fireres.gui.controller.common.SampleTab;
 import io.github.fireres.gui.preset.Preset;
-import io.github.fireres.gui.service.ReportExecutorService;
-import io.github.fireres.heatflow.model.HeatFlowPoint;
-import io.github.fireres.heatflow.properties.HeatFlowProperties;
 import io.github.fireres.heatflow.report.HeatFlowReport;
 import io.github.fireres.heatflow.service.HeatFlowService;
 import javafx.fxml.FXML;
@@ -36,7 +35,6 @@ import org.springframework.stereotype.Component;
 import java.util.UUID;
 
 import static io.github.fireres.core.properties.ReportType.HEAT_FLOW;
-import static io.github.fireres.gui.synchronizer.impl.HeatFlowChartSynchronizer.MAX_ALLOWED_FLOW_TEXT;
 import static io.github.fireres.gui.util.TabUtils.disableTab;
 import static io.github.fireres.gui.util.TabUtils.enableTab;
 import static java.util.Collections.singletonList;
@@ -46,6 +44,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @RequiredArgsConstructor
 @Component
 @Scope(scopeName = SCOPE_PROTOTYPE)
+@Initialize(HeatFlowInitializer.class)
 public class HeatFlow extends AbstractReportUpdaterComponent<VBox>
         implements HeatFlowReportContainer, ReportInclusionChanger,
         Resettable, ReportDataCollector, Refreshable, PresetChanger {
@@ -75,50 +74,11 @@ public class HeatFlow extends AbstractReportUpdaterComponent<VBox>
 
     private final HeatFlowService heatFlowService;
     private final GenerationProperties generationProperties;
-    private final ReportExecutorService reportExecutorService;
     private final HeatFlowExcelReportsBuilder excelReportsBuilder;
-    private final HeatFlowParametersConfigurer heatFlowParametersConfigurer;
-
-    @Override
-    public Sample getSample() {
-        return ((SampleTab) getParent()).getSample();
-    }
-
-    @Override
-    protected void initialize() {
-        initializeFunctionParams();
-        initializeBoundsShiftParams();
-    }
-
-    private void initializeFunctionParams() {
-        getFunctionParams().setInterpolationService(heatFlowService);
-
-        getFunctionParams().setPropertiesMapper(props ->
-                props.getReportPropertiesByClass(HeatFlowProperties.class)
-                        .orElseThrow()
-                        .getFunctionForm());
-
-        getFunctionParams().setNodesToBlockOnUpdate(singletonList(paramsVbox));
-
-        getFunctionParams().setInterpolationPointConstructor((time, value) -> new HeatFlowPoint(time, value.doubleValue()));
-    }
-
-    private void initializeBoundsShiftParams() {
-        getBoundsShiftParams().addBoundShift(
-                MAX_ALLOWED_FLOW_TEXT,
-                singletonList(paramsVbox),
-                properties -> ((HeatFlowProperties) properties).getBoundsShift().getMaxAllowedFlowShift(),
-                point -> heatFlowService.addMaxAllowedFlowShift(report, (HeatFlowPoint) point),
-                point -> heatFlowService.removeMaxAllowedFlowShift(report, (HeatFlowPoint) point),
-                (integer, number) -> new HeatFlowPoint(integer, number.doubleValue())
-        );
-    }
+    private final HeatFlowPresetApplier heatFlowPresetApplier;
 
     @Override
     public void postConstruct() {
-        heatFlowParametersConfigurer.config(this,
-                ((PresetContainer) getParent()).getPreset());
-
         excludeReportIfNeeded();
     }
 
@@ -145,7 +105,7 @@ public class HeatFlow extends AbstractReportUpdaterComponent<VBox>
 
     @Override
     public void changePreset(Preset preset) {
-        heatFlowParametersConfigurer.config(this, preset);
+        heatFlowPresetApplier.apply(this, preset);
 
         refresh();
     }
@@ -176,6 +136,11 @@ public class HeatFlow extends AbstractReportUpdaterComponent<VBox>
         }
 
         return new DataViewer(excelReports.get(0));
+    }
+
+    @Override
+    public Sample getSample() {
+        return ((SampleTab) getParent()).getSample();
     }
 
     public HeatFlowParams getHeatFlowParams() {

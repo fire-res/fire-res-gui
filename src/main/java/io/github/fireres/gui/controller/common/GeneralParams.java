@@ -1,7 +1,8 @@
 package io.github.fireres.gui.controller.common;
 
 import io.github.fireres.core.properties.GenerationProperties;
-import io.github.fireres.gui.configurer.GeneralParametersConfigurer;
+import io.github.fireres.gui.annotation.Initialize;
+import io.github.fireres.gui.initializer.general.GeneralParametersInitializer;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.ReportInclusionChanger;
 import javafx.event.Event;
@@ -19,6 +20,7 @@ import java.util.function.Function;
 @FxmlView("generalParams.fxml")
 @RequiredArgsConstructor
 @Component
+@Initialize(GeneralParametersInitializer.class)
 public class GeneralParams extends AbstractComponent<TitledPane> {
 
     @FXML
@@ -29,13 +31,10 @@ public class GeneralParams extends AbstractComponent<TitledPane> {
     @Getter
     private Spinner<Integer> environmentTemperature;
 
-    private final GeneralParametersConfigurer generalParametersConfigurer;
     private final GenerationProperties generationProperties;
 
     @Override
     public void postConstruct() {
-        generalParametersConfigurer.config(this);
-
         time.focusedProperty().addListener((observable, oldValue, newValue) ->
                 handleTimeSpinnerLostFocus(newValue));
 

@@ -1,8 +1,10 @@
-package io.github.fireres.gui.configurer.report;
+package io.github.fireres.gui.preset.impl;
 
 import com.rits.cloning.Cloner;
 import io.github.fireres.gui.controller.unheated.surface.groups.first.FirstGroup;
+import io.github.fireres.gui.preset.FunctionFormApplier;
 import io.github.fireres.gui.preset.Preset;
+import io.github.fireres.gui.preset.PresetApplier;
 import io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -12,15 +14,16 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UnheatedSurfaceFirstGroupConfigurer extends AbstractReportParametersConfigurer<FirstGroup> {
+public class UnheatedSurfaceFirstGroupPresetApplier implements PresetApplier<FirstGroup> {
 
     private static final Integer THERMOCOUPLES_NUMBER_MIN = 1;
     private static final Integer THERMOCOUPLES_NUMBER_MAX = 100;
 
     private final Cloner cloner;
+    private final FunctionFormApplier functionFormApplier;
 
     @Override
-    public void config(FirstGroup firstGroup, Preset preset) {
+    public void apply(FirstGroup firstGroup, Preset preset) {
         val sampleProperties = firstGroup.getSample().getSampleProperties();
         val presetProperties = cloner.deepClone(preset.getProperties(UnheatedSurfaceProperties.class).getFirstGroup());
 
@@ -28,18 +31,17 @@ public class UnheatedSurfaceFirstGroupConfigurer extends AbstractReportParameter
                 .orElseThrow()
                 .setFirstGroup(presetProperties);
 
-        resetThermocouplesCount(
+        setThermocouplesCount(
                 firstGroup.getFirstGroupParams().getThermocouples(),
                 presetProperties.getThermocoupleCount());
 
-        resetFunctionParameters(firstGroup.getFunctionParams(), presetProperties.getFunctionForm());
+        functionFormApplier.apply(firstGroup.getFunctionParams(), presetProperties.getFunctionForm());
     }
 
-    private void resetThermocouplesCount(Spinner<Integer> thermocouplesCount, Integer thermocouplesCountValue) {
+    private void setThermocouplesCount(Spinner<Integer> thermocouplesCount, Integer thermocouplesCountValue) {
         thermocouplesCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                 THERMOCOUPLES_NUMBER_MIN,
                 THERMOCOUPLES_NUMBER_MAX,
                 thermocouplesCountValue));
     }
-
 }

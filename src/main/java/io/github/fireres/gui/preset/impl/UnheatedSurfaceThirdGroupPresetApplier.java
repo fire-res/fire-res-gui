@@ -1,8 +1,10 @@
-package io.github.fireres.gui.configurer.report;
+package io.github.fireres.gui.preset.impl;
 
 import com.rits.cloning.Cloner;
-import io.github.fireres.gui.controller.unheated.surface.groups.second.SecondGroup;
+import io.github.fireres.gui.controller.unheated.surface.groups.third.ThirdGroup;
+import io.github.fireres.gui.preset.FunctionFormApplier;
 import io.github.fireres.gui.preset.Preset;
+import io.github.fireres.gui.preset.PresetApplier;
 import io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
@@ -12,7 +14,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class UnheatedSurfaceSecondGroupConfigurer extends AbstractReportParametersConfigurer<SecondGroup> {
+public class UnheatedSurfaceThirdGroupPresetApplier implements PresetApplier<ThirdGroup> {
 
     private static final Integer THERMOCOUPLES_NUMBER_MIN = 1;
     private static final Integer THERMOCOUPLES_NUMBER_MAX = 100;
@@ -22,40 +24,40 @@ public class UnheatedSurfaceSecondGroupConfigurer extends AbstractReportParamete
     private static final Integer BOUND_INCREMENT = 100;
 
     private final Cloner cloner;
+    private final FunctionFormApplier functionFormApplier;
 
     @Override
-    public void config(SecondGroup secondGroup, Preset preset) {
-        val sampleProperties = secondGroup.getSample().getSampleProperties();
-        val presetProperties = cloner.deepClone(preset.getProperties(UnheatedSurfaceProperties.class).getSecondGroup());
+    public void apply(ThirdGroup thirdGroup, Preset preset) {
+        val sampleProperties = thirdGroup.getSample().getSampleProperties();
+        val presetProperties = cloner.deepClone(preset.getProperties(UnheatedSurfaceProperties.class).getThirdGroup());
 
         sampleProperties.getReportPropertiesByClass(UnheatedSurfaceProperties.class)
                 .orElseThrow()
-                .setSecondGroup(presetProperties);
+                .setThirdGroup(presetProperties);
 
-        resetThermocouplesCount(
-                secondGroup.getSecondGroupParams().getThermocouples(),
+        setThermocouplesCount(
+                thirdGroup.getThirdGroupParams().getThermocouples(),
                 presetProperties.getThermocoupleCount());
 
-        resetBound(
-                secondGroup.getSecondGroupParams().getBound(),
+        setBound(
+                thirdGroup.getThirdGroupParams().getBound(),
                 presetProperties.getBound());
 
-        resetFunctionParameters(secondGroup.getFunctionParams(), presetProperties.getFunctionForm());
+        functionFormApplier.apply(thirdGroup.getFunctionParams(), presetProperties.getFunctionForm());
     }
 
-    private void resetThermocouplesCount(Spinner<Integer> thermocouplesCount, Integer thermocouplesCountValue) {
+    private void setThermocouplesCount(Spinner<Integer> thermocouplesCount, Integer thermocouplesCountValue) {
         thermocouplesCount.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                 THERMOCOUPLES_NUMBER_MIN,
                 THERMOCOUPLES_NUMBER_MAX,
                 thermocouplesCountValue));
     }
 
-    private void resetBound(Spinner<Integer> bound, Integer boundValue) {
+    private void setBound(Spinner<Integer> bound, Integer boundValue) {
         bound.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(
                 BOUND_MIN,
                 BOUND_MAX,
                 boundValue,
                 BOUND_INCREMENT));
     }
-
 }

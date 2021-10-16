@@ -6,11 +6,12 @@ import io.github.fireres.gui.controller.ExtendedComponent;
 import io.github.fireres.gui.service.FxmlLoadService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,12 +21,18 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class FxmlLoadServiceImpl implements FxmlLoadService {
 
     private final List<AnnotationProcessor> annotationProcessors;
     private final ConfigurableApplicationContext context;
+
+    @Autowired
+    public FxmlLoadServiceImpl(@Lazy List<AnnotationProcessor> annotationProcessors,
+                               ConfigurableApplicationContext context) {
+        this.annotationProcessors = annotationProcessors;
+        this.context = context;
+    }
 
     @Override
     public <C extends ExtendedComponent<?>> C loadComponent(Class<C> componentClass) {

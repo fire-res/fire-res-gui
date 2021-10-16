@@ -1,6 +1,6 @@
 package io.github.fireres.gui;
 
-import io.github.fireres.gui.configurer.PrimaryStageConfigurer;
+import io.github.fireres.gui.initializer.general.PrimaryStageInitializer;
 import io.github.fireres.gui.controller.common.MainScene;
 import io.github.fireres.gui.service.FxmlLoadService;
 import javafx.scene.Scene;
@@ -13,11 +13,11 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class GraphicalInterface {
 
-    private final PrimaryStageConfigurer primaryStageConfigurer;
+    private final PrimaryStageInitializer primaryStageInitializer;
     private final FxmlLoadService fxmlLoadService;
 
     public void start(Stage stage) {
-        primaryStageConfigurer.config(stage);
+        primaryStageInitializer.initialize(stage);
 
         val mainScene = fxmlLoadService.loadComponent(MainScene.class);
 

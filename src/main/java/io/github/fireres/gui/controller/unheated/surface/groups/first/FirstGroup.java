@@ -1,14 +1,16 @@
 package io.github.fireres.gui.controller.unheated.surface.groups.first;
 
-import io.github.fireres.core.model.IntegerPoint;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.GenerationProperties;
 import io.github.fireres.excel.report.UnheatedSurfaceExcelReportsBuilder;
+import io.github.fireres.gui.annotation.Initialize;
 import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.component.DataViewer;
-import io.github.fireres.gui.configurer.report.UnheatedSurfaceFirstGroupConfigurer;
+import io.github.fireres.gui.initializer.report.UnheatedSurfaceFirstGroupInitializer;
+import io.github.fireres.gui.preset.impl.UnheatedSurfaceFirstGroupPresetApplier;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
+import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
 import io.github.fireres.gui.controller.Refreshable;
 import io.github.fireres.gui.controller.ReportDataCollector;
@@ -18,7 +20,7 @@ import io.github.fireres.gui.controller.common.FunctionParams;
 import io.github.fireres.gui.controller.common.ReportToolBar;
 import io.github.fireres.gui.controller.unheated.surface.UnheatedSurface;
 import io.github.fireres.gui.controller.unheated.surface.UnheatedSurfaceReportContainer;
-import io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties;
+import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.unheated.surface.report.UnheatedSurfaceReport;
 import io.github.fireres.unheated.surface.service.UnheatedSurfaceFirstGroupService;
 import javafx.fxml.FXML;
@@ -27,14 +29,11 @@ import javafx.scene.layout.VBox;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-import static io.github.fireres.gui.synchronizer.impl.FirstThermocoupleGroupChartSynchronizer.MAX_MEAN_TEMPERATURE_TEXT;
-import static io.github.fireres.gui.synchronizer.impl.FirstThermocoupleGroupChartSynchronizer.MAX_THERMOCOUPLE_TEMPERATURE_TEXT;
 import static java.util.Collections.singletonList;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
@@ -42,8 +41,10 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @RequiredArgsConstructor
 @Component
 @Scope(scopeName = SCOPE_PROTOTYPE)
+@Initialize(UnheatedSurfaceFirstGroupInitializer.class)
 public class FirstGroup extends AbstractReportUpdaterComponent<TitledPane>
-        implements UnheatedSurfaceReportContainer, ReportDataCollector, Resettable, Refreshable {
+        implements UnheatedSurfaceReportContainer, ReportDataCollector,
+        Resettable, Refreshable, PresetChanger {
 
     @FXML
     @Getter
@@ -67,47 +68,7 @@ public class FirstGroup extends AbstractReportUpdaterComponent<TitledPane>
     private final UnheatedSurfaceFirstGroupService unheatedSurfaceFirstGroupService;
     private final UnheatedSurfaceExcelReportsBuilder excelReportsBuilder;
     private final GenerationProperties generationProperties;
-    private final UnheatedSurfaceFirstGroupConfigurer firstGroupConfigurer;
-
-    @Override
-    protected void initialize() {
-        initializeFunctionParams();
-        initializeBoundsShiftParams();
-    }
-
-    private void initializeFunctionParams() {
-        getFunctionParams().setInterpolationService(unheatedSurfaceFirstGroupService);
-
-        getFunctionParams().setPropertiesMapper(props ->
-                props.getReportPropertiesByClass(UnheatedSurfaceProperties.class)
-                        .orElseThrow()
-                        .getFirstGroup()
-                        .getFunctionForm());
-
-        getFunctionParams().setNodesToBlockOnUpdate(singletonList(paramsVbox));
-
-        getFunctionParams().setInterpolationPointConstructor((time, value) -> new IntegerPoint(time, value.intValue()));
-    }
-
-    private void initializeBoundsShiftParams() {
-        getBoundsShiftParams().addBoundShift(
-                MAX_MEAN_TEMPERATURE_TEXT,
-                singletonList(paramsVbox),
-                properties -> ((UnheatedSurfaceProperties) properties).getFirstGroup().getBoundsShift().getMaxAllowedMeanTemperatureShift(),
-                point -> unheatedSurfaceFirstGroupService.addMaxAllowedMeanTemperatureShift(getReport(), (IntegerPoint) point),
-                point -> unheatedSurfaceFirstGroupService.removeMaxAllowedMeanTemperatureShift(getReport(), (IntegerPoint) point),
-                (integer, number) -> new IntegerPoint(integer, number.intValue())
-        );
-
-        getBoundsShiftParams().addBoundShift(
-                MAX_THERMOCOUPLE_TEMPERATURE_TEXT,
-                singletonList(paramsVbox),
-                properties -> ((UnheatedSurfaceProperties) properties).getFirstGroup().getBoundsShift().getMaxAllowedThermocoupleTemperatureShift(),
-                point -> unheatedSurfaceFirstGroupService.addMaxAllowedThermocoupleTemperatureShift(getReport(), (IntegerPoint) point),
-                point -> unheatedSurfaceFirstGroupService.removeMaxAllowedThermocoupleTemperatureShift(getReport(), (IntegerPoint) point),
-                (integer, number) -> new IntegerPoint(integer, number.intValue())
-        );
-    }
+    private final UnheatedSurfaceFirstGroupPresetApplier firstGroupConfigurer;
 
     @Override
     public void refresh() {
@@ -117,11 +78,14 @@ public class FirstGroup extends AbstractReportUpdaterComponent<TitledPane>
     @Override
     public void reset() {
         updateReport(() -> {
-            firstGroupConfigurer.config(this,
-                    ((PresetContainer) getParent().getParent()).getPreset());
-
+            changePreset(((PresetContainer) getParent().getParent()).getPreset());
             unheatedSurfaceFirstGroupService.refreshFirstGroup(getReport());
         }, getParamsVbox());
+    }
+
+    @Override
+    public void changePreset(Preset preset) {
+        firstGroupConfigurer.apply(this, preset);
     }
 
     @Override
@@ -171,5 +135,4 @@ public class FirstGroup extends AbstractReportUpdaterComponent<TitledPane>
     public ReportToolBar getToolBar() {
         return toolBarController;
     }
-
 }

@@ -1,13 +1,15 @@
 package io.github.fireres.gui.controller.unheated.surface.groups.second;
 
-import io.github.fireres.core.model.IntegerPoint;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.GenerationProperties;
 import io.github.fireres.excel.report.UnheatedSurfaceExcelReportsBuilder;
+import io.github.fireres.gui.annotation.Initialize;
 import io.github.fireres.gui.component.DataViewer;
-import io.github.fireres.gui.configurer.report.UnheatedSurfaceSecondGroupConfigurer;
+import io.github.fireres.gui.initializer.report.UnheatedSurfaceSecondGroupInitializer;
+import io.github.fireres.gui.preset.impl.UnheatedSurfaceSecondGroupPresetApplier;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
+import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
 import io.github.fireres.gui.controller.Refreshable;
 import io.github.fireres.gui.controller.ReportDataCollector;
@@ -17,7 +19,7 @@ import io.github.fireres.gui.controller.common.FunctionParams;
 import io.github.fireres.gui.controller.common.ReportToolBar;
 import io.github.fireres.gui.controller.unheated.surface.UnheatedSurface;
 import io.github.fireres.gui.controller.unheated.surface.UnheatedSurfaceReportContainer;
-import io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties;
+import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.unheated.surface.report.UnheatedSurfaceReport;
 import io.github.fireres.unheated.surface.service.UnheatedSurfaceSecondGroupService;
 import javafx.fxml.FXML;
@@ -32,7 +34,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-import static io.github.fireres.gui.synchronizer.impl.SecondThermocoupleGroupChartSynchronizer.MAX_THERMOCOUPLE_TEMPERATURE_TEXT;
 import static java.util.Collections.singletonList;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
@@ -40,13 +41,14 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @RequiredArgsConstructor
 @Component
 @Scope(scopeName = SCOPE_PROTOTYPE)
+@Initialize(UnheatedSurfaceSecondGroupInitializer.class)
 public class SecondGroup extends AbstractReportUpdaterComponent<TitledPane>
-        implements UnheatedSurfaceReportContainer, Resettable, ReportDataCollector, Refreshable {
+        implements UnheatedSurfaceReportContainer, Resettable,
+        ReportDataCollector, Refreshable, PresetChanger {
 
     @FXML
     @Getter
     private VBox paramsVbox;
-
 
     @FXML
     private SecondGroupParams secondGroupParamsController;
@@ -66,38 +68,7 @@ public class SecondGroup extends AbstractReportUpdaterComponent<TitledPane>
     private final UnheatedSurfaceSecondGroupService unheatedSurfaceSecondGroupService;
     private final UnheatedSurfaceExcelReportsBuilder excelReportsBuilder;
     private final GenerationProperties generationProperties;
-    private final UnheatedSurfaceSecondGroupConfigurer secondGroupConfigurer;
-
-    @Override
-    protected void initialize() {
-        initializeFunctionParams();
-        initializeBoundsShiftParams();
-    }
-
-    private void initializeFunctionParams() {
-        getFunctionParams().setInterpolationService(unheatedSurfaceSecondGroupService);
-
-        getFunctionParams().setPropertiesMapper(props ->
-                props.getReportPropertiesByClass(UnheatedSurfaceProperties.class)
-                        .orElseThrow()
-                        .getSecondGroup()
-                        .getFunctionForm());
-
-        getFunctionParams().setNodesToBlockOnUpdate(singletonList(paramsVbox));
-
-        getFunctionParams().setInterpolationPointConstructor((time, value) -> new IntegerPoint(time, value.intValue()));
-    }
-
-    private void initializeBoundsShiftParams() {
-        getBoundsShiftParams().addBoundShift(
-                MAX_THERMOCOUPLE_TEMPERATURE_TEXT,
-                singletonList(paramsVbox),
-                properties -> ((UnheatedSurfaceProperties) properties).getSecondGroup().getBoundsShift().getMaxAllowedTemperatureShift(),
-                point -> unheatedSurfaceSecondGroupService.addMaxAllowedTemperatureShift(getReport(), (IntegerPoint) point),
-                point -> unheatedSurfaceSecondGroupService.removeMaxAllowedTemperatureShift(getReport(), (IntegerPoint) point),
-                (integer, number) -> new IntegerPoint(integer, number.intValue())
-        );
-    }
+    private final UnheatedSurfaceSecondGroupPresetApplier secondGroupConfigurer;
 
     @Override
     public void refresh() {
@@ -107,11 +78,14 @@ public class SecondGroup extends AbstractReportUpdaterComponent<TitledPane>
     @Override
     public void reset() {
         updateReport(() -> {
-            secondGroupConfigurer.config(this,
-                    ((PresetContainer) getParent().getParent()).getPreset());
-
+            changePreset(((PresetContainer) getParent().getParent()).getPreset());
             unheatedSurfaceSecondGroupService.refreshSecondGroup(getReport());
         }, getParamsVbox());
+    }
+
+    @Override
+    public void changePreset(Preset preset) {
+        secondGroupConfigurer.apply(this, preset);
     }
 
     @Override

@@ -1,7 +1,7 @@
 package io.github.fireres.gui.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import io.github.fireres.gui.config.properties.ApplicationProperties;
+import io.github.fireres.gui.config.properties.general.PresetsProperties;
 import io.github.fireres.gui.preset.Preset;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
@@ -19,15 +19,15 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class PresetsConfig {
 
-    private final ApplicationProperties applicationProperties;
+    private final PresetsProperties properties;
     private final ObjectMapper objectMapper;
 
     @Bean
     public List<Preset> presets() {
         val availablePresets = new ArrayList<Preset>();
 
-        availablePresets.addAll(loadPresets(applicationProperties.getPresets().getDefaultPresetsPath()));
-        availablePresets.addAll(loadPresets(applicationProperties.getPresets().getCustomPresetsPath()));
+        availablePresets.addAll(loadPresets(properties.getDefaultPresetsPath()));
+        availablePresets.addAll(loadPresets(properties.getCustomPresetsPath()));
 
         return availablePresets;
     }
