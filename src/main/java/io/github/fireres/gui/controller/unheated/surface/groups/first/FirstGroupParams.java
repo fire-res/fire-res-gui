@@ -12,7 +12,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TitledPane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -34,21 +33,11 @@ public class FirstGroupParams extends AbstractReportUpdaterComponent<TitledPane>
 
     private final UnheatedSurfaceFirstGroupService unheatedSurfaceFirstGroupService;
 
-    @SneakyThrows
-    private void handleThermocouplesCountSpinnerFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                unheatedSurfaceFirstGroupService.updateThermocoupleCount(
-                        getReport(),
-                        thermocouples.getValue());
-
-        handleSpinnerLostFocus(focusValue, thermocouples, () ->
-                updateReport(action, ((FirstGroup) getParent()).getParamsVbox()));
-    }
-
-    @Override
-    protected void initialize() {
-        thermocouples.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleThermocouplesCountSpinnerFocusChanged(newValue));
+    @FXML
+    public void handleThermocouplesCountChanged() {
+        updateReport(
+                () -> unheatedSurfaceFirstGroupService.updateThermocoupleCount(getReport(), thermocouples.getValue()),
+                ((FirstGroup) getParent()).getParamsVbox());
     }
 
     @Override

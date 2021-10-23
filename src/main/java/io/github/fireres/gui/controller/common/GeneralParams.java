@@ -33,43 +33,36 @@ public class GeneralParams extends AbstractComponent<TitledPane> {
 
     private final GenerationProperties generationProperties;
 
-    @Override
-    public void postConstruct() {
-        time.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleTimeSpinnerLostFocus(newValue));
+    @FXML
+    public void handleTimeChanged() {
+        generationProperties.getGeneral().setTime(time.getValue() + 1);
 
-        environmentTemperature.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleEnvironmentTemperatureSpinnerLostFocus(newValue));
+        findComponents(SampleTab.class).forEach(SampleTab::refresh);
     }
 
-    private void handleTimeSpinnerLostFocus(Boolean focusValue) {
-        handleSpinnerLostFocus(focusValue, time, () -> {
-            generationProperties.getGeneral().setTime(time.getValue() + 1);
+    @FXML
+    public void handleEnvironmentTemperatureChanged() {
+        generationProperties.getGeneral().setEnvironmentTemperature(environmentTemperature.getValue());
 
-            findComponents(SampleTab.class).forEach(SampleTab::refresh);
-        });
+        findComponents(SampleTab.class).forEach(SampleTab::refresh);
     }
 
-    private void handleEnvironmentTemperatureSpinnerLostFocus(Boolean focusValue) {
-        handleSpinnerLostFocus(focusValue, environmentTemperature, () -> {
-            generationProperties.getGeneral().setEnvironmentTemperature(environmentTemperature.getValue());
-
-            findComponents(SampleTab.class).forEach(SampleTab::refresh);
-        });
-    }
-
+    @FXML
     public void changeFireModeInclusion(Event event) {
         changeReportInclusion((CheckMenuItem) event.getTarget(), SampleTab::getFireMode);
     }
 
+    @FXML
     public void changeExcessPressureInclusion(Event event) {
         changeReportInclusion((CheckMenuItem) event.getTarget(), SampleTab::getExcessPressure);
     }
 
+    @FXML
     public void changeHeatFlowInclusion(Event event) {
         changeReportInclusion((CheckMenuItem) event.getTarget(), SampleTab::getHeatFlow);
     }
 
+    @FXML
     public void changeUnheatedSurfaceInclusion(Event event) {
         changeReportInclusion((CheckMenuItem) event.getTarget(), SampleTab::getUnheatedSurface);
     }

@@ -36,29 +36,18 @@ public class HeatFlowParams extends AbstractReportUpdaterComponent<TitledPane>
 
     private final HeatFlowService heatFlowService;
 
-    @Override
-    protected void initialize() {
-        sensors.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleSensorSpinnerLostFocus(newValue));
-
-        bound.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleHeatFlowBoundSpinnerLostFocus(newValue));
+    @FXML
+    public void handleSensorCountChanged() {
+        updateReport(
+                () -> heatFlowService.updateSensorsCount(getReport(), sensors.getValue()),
+                ((HeatFlow) getParent()).getParamsVbox());
     }
 
-    private void handleSensorSpinnerLostFocus(Boolean focusValue) {
-        Runnable action = () ->
-                heatFlowService.updateSensorsCount(getReport(), sensors.getValue());
-
-        handleSpinnerLostFocus(focusValue, sensors, () ->
-                updateReport(action, ((HeatFlow) getParent()).getParamsVbox()));
-    }
-
-    private void handleHeatFlowBoundSpinnerLostFocus(Boolean focusValue) {
-        Runnable action = () ->
-                heatFlowService.updateBound(getReport(), bound.getValue());
-
-        handleSpinnerLostFocus(focusValue, bound, () ->
-                updateReport(action, ((HeatFlow) getParent()).getParamsVbox()));
+    @FXML
+    public void handleHeatFlowBoundChanged() {
+        updateReport(
+                () -> heatFlowService.updateBound(getReport(), bound.getValue()),
+                ((HeatFlow) getParent()).getParamsVbox());
     }
 
     @Override

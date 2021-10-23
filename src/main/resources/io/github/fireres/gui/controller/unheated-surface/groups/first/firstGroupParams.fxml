@@ -25,7 +25,10 @@
 
             <Label prefHeight="16.0" prefWidth="165.0" text="Количество термопар:" />
 
-            <ContextlessSpinner fx:id="thermocouples" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" />
+            <FireResSpinner fx:id="thermocouples" editable="true"
+                            prefHeight="26.0" prefWidth="80.0"
+                            GridPane.columnIndex="1"
+                            onLostFocus="#handleThermocouplesCountChanged"/>
 
             <Label prefWidth="30.0" text="шт." GridPane.columnIndex="2" GridPane.rowIndex="0">
                 <padding>

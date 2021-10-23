@@ -45,37 +45,7 @@ public abstract class AbstractComponent<N> implements ExtendedComponent<N> {
         return (N) component;
     }
 
-    /**
-     * c&p from Spinner
-     * https://stackoverflow.com/questions/32340476/manually-typing-in-text-in-javafx-spinner-is-not-updating-the-value-unless-user/32349847
-     */
-    protected <T> void commitSpinner(Spinner<T> spinner) {
-        log.info("Commit {} changes", spinner.getId());
-        if (!spinner.isEditable()) {
-            return;
-        }
 
-        val text = spinner.getEditor().getText();
-        val valueFactory = spinner.getValueFactory();
-
-        if (valueFactory != null) {
-            val converter = valueFactory.getConverter();
-
-            if (converter != null) {
-                val value = converter.fromString(text);
-                valueFactory.setValue(value);
-            }
-        }
-    }
-
-    protected void handleSpinnerLostFocus(Boolean focusValue, Spinner<?> spinner, Runnable action) {
-        if (!focusValue) {
-            log.info("Spinner {} lost focus, new value: {}", spinner.getId(), spinner.getValue());
-
-            commitSpinner(spinner);
-            action.run();
-        }
-    }
 
     protected Optional<ExtendedComponent<?>> findFirstComponent(Class<? extends ExtendedComponent<?>> componentClass) {
         val components = findComponents(componentClass);

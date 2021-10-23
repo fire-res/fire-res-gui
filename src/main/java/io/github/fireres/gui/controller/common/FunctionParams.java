@@ -93,18 +93,6 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
     private final FxmlLoadService fxmlLoadService;
 
     @Override
-    protected void initialize() {
-        linearityCoefficient.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleLinearityCoefficientFocusChanged(newValue));
-
-        dispersionCoefficient.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleDispersionCoefficientFocusChanged(newValue));
-
-        childFunctionsDeltaCoefficient.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleChildFunctionsDeltaCoefficienFocusChanged(newValue));
-    }
-
-    @Override
     public void postConstruct() {
         timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
         valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
@@ -169,28 +157,25 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
         fxmlLoadService.loadComponent(InterpolationPointsModalWindow.class, this).getWindow().show();
     }
 
-    private void handleLinearityCoefficientFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                interpolationService.updateLinearityCoefficient(getReport(), linearityCoefficient.getValue());
-
-        handleSpinnerLostFocus(focusValue, linearityCoefficient, () ->
-                updateReport(action, nodesToBlockOnUpdate));
+    @FXML
+    public void handleLinearityCoefficientChanged() {
+        updateReport(
+                () -> interpolationService.updateLinearityCoefficient(getReport(), linearityCoefficient.getValue()),
+                nodesToBlockOnUpdate);
     }
 
-    private void handleDispersionCoefficientFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                interpolationService.updateDispersionCoefficient(getReport(), dispersionCoefficient.getValue());
-
-        handleSpinnerLostFocus(focusValue, dispersionCoefficient, () ->
-                updateReport(action, nodesToBlockOnUpdate));
+    @FXML
+    public void handleDispersionCoefficientChanged() {
+        updateReport(
+                () -> interpolationService.updateDispersionCoefficient(getReport(), dispersionCoefficient.getValue()),
+                nodesToBlockOnUpdate);
     }
 
-    private void handleChildFunctionsDeltaCoefficienFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                interpolationService.updateChildFunctionsDeltaCoefficient(getReport(), childFunctionsDeltaCoefficient.getValue());
-
-        handleSpinnerLostFocus(focusValue, childFunctionsDeltaCoefficient, () ->
-                updateReport(action, nodesToBlockOnUpdate));
+    @FXML
+    public void handleChildFunctionsDeltaCoefficientChanged() {
+        updateReport(
+                () -> interpolationService.updateChildFunctionsDeltaCoefficient(getReport(), childFunctionsDeltaCoefficient.getValue()),
+                nodesToBlockOnUpdate);
     }
 
     @Override

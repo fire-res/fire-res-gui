@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.fireres.gui.component.ContextlessSpinner?>
+<?import io.github.fireres.gui.component.FireResSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
@@ -30,8 +30,8 @@
 
             <Label prefHeight="16.0" prefWidth="150.0" text="Время:"/>
 
-            <ContextlessSpinner fx:id="time" amountToStepBy="1" editable="true" initialValue="0"
-                                max="10000" min="0" prefHeight="26.0" prefWidth="100.0" GridPane.columnIndex="1"/>
+            <FireResSpinner fx:id="time" amountToStepBy="1" editable="true" initialValue="0"
+                            max="10000" min="0" prefHeight="26.0" prefWidth="100.0" GridPane.columnIndex="1"/>
 
             <Label prefHeight="16.0" prefWidth="150.0" text="Смещение:" GridPane.rowIndex="1">
                 <GridPane.margin>
@@ -39,13 +39,13 @@
                 </GridPane.margin>
             </Label>
 
-            <ContextlessSpinner fx:id="value" amountToStepBy="1" editable="true" initialValue="0"
-                                max="100000.0" min="-100000.0" prefHeight="26.0" prefWidth="100.0" GridPane.columnIndex="1"
-                                GridPane.rowIndex="1">
+            <FireResSpinner fx:id="value" amountToStepBy="1" editable="true" initialValue="0"
+                            max="100000.0" min="-100000.0" prefHeight="26.0" prefWidth="100.0" GridPane.columnIndex="1"
+                            GridPane.rowIndex="1">
                 <GridPane.margin>
                     <Insets top="15.0"/>
                 </GridPane.margin>
-            </ContextlessSpinner>
+            </FireResSpinner>
 
             <Button prefWidth="100.0" GridPane.columnIndex="0" GridPane.rowIndex="2" text="Добавить" onAction="#addShift">
                 <GridPane.margin>

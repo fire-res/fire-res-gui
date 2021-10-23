@@ -30,7 +30,7 @@
 
             <Label prefHeight="16.0" prefWidth="165.0" text="Базовое давление:" />
 
-            <ContextlessSpinner fx:id="basePressure" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" />
+            <FireResSpinner fx:id="basePressure" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" />
 
             <Label prefWidth="30.0" text="Па" GridPane.columnIndex="2" GridPane.rowIndex="0">
                 <padding>
@@ -44,11 +44,11 @@
                 </GridPane.margin>
             </Label>
 
-            <ContextlessSpinner fx:id="delta" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <FireResSpinner fx:id="delta" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
                 <GridPane.margin>
                     <Insets top="15.0" />
                 </GridPane.margin>
-            </ContextlessSpinner>
+            </FireResSpinner>
 
             <Label prefWidth="15.0" text="Δ" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <padding>
@@ -62,11 +62,11 @@
                 </GridPane.margin>
             </Label>
 
-            <ContextlessSpinner fx:id="dispersionCoefficient" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <FireResSpinner fx:id="dispersionCoefficient" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
                 <GridPane.margin>
                     <Insets top="15.0" />
                 </GridPane.margin>
-            </ContextlessSpinner>
+            </FireResSpinner>
             <VBox.margin>
                 <Insets />
             </VBox.margin>
