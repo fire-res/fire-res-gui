@@ -26,7 +26,10 @@
 
             <Label prefHeight="16.0" prefWidth="165.0" text="Количество термопар:" />
 
-            <ContextlessSpinner fx:id="thermocouples" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" />
+            <FireResSpinner fx:id="thermocouples" editable="true"
+                            prefHeight="26.0" prefWidth="80.0"
+                            GridPane.columnIndex="1"
+                            onLostFocus="#handleThermocouplesCountChanged"/>
 
             <Label prefWidth="30.0" text="шт." GridPane.columnIndex="2" GridPane.rowIndex="0">
                 <padding>
@@ -40,11 +43,14 @@
                 </GridPane.margin>
             </Label>
 
-            <ContextlessSpinner fx:id="bound" editable="true" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <FireResSpinner fx:id="bound" editable="true"
+                            prefHeight="26.0" prefWidth="80.0"
+                            GridPane.columnIndex="1" GridPane.rowIndex="1"
+                            onLostFocus="#handleThermocouplesBoundChanged">
                 <GridPane.margin>
                     <Insets top="15.0" />
                 </GridPane.margin>
-            </ContextlessSpinner>
+            </FireResSpinner>
 
             <Label prefWidth="24.0" text="°C" GridPane.columnIndex="2" GridPane.rowIndex="1">
                 <padding>

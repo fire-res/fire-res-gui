@@ -14,7 +14,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TitledPane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import lombok.SneakyThrows;
 import lombok.val;
 import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
@@ -54,62 +53,47 @@ public class FireModeParams extends AbstractReportUpdaterComponent<TitledPane>
     private final FireModeService fireModeService;
 
     @Override
-    protected void initialize() {
-        thermocouples.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleThermocoupleSpinnerFocusChanged(newValue));
-
-        temperatureMaintaining.focusedProperty().addListener((observableValue, oldValue, newValue) ->
-                handleTemperatureMaintainingSpinnerFocusChanged(newValue));
-
-        showBounds.setOnAction(event -> handleShowBoundsChanged());
-
-        showMeanTemperature.setOnAction(event -> handleShowMeanTemperatureChanged());
-    }
-
-    @Override
     public void postConstruct() {
         fireModeType.getItems().addAll(FireModeType.values());
-
-        fireModeType.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
-                handleFireModeTypeChanged());
     }
 
-    @SneakyThrows
-    private void handleThermocoupleSpinnerFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                fireModeService.updateThermocoupleCount(getReport(), thermocouples.getValue());
-
-        handleSpinnerLostFocus(focusValue, thermocouples, () ->
-                updateReport(action, ((FireMode) getParent()).getParamsVbox()));
+    @FXML
+    public void handleThermocoupleCountChanged() {
+        updateReport(
+                () -> fireModeService.updateThermocoupleCount(getReport(), thermocouples.getValue()),
+                ((FireMode) getParent()).getParamsVbox());
     }
 
-    @SneakyThrows
-    private void handleTemperatureMaintainingSpinnerFocusChanged(Boolean focusValue) {
-        Runnable action = () -> {
+    @FXML
+    public void handleTemperatureMaintainingChanged() {
+        updateReport(() -> {
             val value = temperatureMaintaining.getValue();
 
             fireModeService.updateTemperatureMaintaining(getReport(), value == 0 ? null : value);
-        };
-
-        handleSpinnerLostFocus(focusValue, temperatureMaintaining, () ->
-                updateReport(action, ((FireMode) getParent()).getParamsVbox()));
+        }, ((FireMode) getParent()).getParamsVbox());
     }
 
-    private void handleFireModeTypeChanged() {
+    @FXML
+    public void handleFireModeTypeChanged() {
         if (getReport() != null) {
-            updateReport(() -> fireModeService.updateFireModeType(
-                    getReport(), fireModeType.getValue()), ((FireMode) getParent()).getParamsVbox());
+            updateReport(
+                    () -> fireModeService.updateFireModeType(getReport(), fireModeType.getValue()),
+                    ((FireMode) getParent()).getParamsVbox());
         }
     }
 
-    private void handleShowBoundsChanged() {
-        updateReport(() -> fireModeService.updateShowBounds(
-                getReport(), showBounds.isSelected()), ((FireMode) getParent()).getParamsVbox());
+    @FXML
+    public void handleShowBoundsChanged() {
+        updateReport(
+                () -> fireModeService.updateShowBounds(getReport(), showBounds.isSelected()),
+                ((FireMode) getParent()).getParamsVbox());
     }
 
-    private void handleShowMeanTemperatureChanged() {
-        updateReport(() -> fireModeService.updateShowMeanTemperature(
-                getReport(), showMeanTemperature.isSelected()), ((FireMode) getParent()).getParamsVbox());
+    @FXML
+    public void handleShowMeanTemperatureChanged() {
+        updateReport(
+                () -> fireModeService.updateShowMeanTemperature(getReport(), showMeanTemperature.isSelected()),
+                ((FireMode) getParent()).getParamsVbox());
     }
 
     @Override

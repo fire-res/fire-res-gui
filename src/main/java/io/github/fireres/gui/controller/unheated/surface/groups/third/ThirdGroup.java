@@ -1,13 +1,15 @@
 package io.github.fireres.gui.controller.unheated.surface.groups.third;
 
-import io.github.fireres.core.model.IntegerPoint;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.GenerationProperties;
 import io.github.fireres.excel.report.UnheatedSurfaceExcelReportsBuilder;
+import io.github.fireres.gui.annotation.Initialize;
 import io.github.fireres.gui.component.DataViewer;
-import io.github.fireres.gui.configurer.report.UnheatedSurfaceThirdGroupConfigurer;
+import io.github.fireres.gui.initializer.report.UnheatedSurfaceThirdGroupInitializer;
+import io.github.fireres.gui.preset.impl.UnheatedSurfaceThirdGroupPresetApplier;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
+import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
 import io.github.fireres.gui.controller.Refreshable;
 import io.github.fireres.gui.controller.ReportDataCollector;
@@ -17,7 +19,7 @@ import io.github.fireres.gui.controller.common.FunctionParams;
 import io.github.fireres.gui.controller.common.ReportToolBar;
 import io.github.fireres.gui.controller.unheated.surface.UnheatedSurface;
 import io.github.fireres.gui.controller.unheated.surface.UnheatedSurfaceReportContainer;
-import io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties;
+import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.unheated.surface.report.UnheatedSurfaceReport;
 import io.github.fireres.unheated.surface.service.UnheatedSurfaceThirdGroupService;
 import javafx.fxml.FXML;
@@ -32,7 +34,6 @@ import org.springframework.stereotype.Component;
 
 import java.util.UUID;
 
-import static io.github.fireres.gui.synchronizer.impl.ThirdThermocoupleGroupChartSynchronizer.MAX_THERMOCOUPLE_TEMPERATURE_TEXT;
 import static java.util.Collections.singletonList;
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
@@ -40,8 +41,10 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @RequiredArgsConstructor
 @Component
 @Scope(scopeName = SCOPE_PROTOTYPE)
+@Initialize(UnheatedSurfaceThirdGroupInitializer.class)
 public class ThirdGroup extends AbstractReportUpdaterComponent<TitledPane>
-        implements UnheatedSurfaceReportContainer, Resettable, ReportDataCollector, Refreshable {
+        implements UnheatedSurfaceReportContainer, Resettable,
+        ReportDataCollector, Refreshable, PresetChanger {
 
     @FXML
     @Getter
@@ -65,42 +68,11 @@ public class ThirdGroup extends AbstractReportUpdaterComponent<TitledPane>
     private final UnheatedSurfaceThirdGroupService unheatedSurfaceThirdGroupService;
     private final UnheatedSurfaceExcelReportsBuilder excelReportsBuilder;
     private final GenerationProperties generationProperties;
-    private final UnheatedSurfaceThirdGroupConfigurer thirdGroupConfigurer;
+    private final UnheatedSurfaceThirdGroupPresetApplier thirdGroupConfigurer;
 
     @Override
     public Sample getSample() {
         return ((UnheatedSurface) getParent()).getSample();
-    }
-
-    @Override
-    protected void initialize() {
-        initializeFunctionParams();
-        initializeBoundsShiftParams();
-    }
-
-    private void initializeFunctionParams() {
-        getFunctionParams().setInterpolationService(unheatedSurfaceThirdGroupService);
-
-        getFunctionParams().setPropertiesMapper(props ->
-                props.getReportPropertiesByClass(UnheatedSurfaceProperties.class)
-                        .orElseThrow()
-                        .getThirdGroup()
-                        .getFunctionForm());
-
-        getFunctionParams().setNodesToBlockOnUpdate(singletonList(paramsVbox));
-
-        getFunctionParams().setInterpolationPointConstructor((time, value) -> new IntegerPoint(time, value.intValue()));
-    }
-
-    private void initializeBoundsShiftParams() {
-        getBoundsShiftParams().addBoundShift(
-                MAX_THERMOCOUPLE_TEMPERATURE_TEXT,
-                singletonList(paramsVbox),
-                properties -> ((UnheatedSurfaceProperties) properties).getThirdGroup().getBoundsShift().getMaxAllowedTemperatureShift(),
-                point -> unheatedSurfaceThirdGroupService.addMaxAllowedTemperatureShift(getReport(), (IntegerPoint) point),
-                point -> unheatedSurfaceThirdGroupService.removeMaxAllowedTemperatureShift(getReport(), (IntegerPoint) point),
-                (integer, number) -> new IntegerPoint(integer, number.intValue())
-        );
     }
 
     @Override
@@ -111,11 +83,14 @@ public class ThirdGroup extends AbstractReportUpdaterComponent<TitledPane>
     @Override
     public void reset() {
         updateReport(() -> {
-            thirdGroupConfigurer.config(this,
-                    ((PresetContainer) getParent().getParent()).getPreset());
-
+            changePreset(((PresetContainer) getParent().getParent()).getPreset());
             unheatedSurfaceThirdGroupService.refreshThirdGroup(getReport());
         }, getParamsVbox());
+    }
+
+    @Override
+    public void changePreset(Preset preset) {
+        thirdGroupConfigurer.apply(this, preset);
     }
 
     @Override

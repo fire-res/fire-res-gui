@@ -37,33 +37,18 @@ public class SecondGroupParams extends AbstractReportUpdaterComponent<TitledPane
 
     private final UnheatedSurfaceSecondGroupService unheatedSurfaceSecondGroupService;
 
-    @Override
-    protected void initialize() {
-        thermocouples.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleThermocouplesCountSpinnerFocusChanged(newValue));
-
-        bound.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleThermocouplesBoundSpinnerFocusChanged(newValue));
+    @FXML
+    public void handleThermocouplesCountChanged() {
+        updateReport(
+                () -> unheatedSurfaceSecondGroupService.updateThermocoupleCount(getReport(), thermocouples.getValue()),
+                ((SecondGroup) getParent()).getParamsVbox());
     }
 
-    private void handleThermocouplesCountSpinnerFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                unheatedSurfaceSecondGroupService.updateThermocoupleCount(
-                        getReport(),
-                        thermocouples.getValue());
-
-        handleSpinnerLostFocus(focusValue, thermocouples, () ->
-                updateReport(action, ((SecondGroup) getParent()).getParamsVbox()));
-    }
-
-    private void handleThermocouplesBoundSpinnerFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                unheatedSurfaceSecondGroupService.updateBound(
-                        getReport(),
-                        bound.getValue());
-
-        handleSpinnerLostFocus(focusValue, bound, () ->
-                updateReport(action, ((SecondGroup) getParent()).getParamsVbox()));
+    @FXML
+    public void handleThermocouplesBoundChanged() {
+        updateReport(
+                () -> unheatedSurfaceSecondGroupService.updateBound(getReport(), bound.getValue()),
+                ((SecondGroup) getParent()).getParamsVbox());
     }
 
     @Override

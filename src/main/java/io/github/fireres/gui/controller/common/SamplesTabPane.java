@@ -1,6 +1,7 @@
 package io.github.fireres.gui.controller.common;
 
-import io.github.fireres.gui.configurer.SamplesConfigurer;
+import io.github.fireres.gui.annotation.Initialize;
+import io.github.fireres.gui.initializer.general.SamplesInitializer;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.service.SampleService;
 import javafx.event.Event;
@@ -19,15 +20,10 @@ import java.util.List;
 @FxmlView("samplesTabPane.fxml")
 @RequiredArgsConstructor
 @Component
+@Initialize(SamplesInitializer.class)
 public class SamplesTabPane extends AbstractComponent<TabPane> {
 
-    private final SamplesConfigurer samplesConfigurer;
     private final SampleService sampleService;
-
-    @Override
-    public void postConstruct() {
-        samplesConfigurer.config(this);
-    }
 
     @FXML
     public void addSample(Event event) {

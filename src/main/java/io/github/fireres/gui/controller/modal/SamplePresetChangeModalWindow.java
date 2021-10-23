@@ -39,9 +39,6 @@ public class SamplePresetChangeModalWindow extends AbstractComponent<Pane> {
 
     @Override
     public void postConstruct() {
-        presets.getSelectionModel().selectedItemProperty().addListener((observableValue, preset, t1) ->
-                handleAnotherPresetChosen());
-
         presets.getItems().addAll(presetService.getAvailablePresets());
 
         choosePreset(((PresetContainer) getParent()).getPreset());
@@ -69,7 +66,8 @@ public class SamplePresetChangeModalWindow extends AbstractComponent<Pane> {
         presets.setTooltip(new Tooltip(preset.getDescription()));
     }
 
-    private void handleAnotherPresetChosen() {
+    @FXML
+    public void handleAnotherPresetChosen() {
         choosePreset(presets.getValue());
     }
 }

@@ -7,9 +7,9 @@
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.Label?>
-<?import io.github.fireres.gui.component.ContextlessSpinner?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import io.github.fireres.gui.component.FireResSpinner?>
 <?import javafx.scene.control.CheckBox?>
+<?import io.github.fireres.gui.component.FireResChoiceBox?>
 
 <TitledPane fx:id="component"
             minWidth="322.0"
@@ -37,8 +37,9 @@
 
             <Label prefHeight="16.0" prefWidth="165.0" text="Количество термопар:" GridPane.rowIndex="0"/>
 
-            <ContextlessSpinner fx:id="thermocouples" editable="true" prefHeight="26.0" prefWidth="80.0"
-                                GridPane.columnIndex="1" GridPane.rowIndex="0"/>
+            <FireResSpinner fx:id="thermocouples" editable="true" prefHeight="26.0" prefWidth="80.0"
+                            GridPane.columnIndex="1" GridPane.rowIndex="0"
+                            onLostFocus="#handleThermocoupleCountChanged"/>
 
             <Label prefWidth="30.0" text="шт." GridPane.columnIndex="2" GridPane.rowIndex="0">
                 <padding>
@@ -52,11 +53,14 @@
                 </GridPane.margin>
             </Label>
 
-            <ChoiceBox fx:id="fireModeType" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <FireResChoiceBox fx:id="fireModeType"
+                              prefHeight="26.0" prefWidth="80.0"
+                              GridPane.columnIndex="1" GridPane.rowIndex="1"
+                              onValueSelected="#handleFireModeTypeChanged">
                 <GridPane.margin>
                     <Insets top="15"/>
                 </GridPane.margin>
-            </ChoiceBox>
+            </FireResChoiceBox>
 
             <Label prefHeight="16.0" prefWidth="165.0" text="Поддержание температур:" GridPane.rowIndex="2">
                 <GridPane.margin>
@@ -64,13 +68,14 @@
                 </GridPane.margin>
             </Label>
 
-            <ContextlessSpinner fx:id="temperatureMaintaining" editable="true"
-                                prefHeight="26.0" prefWidth="80.0"
-                                GridPane.columnIndex="1" GridPane.rowIndex="2">
+            <FireResSpinner fx:id="temperatureMaintaining" editable="true"
+                            prefHeight="26.0" prefWidth="80.0"
+                            GridPane.columnIndex="1" GridPane.rowIndex="2"
+                            onLostFocus="#handleTemperatureMaintainingChanged">
                 <GridPane.margin>
                     <Insets top="15"/>
                 </GridPane.margin>
-            </ContextlessSpinner>
+            </FireResSpinner>
 
             <Label prefHeight="16.0" prefWidth="165.0" text="Показывать границы:" GridPane.rowIndex="3">
                 <GridPane.margin>
@@ -80,7 +85,8 @@
 
             <CheckBox fx:id="showBounds"
                       prefHeight="26.0" prefWidth="80.0"
-                      GridPane.columnIndex="1" GridPane.rowIndex="3">
+                      GridPane.columnIndex="1" GridPane.rowIndex="3"
+                      onAction="#handleShowBoundsChanged">
                 <GridPane.margin>
                     <Insets top="15"/>
                 </GridPane.margin>
@@ -94,7 +100,8 @@
 
             <CheckBox fx:id="showMeanTemperature"
                       prefHeight="26.0" prefWidth="80.0"
-                      GridPane.columnIndex="1" GridPane.rowIndex="4">
+                      GridPane.columnIndex="1" GridPane.rowIndex="4"
+                      onAction="#handleShowMeanTemperatureChanged">
                 <GridPane.margin>
                     <Insets top="15"/>
                 </GridPane.margin>

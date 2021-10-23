@@ -3,7 +3,7 @@ package io.github.fireres.gui.controller.modal;
 import io.github.fireres.core.model.Report;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.gui.annotation.ModalWindow;
-import io.github.fireres.gui.component.ContextlessSpinner;
+import io.github.fireres.gui.component.FireResSpinner;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.ReportContainer;
@@ -38,10 +38,10 @@ public class BoundShiftModalWindow extends AbstractReportUpdaterComponent<Pane>
         implements ReportContainer {
 
     @FXML
-    private ContextlessSpinner<Integer> time;
+    private FireResSpinner<Integer> time;
 
     @FXML
-    private ContextlessSpinner<Number> value;
+    private FireResSpinner<Number> value;
 
     @ModalWindow.Window
     @Getter

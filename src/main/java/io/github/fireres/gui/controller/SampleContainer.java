@@ -6,7 +6,4 @@ public interface SampleContainer {
 
     Sample getSample();
 
-    default void generateReports() {
-    }
-
 }

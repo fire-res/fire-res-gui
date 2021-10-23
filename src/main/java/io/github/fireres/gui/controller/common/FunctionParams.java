@@ -6,6 +6,11 @@ import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.FunctionForm;
 import io.github.fireres.core.properties.SampleProperties;
 import io.github.fireres.core.service.InterpolationService;
+import io.github.fireres.gui.annotation.ColumnProperty;
+import io.github.fireres.gui.annotation.ContextMenu;
+import io.github.fireres.gui.annotation.ContextMenu.Handler;
+import io.github.fireres.gui.annotation.ContextMenu.Item;
+import io.github.fireres.gui.annotation.TableContextMenu;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.ReportContainer;
@@ -14,22 +19,16 @@ import io.github.fireres.gui.controller.SampleContainer;
 import io.github.fireres.gui.controller.modal.InterpolationPointsModalWindow;
 import io.github.fireres.gui.service.FxmlLoadService;
 import javafx.application.Platform;
-import javafx.beans.binding.Bindings;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import lombok.val;
 import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -64,14 +63,25 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
 
     @FXML
     @Getter
+    @TableContextMenu(
+            table = @ContextMenu({
+                    @Item(text = "Добавить", handler = "handlePointAddPressed"),
+            }),
+            row = @ContextMenu({
+                    @Item(text = "Добавить", handler = "handlePointAddPressedOnRow"),
+                    @Item(text = "Удалить", handler = "handlePointDeletePressed")
+            })
+    )
     private TableView<Point<?>> interpolationPoints;
 
     @FXML
     @Getter
+    @ColumnProperty("time")
     private TableColumn<Point<?>, Integer> timeColumn;
 
     @FXML
     @Getter
+    @ColumnProperty("value")
     private TableColumn<Point<?>, Integer> valueColumn;
 
     @Getter
@@ -92,105 +102,43 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
 
     private final FxmlLoadService fxmlLoadService;
 
-    @Override
-    protected void initialize() {
-        linearityCoefficient.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleLinearityCoefficientFocusChanged(newValue));
-
-        dispersionCoefficient.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleDispersionCoefficientFocusChanged(newValue));
-
-        childFunctionsDeltaCoefficient.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleChildFunctionsDeltaCoefficienFocusChanged(newValue));
-    }
-
-    @Override
-    public void postConstruct() {
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-
-        initializeTableContextMenu();
-        initializeRowContextMenu();
-    }
-
-    private void initializeTableContextMenu() {
-        val contextMenu = createTableContextMenu();
-
-        interpolationPoints.setContextMenu(contextMenu);
-    }
-
-    private ContextMenu createTableContextMenu() {
-        val contextMenu = new ContextMenu();
-        val addPointMenuItem = new MenuItem("Добавить");
-
-        addPointMenuItem.setOnAction(this::handleRowAddedEvent);
-        contextMenu.getItems().add(addPointMenuItem);
-
-        return contextMenu;
-    }
-
-    private void initializeRowContextMenu() {
-        interpolationPoints.setRowFactory(
-                tableView -> {
-                    val row = new TableRow<Point<?>>();
-                    val contextMenu = createRowContextMenu(row);
-
-                    row.contextMenuProperty().bind(
-                            Bindings.when(row.emptyProperty().not())
-                                    .then(contextMenu)
-                                    .otherwise((ContextMenu) null));
-
-                    return row;
-                });
-    }
-
-    private ContextMenu createRowContextMenu(TableRow<Point<?>> row) {
-        val rowMenu = new ContextMenu();
-        val addPointMenuItem = new MenuItem("Добавить");
-        val removePointMenuItem = new MenuItem("Удалить");
-
-        addPointMenuItem.setOnAction(this::handleRowAddedEvent);
-        removePointMenuItem.setOnAction(event -> handleRowDeletedEvent(row));
-        rowMenu.getItems().addAll(addPointMenuItem, removePointMenuItem);
-
-        return rowMenu;
-    }
-
-    private void handleRowDeletedEvent(TableRow<Point<?>> affectedRow) {
-        Runnable action = () -> {
+    @Handler
+    public void handlePointDeletePressed(TableRow<Point<?>> affectedRow) {
+        updateReport(() -> {
             interpolationService.removeInterpolationPoint(getReport(), affectedRow.getItem());
             Platform.runLater(() -> interpolationPoints.getItems().remove(affectedRow.getItem()));
-        };
-
-        updateReport(action, nodesToBlockOnUpdate);
+        }, nodesToBlockOnUpdate);
     }
 
-    private void handleRowAddedEvent(Event event) {
+    @Handler
+    public void handlePointAddPressedOnRow(TableRow<Point<?>> affectedRow) {
+        handlePointAddPressed();
+    }
+
+    @Handler
+    public void handlePointAddPressed() {
         fxmlLoadService.loadComponent(InterpolationPointsModalWindow.class, this).getWindow().show();
     }
 
-    private void handleLinearityCoefficientFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                interpolationService.updateLinearityCoefficient(getReport(), linearityCoefficient.getValue());
-
-        handleSpinnerLostFocus(focusValue, linearityCoefficient, () ->
-                updateReport(action, nodesToBlockOnUpdate));
+    @FXML
+    public void handleLinearityCoefficientChanged() {
+        updateReport(
+                () -> interpolationService.updateLinearityCoefficient(getReport(), linearityCoefficient.getValue()),
+                nodesToBlockOnUpdate);
     }
 
-    private void handleDispersionCoefficientFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                interpolationService.updateDispersionCoefficient(getReport(), dispersionCoefficient.getValue());
-
-        handleSpinnerLostFocus(focusValue, dispersionCoefficient, () ->
-                updateReport(action, nodesToBlockOnUpdate));
+    @FXML
+    public void handleDispersionCoefficientChanged() {
+        updateReport(
+                () -> interpolationService.updateDispersionCoefficient(getReport(), dispersionCoefficient.getValue()),
+                nodesToBlockOnUpdate);
     }
 
-    private void handleChildFunctionsDeltaCoefficienFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                interpolationService.updateChildFunctionsDeltaCoefficient(getReport(), childFunctionsDeltaCoefficient.getValue());
-
-        handleSpinnerLostFocus(focusValue, childFunctionsDeltaCoefficient, () ->
-                updateReport(action, nodesToBlockOnUpdate));
+    @FXML
+    public void handleChildFunctionsDeltaCoefficientChanged() {
+        updateReport(
+                () -> interpolationService.updateChildFunctionsDeltaCoefficient(getReport(), childFunctionsDeltaCoefficient.getValue()),
+                nodesToBlockOnUpdate);
     }
 
     @Override

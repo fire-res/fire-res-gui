@@ -40,40 +40,25 @@ public class ExcessPressureParams extends AbstractReportUpdaterComponent<TitledP
 
     private final ExcessPressureService excessPressureService;
 
-    @Override
-    protected void initialize() {
-        basePressure.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleBasePressureSpinnerLostFocus(newValue));
-
-        dispersionCoefficient.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleDispersionCoefficientLostFocus(newValue));
-
-        delta.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleDeltaSpinnerLostFocus(newValue));
+    @FXML
+    public void handleBasePressureChanged() {
+        updateReport(
+                () -> excessPressureService.updateBasePressure(getReport(), basePressure.getValue()),
+                ((ExcessPressure) getParent()).getParamsVbox());
     }
 
-    private void handleBasePressureSpinnerLostFocus(Boolean focusValue) {
-        Runnable action = () ->
-                excessPressureService.updateBasePressure(getReport(), basePressure.getValue());
-
-        handleSpinnerLostFocus(focusValue, basePressure, () ->
-                updateReport(action, ((ExcessPressure) getParent()).getParamsVbox()));
+    @FXML
+    public void handleDispersionCoefficientChanged() {
+        updateReport(
+                () -> excessPressureService.updateDispersionCoefficient(getReport(), dispersionCoefficient.getValue()),
+                ((ExcessPressure) getParent()).getParamsVbox());
     }
 
-    private void handleDispersionCoefficientLostFocus(Boolean focusValue) {
-        Runnable action = () ->
-                excessPressureService.updateDispersionCoefficient(getReport(), dispersionCoefficient.getValue());
-
-        handleSpinnerLostFocus(focusValue, dispersionCoefficient, () ->
-                updateReport(action, ((ExcessPressure) getParent()).getParamsVbox()));
-    }
-
-    private void handleDeltaSpinnerLostFocus(Boolean focusValue) {
-        Runnable action = () ->
-                excessPressureService.updateDelta(getReport(), delta.getValue());
-
-        handleSpinnerLostFocus(focusValue, delta, () ->
-                updateReport(action, ((ExcessPressure) getParent()).getParamsVbox()));
+    @FXML
+    public void handleDeltaSpinnerChanged() {
+        updateReport(
+                () -> excessPressureService.updateDelta(getReport(), delta.getValue()),
+                ((ExcessPressure) getParent()).getParamsVbox());
     }
 
     @Override

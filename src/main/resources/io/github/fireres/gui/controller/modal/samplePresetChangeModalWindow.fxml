@@ -8,7 +8,7 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.control.ChoiceBox?>
+<?import io.github.fireres.gui.component.FireResChoiceBox?>
 
 <Pane stylesheets="/io/github/fireres/gui/controller/css/style.css"
       xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1"
@@ -31,7 +31,10 @@
 
             <Label prefHeight="16.0" prefWidth="150.0" text="Пресет:"/>
 
-            <ChoiceBox fx:id="presets" prefHeight="26.0" prefWidth="130.0" GridPane.columnIndex="1"/>
+            <FireResChoiceBox fx:id="presets"
+                              prefHeight="26.0" prefWidth="130.0"
+                              GridPane.columnIndex="1"
+                              onValueSelected="#handleAnotherPresetChosen"/>
 
             <Button prefWidth="130.0" GridPane.columnIndex="0" GridPane.rowIndex="2" text="Изменить"
                     onAction="#changePreset">

@@ -37,33 +37,18 @@ public class ThirdGroupParams extends AbstractReportUpdaterComponent<TitledPane>
 
     private final UnheatedSurfaceThirdGroupService unheatedSurfaceThirdGroupService;
 
-    @Override
-    protected void initialize() {
-        thermocouples.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleThermocouplesCountSpinnerFocusChanged(newValue));
-
-        bound.focusedProperty().addListener((observable, oldValue, newValue) ->
-                handleThermocouplesBoundSpinnerFocusChanged(newValue));
+    @FXML
+    public void handleThermocouplesCountChanged() {
+        updateReport(
+                () -> unheatedSurfaceThirdGroupService.updateThermocoupleCount(getReport(), thermocouples.getValue()),
+                ((ThirdGroup) getParent()).getParamsVbox());
     }
 
-    private void handleThermocouplesCountSpinnerFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                unheatedSurfaceThirdGroupService.updateThermocoupleCount(
-                        getReport(),
-                        thermocouples.getValue());
-
-        handleSpinnerLostFocus(focusValue, thermocouples, () ->
-                updateReport(action, ((ThirdGroup) getParent()).getParamsVbox()));
-    }
-
-    private void handleThermocouplesBoundSpinnerFocusChanged(Boolean focusValue) {
-        Runnable action = () ->
-                unheatedSurfaceThirdGroupService.updateBound(
-                        getReport(),
-                        bound.getValue());
-
-        handleSpinnerLostFocus(focusValue, bound, () ->
-                updateReport(action, ((ThirdGroup) getParent()).getParamsVbox()));
+    @FXML
+    public void handleThermocouplesBoundChanged() {
+        updateReport(
+                () -> unheatedSurfaceThirdGroupService.updateBound(getReport(), bound.getValue()),
+                ((ThirdGroup) getParent()).getParamsVbox());
     }
 
     @Override

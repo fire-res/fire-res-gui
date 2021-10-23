@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import io.github.fireres.gui.component.ContextlessSpinner?>
+<?import io.github.fireres.gui.component.FireResSpinner?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.CheckMenuItem?>
 <?import javafx.scene.control.Label?>
@@ -37,8 +37,8 @@
 
         <Label prefHeight="16.0" prefWidth="60.0" text="Время:"/>
 
-        <ContextlessSpinner fx:id="time" editable="true" prefHeight="26.0" prefWidth="80.0"
-                            GridPane.columnIndex="1"/>
+        <FireResSpinner fx:id="time" editable="true" prefHeight="26.0" prefWidth="80.0"
+                        GridPane.columnIndex="1" onLostFocus="#handleTimeChanged"/>
 
         <Label prefHeight="16.0" prefWidth="183.0" text="Температура окружения:" GridPane.rowIndex="1">
             <GridPane.margin>
@@ -52,12 +52,13 @@
             </padding>
         </Label>
 
-        <ContextlessSpinner fx:id="environmentTemperature" editable="true" prefHeight="26.0"
-                            prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+        <FireResSpinner fx:id="environmentTemperature" editable="true" prefHeight="26.0"
+                        prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1"
+                        onLostFocus="#handleEnvironmentTemperatureChanged">
             <GridPane.margin>
                 <Insets top="15.0"/>
             </GridPane.margin>
-        </ContextlessSpinner>
+        </FireResSpinner>
 
         <Label prefWidth="45.0" text="°C" GridPane.columnIndex="2" GridPane.rowIndex="1">
             <padding>

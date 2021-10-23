@@ -13,7 +13,7 @@ fire-res:
     min-height: 510
     resizable: true
     maximized: true
-  general-properties:
+  general-params:
     env-temperature:
       default-value: 21
       min-value: 0
@@ -22,5 +22,36 @@ fire-res:
       default-value: 50
       min-value: 1
       max-value: 1000
+  function-form:
+    coefficients:
+      min-value: 0
+      max-value: 1
+      increment: 0.01
+  excess-pressure:
+    base-pressure:
+      min-value: 0
+      max-value: 1000
+    dispersion-coefficient:
+      min-value: 0
+      max-value: 1
+      increment: 0.01
+    delta:
+      min-value: 0
+      max-value: 1000
+  fire-mode:
+    thermocouple-count:
+      min-value: 1
+      max-value: 100
+    temperature-maintaining:
+      min-value: 0
+      max-value: 5000
+  heat-flow:
+    sensors:
+      min-value: 1
+      max-value: 100
+    bound:
+      min-value: 0.1
+      max-value: 100
+      increment: 0.1
 
 

@@ -6,11 +6,12 @@ import io.github.fireres.gui.controller.ExtendedComponent;
 import io.github.fireres.gui.service.FxmlLoadService;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
@@ -20,12 +21,18 @@ import java.util.Optional;
 import java.util.function.Consumer;
 
 @Service
-@RequiredArgsConstructor
 @Slf4j
 public class FxmlLoadServiceImpl implements FxmlLoadService {
 
     private final List<AnnotationProcessor> annotationProcessors;
     private final ConfigurableApplicationContext context;
+
+    @Autowired
+    public FxmlLoadServiceImpl(@Lazy List<AnnotationProcessor> annotationProcessors,
+                               ConfigurableApplicationContext context) {
+        this.annotationProcessors = annotationProcessors;
+        this.context = context;
+    }
 
     @Override
     public <C extends ExtendedComponent<?>> C loadComponent(Class<C> componentClass) {
@@ -52,10 +59,19 @@ public class FxmlLoadServiceImpl implements FxmlLoadService {
 
         preConstructAction.accept(component);
         initializeComponentHierarchy(component, parent);
-        annotationProcessors.forEach(processor -> processor.process(component));
+        applyAnnotationProcessors(component);
         callPostConstruct(component);
 
         return component;
+    }
+
+    private <C extends ExtendedComponent<?>> void applyAnnotationProcessors(C component) {
+        component.getChildren().forEach(this::applyAnnotationProcessors);
+
+        if (!component.getMetaData().isAnnotationProcessed()) {
+            annotationProcessors.forEach(processor -> processor.process(component));
+            component.getMetaData().setAnnotationProcessed(true);
+        }
     }
 
     private <C> C load(Class<C> componentClass, String fxml) {
@@ -76,14 +92,21 @@ public class FxmlLoadServiceImpl implements FxmlLoadService {
 
     private <C extends ExtendedComponent<?>> void callPostConstruct(C component) {
         component.getChildren().forEach(this::callPostConstruct);
-        component.postConstruct();
+
+        if (!component.getMetaData().isPostConstructed()) {
+            component.postConstruct();
+            component.getMetaData().setPostConstructed(true);
+        }
     }
 
     @SuppressWarnings({"rawtypes"})
     @SneakyThrows
     private void initializeComponentHierarchy(ExtendedComponent component, ExtendedComponent parent) {
-        initializeFxmlComponentHierarchy(component);
-        addAdditionalParent(component, parent);
+        if (!component.getMetaData().isHierarchyInitialized()) {
+            initializeFxmlComponentHierarchy(component);
+            addAdditionalParent(component, parent);
+            component.getMetaData().setHierarchyInitialized(true);
+        }
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
