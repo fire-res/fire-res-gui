@@ -1,6 +1,8 @@
 package io.github.fireres.gui.controller.common;
 
 import io.github.fireres.core.model.Sample;
+import io.github.fireres.gui.annotation.ContextMenu;
+import io.github.fireres.gui.annotation.ContextMenu.Item;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
@@ -17,10 +19,7 @@ import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.gui.service.FxmlLoadService;
 import io.github.fireres.gui.service.PresetService;
 import io.github.fireres.gui.service.SampleService;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.control.ContextMenu;
-import javafx.scene.control.MenuItem;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import lombok.Getter;
@@ -39,6 +38,11 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @RequiredArgsConstructor
 @Component
 @Scope(scopeName = SCOPE_PROTOTYPE)
+@ContextMenu({
+        @Item(text = "Переименовать", handler = "handleRenamePressed"),
+        @Item(text = "Изменить пресет", handler = "handleChangePresetPressed"),
+        @Item(text = "Сохранить как пресет", handler = "handleSavePressed")
+})
 public class SampleTab extends AbstractComponent<Tab>
         implements SampleContainer, PresetContainer, PresetChanger, Refreshable {
 
@@ -85,7 +89,6 @@ public class SampleTab extends AbstractComponent<Tab>
 
     @Override
     public void postConstruct() {
-        initializeSampleTabContextMenu();
         refresh();
     }
 
@@ -121,38 +124,18 @@ public class SampleTab extends AbstractComponent<Tab>
         getUnheatedSurface().refresh();
     }
 
-    private void initializeSampleTabContextMenu() {
-        val contextMenu = createSampleTabContextMenu();
-
-        getComponent().setContextMenu(contextMenu);
-    }
-
-    private ContextMenu createSampleTabContextMenu() {
-        val contextMenu = new ContextMenu();
-        val addPointMenuItem = new MenuItem("Переименовать");
-        val changePresetMenuItem = new MenuItem("Изменить пресет");
-        val savePresetMenuItem = new MenuItem("Сохранить как пресет");
-
-        addPointMenuItem.setOnAction(this::handleRenameEvent);
-        changePresetMenuItem.setOnAction(this::handleChangePresetEvent);
-        savePresetMenuItem.setOnAction(this::handleSaveEvent);
-
-        contextMenu.getItems().add(addPointMenuItem);
-        contextMenu.getItems().add(changePresetMenuItem);
-        contextMenu.getItems().add(savePresetMenuItem);
-
-        return contextMenu;
-    }
-
-    private void handleChangePresetEvent(Event event) {
+    @ContextMenu.Handler
+    public void handleChangePresetPressed() {
         fxmlLoadService.loadComponent(SamplePresetChangeModalWindow.class, this).getWindow().show();
     }
 
-    private void handleRenameEvent(Event event) {
+    @ContextMenu.Handler
+    public void handleRenamePressed() {
         fxmlLoadService.loadComponent(SampleRenameModalWindow.class, this).getWindow().show();
     }
 
-    private void handleSaveEvent(Event event) {
+    @ContextMenu.Handler
+    public void handleSavePressed() {
         fxmlLoadService.loadComponent(SampleSavePresetModalWindow.class, this).getWindow().show();
     }
 
