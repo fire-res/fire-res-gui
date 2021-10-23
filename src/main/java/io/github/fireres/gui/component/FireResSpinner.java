@@ -29,7 +29,7 @@ public class FireResSpinner<N extends Number> extends Spinner<N> {
 
         @Override
         public String getName() {
-            return "onAction";
+            return "onLostFocus";
         }
     };
 

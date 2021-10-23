@@ -55,9 +55,6 @@ public class FireModeParams extends AbstractReportUpdaterComponent<TitledPane>
     @Override
     public void postConstruct() {
         fireModeType.getItems().addAll(FireModeType.values());
-
-        fireModeType.getSelectionModel().selectedItemProperty().addListener((observableValue, oldValue, newValue) ->
-                handleFireModeTypeChanged());
     }
 
     @FXML
@@ -76,10 +73,12 @@ public class FireModeParams extends AbstractReportUpdaterComponent<TitledPane>
         }, ((FireMode) getParent()).getParamsVbox());
     }
 
-    private void handleFireModeTypeChanged() {
+    @FXML
+    public void handleFireModeTypeChanged() {
         if (getReport() != null) {
-            updateReport(() -> fireModeService.updateFireModeType(
-                    getReport(), fireModeType.getValue()), ((FireMode) getParent()).getParamsVbox());
+            updateReport(
+                    () -> fireModeService.updateFireModeType(getReport(), fireModeType.getValue()),
+                    ((FireMode) getParent()).getParamsVbox());
         }
     }
 

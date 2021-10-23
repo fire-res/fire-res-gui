@@ -1,7 +1,6 @@
 package io.github.fireres.gui.controller;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Spinner;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.SneakyThrows;
@@ -27,6 +26,9 @@ public abstract class AbstractComponent<N> implements ExtendedComponent<N> {
 
     @Getter
     private final List<ExtendedComponent<?>> children = new ArrayList<>();
+
+    @Getter
+    private final ComponentMetaData metaData = new ComponentMetaData();
 
     @SneakyThrows
     @Override

@@ -8,8 +8,8 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.control.Label?>
 <?import io.github.fireres.gui.component.FireResSpinner?>
-<?import javafx.scene.control.ChoiceBox?>
 <?import javafx.scene.control.CheckBox?>
+<?import io.github.fireres.gui.component.FireResChoiceBox?>
 
 <TitledPane fx:id="component"
             minWidth="322.0"
@@ -53,11 +53,14 @@
                 </GridPane.margin>
             </Label>
 
-            <ChoiceBox fx:id="fireModeType" prefHeight="26.0" prefWidth="80.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <FireResChoiceBox fx:id="fireModeType"
+                              prefHeight="26.0" prefWidth="80.0"
+                              GridPane.columnIndex="1" GridPane.rowIndex="1"
+                              onValueSelected="#handleFireModeTypeChanged">
                 <GridPane.margin>
                     <Insets top="15"/>
                 </GridPane.margin>
-            </ChoiceBox>
+            </FireResChoiceBox>
 
             <Label prefHeight="16.0" prefWidth="165.0" text="Поддержание температур:" GridPane.rowIndex="2">
                 <GridPane.margin>

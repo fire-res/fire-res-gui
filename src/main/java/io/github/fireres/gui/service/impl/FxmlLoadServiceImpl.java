@@ -67,7 +67,11 @@ public class FxmlLoadServiceImpl implements FxmlLoadService {
 
     private <C extends ExtendedComponent<?>> void applyAnnotationProcessors(C component) {
         component.getChildren().forEach(this::applyAnnotationProcessors);
-        annotationProcessors.forEach(processor -> processor.process(component));
+
+        if (!component.getMetaData().isAnnotationProcessed()) {
+            annotationProcessors.forEach(processor -> processor.process(component));
+            component.getMetaData().setAnnotationProcessed(true);
+        }
     }
 
     private <C> C load(Class<C> componentClass, String fxml) {
@@ -88,14 +92,21 @@ public class FxmlLoadServiceImpl implements FxmlLoadService {
 
     private <C extends ExtendedComponent<?>> void callPostConstruct(C component) {
         component.getChildren().forEach(this::callPostConstruct);
-        component.postConstruct();
+
+        if (!component.getMetaData().isPostConstructed()) {
+            component.postConstruct();
+            component.getMetaData().setPostConstructed(true);
+        }
     }
 
     @SuppressWarnings({"rawtypes"})
     @SneakyThrows
     private void initializeComponentHierarchy(ExtendedComponent component, ExtendedComponent parent) {
-        initializeFxmlComponentHierarchy(component);
-        addAdditionalParent(component, parent);
+        if (!component.getMetaData().isHierarchyInitialized()) {
+            initializeFxmlComponentHierarchy(component);
+            addAdditionalParent(component, parent);
+            component.getMetaData().setHierarchyInitialized(true);
+        }
     }
 
     @SuppressWarnings({"rawtypes", "unchecked"})
