@@ -4,6 +4,7 @@ import io.github.fireres.core.model.Point;
 import io.github.fireres.core.model.Report;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.ReportProperties;
+import io.github.fireres.gui.annotation.ColumnProperty;
 import io.github.fireres.gui.annotation.ContextMenu;
 import io.github.fireres.gui.annotation.ContextMenu.Item;
 import io.github.fireres.gui.annotation.TableContextMenu;
@@ -47,9 +48,11 @@ public class BoundShift extends AbstractReportUpdaterComponent<TitledPane>
         implements SampleContainer, ReportContainer {
 
     @FXML
+    @ColumnProperty("time")
     private TableColumn<Point<?>, Integer> timeColumn;
 
     @FXML
+    @ColumnProperty("value")
     private TableColumn<Point<?>, Integer> valueColumn;
 
     @FXML
@@ -87,12 +90,6 @@ public class BoundShift extends AbstractReportUpdaterComponent<TitledPane>
     private Function<ReportProperties, io.github.fireres.core.model.BoundShift<?>> propertyMapper;
 
     private final FxmlLoadService fxmlLoadService;
-
-    @Override
-    public void postConstruct() {
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-    }
 
     @ContextMenu.Handler
     public void handlePointAddPressedOnRow(TableRow<Point<?>> row) {

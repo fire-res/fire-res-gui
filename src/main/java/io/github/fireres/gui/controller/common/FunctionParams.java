@@ -6,6 +6,7 @@ import io.github.fireres.core.model.Sample;
 import io.github.fireres.core.properties.FunctionForm;
 import io.github.fireres.core.properties.SampleProperties;
 import io.github.fireres.core.service.InterpolationService;
+import io.github.fireres.gui.annotation.ColumnProperty;
 import io.github.fireres.gui.annotation.ContextMenu;
 import io.github.fireres.gui.annotation.ContextMenu.Handler;
 import io.github.fireres.gui.annotation.ContextMenu.Item;
@@ -25,7 +26,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
@@ -76,10 +76,12 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
 
     @FXML
     @Getter
+    @ColumnProperty("time")
     private TableColumn<Point<?>, Integer> timeColumn;
 
     @FXML
     @Getter
+    @ColumnProperty("value")
     private TableColumn<Point<?>, Integer> valueColumn;
 
     @Getter
@@ -99,12 +101,6 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
     private List<Node> nodesToBlockOnUpdate;
 
     private final FxmlLoadService fxmlLoadService;
-
-    @Override
-    public void postConstruct() {
-        timeColumn.setCellValueFactory(new PropertyValueFactory<>("time"));
-        valueColumn.setCellValueFactory(new PropertyValueFactory<>("value"));
-    }
 
     @Handler
     public void handlePointDeletePressed(TableRow<Point<?>> affectedRow) {
