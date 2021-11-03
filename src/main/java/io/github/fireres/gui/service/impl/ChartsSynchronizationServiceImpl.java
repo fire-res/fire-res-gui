@@ -5,10 +5,9 @@ import io.github.fireres.firemode.report.FireModeReport;
 import io.github.fireres.gui.service.ChartsSynchronizationService;
 import io.github.fireres.gui.synchronizer.impl.ExcessPressureChartSynchronizer;
 import io.github.fireres.gui.synchronizer.impl.FireModeChartSynchronizer;
-import io.github.fireres.gui.synchronizer.impl.FirstThermocoupleGroupChartSynchronizer;
 import io.github.fireres.gui.synchronizer.impl.HeatFlowChartSynchronizer;
-import io.github.fireres.gui.synchronizer.impl.SecondThermocoupleGroupChartSynchronizer;
-import io.github.fireres.gui.synchronizer.impl.ThirdThermocoupleGroupChartSynchronizer;
+import io.github.fireres.gui.synchronizer.impl.PrimaryGroupChartSynchronizer;
+import io.github.fireres.gui.synchronizer.impl.SecondaryGroupChartSynchronizer;
 import io.github.fireres.heatflow.report.HeatFlowReport;
 import io.github.fireres.unheated.surface.report.UnheatedSurfaceReport;
 import javafx.scene.chart.LineChart;
@@ -22,9 +21,8 @@ public class ChartsSynchronizationServiceImpl implements ChartsSynchronizationSe
     private final FireModeChartSynchronizer fireModeChartSynchronizer;
     private final ExcessPressureChartSynchronizer excessPressureChartSynchronizer;
     private final HeatFlowChartSynchronizer heatFlowChartSynchronizer;
-    private final FirstThermocoupleGroupChartSynchronizer firstThermocoupleGroupChartSynchronizer;
-    private final SecondThermocoupleGroupChartSynchronizer secondThermocoupleGroupChartSynchronizer;
-    private final ThirdThermocoupleGroupChartSynchronizer thirdThermocoupleGroupChartSynchronizer;
+    private final PrimaryGroupChartSynchronizer primaryGroupChartSynchronizer;
+    private final SecondaryGroupChartSynchronizer secondaryGroupChartSynchronizer;
 
     @Override
     public void syncFireModeChart(LineChart<Number, Number> chart, FireModeReport report) {
@@ -42,19 +40,13 @@ public class ChartsSynchronizationServiceImpl implements ChartsSynchronizationSe
     }
 
     @Override
-    public void syncFirstThermocoupleGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report) {
-        firstThermocoupleGroupChartSynchronizer.synchronize(chart, report);
+    public void syncPrimaryGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report) {
+        primaryGroupChartSynchronizer.synchronize(chart, report);
     }
 
     @Override
-    public void syncSecondThermocoupleGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report) {
-        secondThermocoupleGroupChartSynchronizer.synchronize(chart, report);
+    public void syncSecondaryGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report) {
+        secondaryGroupChartSynchronizer.synchronize(chart, report);
     }
-
-    @Override
-    public void syncThirdThermocoupleGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report) {
-        thirdThermocoupleGroupChartSynchronizer.synchronize(chart, report);
-    }
-
 
 }

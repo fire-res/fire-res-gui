@@ -1,9 +1,11 @@
 package io.github.fireres.gui.config;
 
 import io.github.fireres.gui.annotation.processor.AnnotationProcessor;
+import io.github.fireres.gui.annotation.processor.ColumnPropertyAnnotationProcessor;
+import io.github.fireres.gui.annotation.processor.ContextMenuAnnotationProcessor;
 import io.github.fireres.gui.annotation.processor.InitializeAnnotationProcessor;
-import io.github.fireres.gui.annotation.processor.GenerateReportAnnotationProcessor;
 import io.github.fireres.gui.annotation.processor.ModalWindowAnnotationProcessor;
+import io.github.fireres.gui.annotation.processor.TableContextMenuAnnotationProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,13 +17,17 @@ public class AnnotationProcessorsConfig {
     @Bean
     public List<AnnotationProcessor> annotationProcessors(
             InitializeAnnotationProcessor initializeAnnotationProcessor,
-            GenerateReportAnnotationProcessor generateReportAnnotationProcessor,
-            ModalWindowAnnotationProcessor modalWindowAnnotationProcessor
+            ModalWindowAnnotationProcessor modalWindowAnnotationProcessor,
+            ContextMenuAnnotationProcessor contextMenuAnnotationProcessor,
+            TableContextMenuAnnotationProcessor tableContextMenuAnnotationProcessor,
+            ColumnPropertyAnnotationProcessor columnPropertyAnnotationProcessor
     ) {
         return List.of(
                 initializeAnnotationProcessor,
-                generateReportAnnotationProcessor,
-                modalWindowAnnotationProcessor
+                modalWindowAnnotationProcessor,
+                contextMenuAnnotationProcessor,
+                tableContextMenuAnnotationProcessor,
+                columnPropertyAnnotationProcessor
         );
     }
 

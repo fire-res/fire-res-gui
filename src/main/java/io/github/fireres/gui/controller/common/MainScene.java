@@ -1,12 +1,12 @@
 package io.github.fireres.gui.controller.common;
 
-import io.github.fireres.core.properties.GenerationProperties;
+import io.github.fireres.core.properties.GeneralProperties;
 import io.github.fireres.core.properties.ReportType;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.controller.AbstractComponent;
 import javafx.fxml.FXML;
 import javafx.scene.layout.BorderPane;
 import lombok.RequiredArgsConstructor;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
@@ -25,11 +25,11 @@ public class MainScene extends AbstractComponent<BorderPane> {
     @FXML
     private SamplesTabPane samplesTabPaneController;
 
-    private final GenerationProperties generationProperties;
+    private final GeneralProperties generalProperties;
 
     @Override
     public void initialize() {
-        generationProperties.getGeneral().getIncludedReports().addAll(Arrays.asList(ReportType.values()));
+        generalProperties.getIncludedReports().addAll(Arrays.asList(ReportType.values()));
     }
 
     public GeneralParams getGeneralParams() {

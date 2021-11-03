@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.component.ScrollPaneWithoutFocus?>
+<?import javafx.scene.layout.VBox?>
+
+<ScrollPaneWithoutFocus fitToWidth="true" fitToHeight="true" hbarPolicy="NEVER"
+                        xmlns="http://javafx.com/javafx/10.0.2-internal"
+                        xmlns:fx="http://javafx.com/fxml/1"
+                        fx:id="component"
+                        fx:controller="io.github.fireres.gui.controller.unheated.surface.UnheatedSurface">
+
+    <VBox focusTraversable="true" fx:id="groups"/>
+</ScrollPaneWithoutFocus>
+
+
+
+
+

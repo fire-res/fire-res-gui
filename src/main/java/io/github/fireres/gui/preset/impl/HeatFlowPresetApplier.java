@@ -25,10 +25,9 @@ public class HeatFlowPresetApplier implements PresetApplier<HeatFlow> {
 
     @Override
     public void apply(HeatFlow heatFlow, Preset preset) {
-        val sampleProperties = heatFlow.getSample().getSampleProperties();
-        val presetProperties = cloner.deepClone(preset.getProperties(HeatFlowProperties.class));
-
-        sampleProperties.putReportProperties(presetProperties);
+        val presetProperties = cloner.deepClone(preset
+                .getHeatFlowProperties()
+                .orElse(new HeatFlowProperties()));
 
         val heatFlowParameters = heatFlow.getHeatFlowParams();
 
@@ -36,6 +35,8 @@ public class HeatFlowPresetApplier implements PresetApplier<HeatFlow> {
         setHeatFlowBound(heatFlowParameters.getBound(), presetProperties);
 
         functionFormApplier.apply(heatFlow.getFunctionParams(), presetProperties.getFunctionForm());
+
+        heatFlow.createReport(presetProperties);
     }
 
     private void setSensorsCount(Spinner<Integer> sensorsCount, HeatFlowProperties properties) {

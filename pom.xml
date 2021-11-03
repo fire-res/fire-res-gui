@@ -64,7 +64,7 @@
         </dependency>
         <dependency>
             <groupId>io.github.fireres</groupId>
-            <artifactId>fire-res-firemode</artifactId>
+            <artifactId>fire-res-fire-mode</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>

@@ -1,8 +1,9 @@
 package io.github.fireres.gui.controller.common;
 
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.Initialize;
-import io.github.fireres.gui.initializer.general.SamplesInitializer;
 import io.github.fireres.gui.controller.AbstractComponent;
+import io.github.fireres.gui.initializer.general.SamplesInitializer;
 import io.github.fireres.gui.service.SampleService;
 import javafx.event.Event;
 import javafx.fxml.FXML;
@@ -11,7 +12,6 @@ import javafx.scene.control.TabPane;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

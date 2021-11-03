@@ -25,16 +25,17 @@ public class ExcessPressurePresetApplier implements PresetApplier<ExcessPressure
 
     @Override
     public void apply(ExcessPressure excessPressure, Preset preset) {
-        val sampleProperties = excessPressure.getSample().getSampleProperties();
-        val presetProperties = cloner.deepClone(preset.getProperties(ExcessPressureProperties.class));
-
-        sampleProperties.putReportProperties(presetProperties);
+        val presetProperties = cloner.deepClone(preset
+                .getExcessPressureProperties()
+                .orElse(new ExcessPressureProperties()));
 
         val excessPressureParams = excessPressure.getExcessPressureParams();
 
         setBasePressure(excessPressureParams.getBasePressure(), presetProperties);
         setDispersionCoefficient(excessPressureParams.getDispersionCoefficient(), presetProperties);
         setDelta(excessPressureParams.getDelta(), presetProperties);
+
+        excessPressure.createReport(presetProperties);
     }
 
     private void setBasePressure(Spinner<Double> basePressure, ExcessPressureProperties properties) {

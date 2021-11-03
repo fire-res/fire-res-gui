@@ -3,13 +3,12 @@ package io.github.fireres.gui.controller.common;
 import io.github.fireres.core.model.Point;
 import io.github.fireres.core.model.Report;
 import io.github.fireres.core.model.Sample;
-import io.github.fireres.core.properties.FunctionForm;
-import io.github.fireres.core.properties.SampleProperties;
 import io.github.fireres.core.service.InterpolationService;
 import io.github.fireres.gui.annotation.ColumnProperty;
 import io.github.fireres.gui.annotation.ContextMenu;
 import io.github.fireres.gui.annotation.ContextMenu.Handler;
 import io.github.fireres.gui.annotation.ContextMenu.Item;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.TableContextMenu;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
@@ -29,14 +28,12 @@ import javafx.scene.control.TitledPane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 import java.util.UUID;
 import java.util.function.BiFunction;
-import java.util.function.Function;
 
 import static org.springframework.beans.factory.config.ConfigurableBeanFactory.SCOPE_PROTOTYPE;
 
@@ -87,10 +84,6 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
     @Getter
     @Setter
     private InterpolationService interpolationService;
-
-    @Getter
-    @Setter
-    private Function<SampleProperties, FunctionForm> propertiesMapper;
 
     @Getter
     @Setter
@@ -152,8 +145,8 @@ public class FunctionParams extends AbstractReportUpdaterComponent<TitledPane>
     }
 
     @Override
-    public UUID getUpdatingElementId() {
-        return ((ReportUpdater) getParent()).getUpdatingElementId();
+    public UUID getReportId() {
+        return ((ReportUpdater) getParent()).getReportId();
     }
 
     @Override

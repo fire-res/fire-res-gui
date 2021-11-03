@@ -17,10 +17,10 @@ import static java.util.Collections.singletonList;
 @Component
 @RequiredArgsConstructor
 public class ExcessPressureInitializer implements Initializer<ExcessPressure> {
-    
+
     private final ExcessPressurePresetApplier presetApplier;
     private final ExcessPressureService excessPressureService;
-    
+
     @Override
     public void initialize(ExcessPressure excessPressure) {
         applyDefaultPreset(excessPressure);

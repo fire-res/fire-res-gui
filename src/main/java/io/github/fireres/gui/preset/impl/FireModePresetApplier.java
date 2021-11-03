@@ -3,6 +3,7 @@ package io.github.fireres.gui.preset.impl;
 import com.rits.cloning.Cloner;
 import io.github.fireres.firemode.model.FireModeType;
 import io.github.fireres.firemode.properties.FireModeProperties;
+import io.github.fireres.gui.component.FireResChoiceBox;
 import io.github.fireres.gui.config.properties.firemode.FireModeTemperatureMaintainingProperties;
 import io.github.fireres.gui.config.properties.firemode.FireModeThermocoupleCountProperties;
 import io.github.fireres.gui.controller.fire.mode.FireMode;
@@ -10,7 +11,6 @@ import io.github.fireres.gui.preset.FunctionFormApplier;
 import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.gui.preset.PresetApplier;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.SpinnerValueFactory;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +28,9 @@ public class FireModePresetApplier implements PresetApplier<FireMode> {
 
     @Override
     public void apply(FireMode fireMode, Preset preset) {
-        val sampleProperties = fireMode.getSample().getSampleProperties();
-        val presetProperties = cloner.deepClone(preset.getProperties(FireModeProperties.class));
-
-        sampleProperties.putReportProperties(presetProperties);
+        val presetProperties = cloner.deepClone(preset
+                .getFireModeProperties()
+                .orElse(new FireModeProperties()));
 
         val fireModeParams = fireMode.getFireModeParams();
 
@@ -42,6 +41,8 @@ public class FireModePresetApplier implements PresetApplier<FireMode> {
         setShowMeanTemperature(fireModeParams.getShowMeanTemperature(), presetProperties);
 
         functionFormApplier.apply(fireMode.getFunctionParams(), presetProperties.getFunctionForm());
+
+        fireMode.createReport(presetProperties);
     }
 
     private void setThermocoupleCount(Spinner<Integer> thermocoupleSpinner, FireModeProperties properties) {
@@ -51,8 +52,8 @@ public class FireModePresetApplier implements PresetApplier<FireMode> {
                 properties.getThermocoupleCount()));
     }
 
-    private void setFireModeType(ChoiceBox<FireModeType> fireModeType, FireModeProperties properties) {
-        fireModeType.getSelectionModel().select(properties.getFireModeType());
+    private void setFireModeType(FireResChoiceBox<FireModeType> fireModeType, FireModeProperties properties) {
+        fireModeType.setValueWithoutListener(properties.getFireModeType());
     }
 
     private void setStandardTemperatureMaintaining(Spinner<Integer> standardTemperatureMaintaining,

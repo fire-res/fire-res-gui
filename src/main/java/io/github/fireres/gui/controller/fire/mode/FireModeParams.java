@@ -4,18 +4,18 @@ import io.github.fireres.core.model.Sample;
 import io.github.fireres.firemode.model.FireModeType;
 import io.github.fireres.firemode.report.FireModeReport;
 import io.github.fireres.firemode.service.FireModeService;
+import io.github.fireres.gui.annotation.FxmlView;
+import io.github.fireres.gui.component.FireResChoiceBox;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.ReportUpdater;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckBox;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Spinner;
 import javafx.scene.control.TitledPane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -44,7 +44,7 @@ public class FireModeParams extends AbstractReportUpdaterComponent<TitledPane>
 
     @FXML
     @Getter
-    private ChoiceBox<FireModeType> fireModeType;
+    private FireResChoiceBox<FireModeType> fireModeType;
 
     @FXML
     @Getter
@@ -75,11 +75,9 @@ public class FireModeParams extends AbstractReportUpdaterComponent<TitledPane>
 
     @FXML
     public void handleFireModeTypeChanged() {
-        if (getReport() != null) {
-            updateReport(
-                    () -> fireModeService.updateFireModeType(getReport(), fireModeType.getValue()),
-                    ((FireMode) getParent()).getParamsVbox());
-        }
+        updateReport(
+                () -> fireModeService.updateFireModeType(getReport(), fireModeType.getValue()),
+                ((FireMode) getParent()).getParamsVbox());
     }
 
     @FXML
@@ -112,7 +110,7 @@ public class FireModeParams extends AbstractReportUpdaterComponent<TitledPane>
     }
 
     @Override
-    public UUID getUpdatingElementId() {
-        return ((ReportUpdater) getParent()).getUpdatingElementId();
+    public UUID getReportId() {
+        return ((ReportUpdater) getParent()).getReportId();
     }
 }

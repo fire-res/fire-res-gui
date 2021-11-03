@@ -25,7 +25,7 @@ public abstract class AbstractReportUpdaterComponent<N>
     @Override
     public void updateReport(Runnable action, List<Node> nodesToLock) {
         reportExecutorService.runTask(ReportTask.builder()
-                .updatingElementId(getUpdatingElementId())
+                .reportId(getReportId())
                 .action(action)
                 .chartContainers(singletonList(getChartContainer()))
                 .nodesToLock(nodesToLock)
