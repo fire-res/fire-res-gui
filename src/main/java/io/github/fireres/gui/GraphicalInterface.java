@@ -1,7 +1,7 @@
 package io.github.fireres.gui;
 
-import io.github.fireres.gui.initializer.general.PrimaryStageInitializer;
 import io.github.fireres.gui.controller.common.MainScene;
+import io.github.fireres.gui.initializer.general.PrimaryStageInitializer;
 import io.github.fireres.gui.service.FxmlLoadService;
 import javafx.scene.Scene;
 import javafx.stage.Stage;

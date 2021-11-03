@@ -2,6 +2,7 @@ package io.github.fireres.gui.controller.modal;
 
 import io.github.fireres.core.model.Report;
 import io.github.fireres.core.model.Sample;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.ModalWindow;
 import io.github.fireres.gui.component.FireResSpinner;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
@@ -19,7 +20,6 @@ import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -83,8 +83,8 @@ public class BoundShiftModalWindow extends AbstractReportUpdaterComponent<Pane>
     }
 
     @Override
-    public UUID getUpdatingElementId() {
-        return ((ReportUpdater) getParent()).getUpdatingElementId();
+    public UUID getReportId() {
+        return ((ReportUpdater) getParent()).getReportId();
     }
 
     @Override

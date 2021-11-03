@@ -34,11 +34,6 @@ public class HeatFlowInitializer implements Initializer<HeatFlow> {
     private void initializeFunctionParams(HeatFlow heatFlow) {
         heatFlow.getFunctionParams().setInterpolationService(heatFlowService);
 
-        heatFlow.getFunctionParams().setPropertiesMapper(props ->
-                props.getReportPropertiesByClass(HeatFlowProperties.class)
-                        .orElseThrow()
-                        .getFunctionForm());
-
         heatFlow.getFunctionParams().setNodesToBlockOnUpdate(singletonList(heatFlow.getParamsVbox()));
 
         heatFlow.getFunctionParams().setInterpolationPointConstructor(

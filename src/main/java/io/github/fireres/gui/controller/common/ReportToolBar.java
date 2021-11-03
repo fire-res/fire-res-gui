@@ -75,7 +75,7 @@ public class ReportToolBar extends AbstractComponent<ToolBar>
         val listener = new ReportUpdateListener() {
             @Override
             public void postUpdate(UUID elementId) {
-                if (elementId.equals(((ReportUpdater) getParent()).getUpdatingElementId())) {
+                if (elementId.equals(((ReportUpdater) getParent()).getReportId())) {
                     Platform.runLater(() -> updateDataViewer(modalWindow));
                 }
             }

@@ -48,7 +48,6 @@ public abstract class AbstractComponent<N> implements ExtendedComponent<N> {
     }
 
 
-
     protected Optional<ExtendedComponent<?>> findFirstComponent(Class<? extends ExtendedComponent<?>> componentClass) {
         val components = findComponents(componentClass);
 
@@ -97,5 +96,10 @@ public abstract class AbstractComponent<N> implements ExtendedComponent<N> {
                 .filter(child -> child.getClass().equals(childClass))
                 .map(child -> (C) child)
                 .collect(Collectors.toList());
+    }
+
+    @Override
+    public <C extends ExtendedComponent<?>> void removeChildren(Class<C> childClass) {
+        children.removeIf(child -> child.getClass().equals(childClass));
     }
 }

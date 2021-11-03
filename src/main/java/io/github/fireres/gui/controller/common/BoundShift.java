@@ -7,6 +7,7 @@ import io.github.fireres.core.properties.ReportProperties;
 import io.github.fireres.gui.annotation.ColumnProperty;
 import io.github.fireres.gui.annotation.ContextMenu;
 import io.github.fireres.gui.annotation.ContextMenu.Item;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.TableContextMenu;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
@@ -23,11 +24,9 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableRow;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TitledPane;
-import javafx.scene.control.cell.PropertyValueFactory;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -124,8 +123,8 @@ public class BoundShift extends AbstractReportUpdaterComponent<TitledPane>
     }
 
     @Override
-    public UUID getUpdatingElementId() {
-        return ((ReportUpdater) getParent()).getUpdatingElementId();
+    public UUID getReportId() {
+        return ((ReportUpdater) getParent()).getReportId();
     }
 
     @Override

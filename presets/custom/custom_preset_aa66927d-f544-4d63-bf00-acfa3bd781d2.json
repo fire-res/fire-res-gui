@@ -1,8 +1,8 @@
 {
   "applyingByDefault" : false,
   "description" : "custom",
-  "properties" : {
-    "io.github.fireres.excess.pressure.properties.ExcessPressureProperties" : {
+  "properties" : [
+    {
       "_class" : "io.github.fireres.excess.pressure.properties.ExcessPressureProperties",
       "delta" : 2.0,
       "basePressure" : 10.0,
@@ -16,7 +16,7 @@
         }
       }
     },
-    "io.github.fireres.heatflow.properties.HeatFlowProperties" : {
+    {
       "_class" : "io.github.fireres.heatflow.properties.HeatFlowProperties",
       "sensorCount" : 3,
       "bound" : 3.5,
@@ -32,57 +32,66 @@
         }
       }
     },
-    "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties" : {
+    {
       "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
-      "firstGroup" : {
-        "thermocoupleCount" : 3,
-        "functionForm" : {
-          "interpolationPoints" : [ ],
-          "linearityCoefficient" : 1.0,
-          "dispersionCoefficient" : 0.0,
-          "childFunctionsDeltaCoefficient" : 0.25
-        },
-        "boundsShift" : {
-          "maxAllowedMeanTemperatureShift" : {
-            "points" : [ ]
-          },
-          "maxAllowedThermocoupleTemperatureShift" : {
-            "points" : [ ]
-          }
-        }
+      "type": "PRIMARY",
+      "thermocoupleCount" : 3,
+      "functionForm" : {
+        "interpolationPoints" : [ ],
+        "linearityCoefficient" : 1.0,
+        "dispersionCoefficient" : 0.0,
+        "childFunctionsDeltaCoefficient" : 0.25
       },
-      "secondGroup" : {
-        "bound" : 300,
-        "thermocoupleCount" : 3,
-        "functionForm" : {
-          "interpolationPoints" : [ ],
-          "linearityCoefficient" : 1.0,
-          "dispersionCoefficient" : 0.0,
-          "childFunctionsDeltaCoefficient" : 0.25
+      "boundsShift" : {
+        "maxAllowedMeanTemperatureShift" : {
+          "points" : [ ]
         },
-        "boundsShift" : {
-          "maxAllowedTemperatureShift" : {
-            "points" : [ ]
-          }
-        }
-      },
-      "thirdGroup" : {
-        "bound" : 300,
-        "thermocoupleCount" : 3,
-        "functionForm" : {
-          "interpolationPoints" : [ ],
-          "linearityCoefficient" : 1.0,
-          "dispersionCoefficient" : 0.0,
-          "childFunctionsDeltaCoefficient" : 0.25
-        },
-        "boundsShift" : {
-          "maxAllowedTemperatureShift" : {
-            "points" : [ ]
-          }
+        "maxAllowedThermocoupleTemperatureShift" : {
+          "points" : [ ]
         }
       }
     },
-    "io.github.fireres.firemode.properties.FireModeProperties" : {
+    {
+      "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
+      "type": "SECONDARY",
+      "bound" : 300,
+      "thermocoupleCount" : 3,
+      "functionForm" : {
+        "interpolationPoints" : [ ],
+        "linearityCoefficient" : 1.0,
+        "dispersionCoefficient" : 0.0,
+        "childFunctionsDeltaCoefficient" : 0.25
+      },
+      "boundsShift" : {
+        "maxAllowedMeanTemperatureShift" : {
+          "points" : [ ]
+        },
+        "maxAllowedThermocoupleTemperatureShift" : {
+          "points" : [ ]
+        }
+      }
+    },
+    {
+      "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
+      "type": "SECONDARY",
+      "bound" : 300,
+      "thermocoupleCount" : 3,
+      "functionForm" : {
+        "interpolationPoints" : [ ],
+        "linearityCoefficient" : 1.0,
+        "dispersionCoefficient" : 0.0,
+        "childFunctionsDeltaCoefficient" : 0.25
+      },
+      "boundsShift" : {
+        "maxAllowedMeanTemperatureShift" : {
+          "points" : [ ]
+        },
+        "maxAllowedThermocoupleTemperatureShift" : {
+          "points" : [ ]
+        }
+      }
+    },
+    {
       "_class" : "io.github.fireres.firemode.properties.FireModeProperties",
       "thermocoupleCount" : 3,
       "functionForm" : {
@@ -104,5 +113,5 @@
       "showBounds" : true,
       "showMeanTemperature" : true
     }
-  }
+  ]
 }

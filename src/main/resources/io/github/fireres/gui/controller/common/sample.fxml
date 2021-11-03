@@ -18,7 +18,7 @@
                 <AnchorPane focusTraversable="true" prefHeight="625.0">
                     <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <fx:include fx:id="fireMode" source="../fire-mode/fireMode.fxml"/>
+                        <fx:include fx:id="fireMode" source="../fire/mode/fireMode.fxml"/>
                     </VBox>
                 </AnchorPane>
             </Tab>
@@ -26,7 +26,7 @@
                 <AnchorPane focusTraversable="true" prefHeight="625.0">
                     <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <fx:include fx:id="excessPressure" source="../excess-pressure/excessPressure.fxml"/>
+                        <fx:include fx:id="excessPressure" source="../excess/pressure/excessPressure.fxml"/>
                     </VBox>
                 </AnchorPane>
             </Tab>
@@ -34,7 +34,7 @@
                 <AnchorPane focusTraversable="true" prefHeight="625.0">
                     <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <fx:include fx:id="heatFlow" source="../heat-flow/heatFlow.fxml"/>
+                        <fx:include fx:id="heatFlow" source="../heat/flow/heatFlow.fxml"/>
                     </VBox>
                 </AnchorPane>
             </Tab>
@@ -42,7 +42,7 @@
                 <AnchorPane focusTraversable="true" prefHeight="625.0">
                     <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
                           AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-                        <fx:include fx:id="unheatedSurface" source="../unheated-surface/unheatedSurface.fxml"/>
+                        <fx:include fx:id="unheatedSurface" source="../unheated/surface/unheatedSurface.fxml"/>
                     </VBox>
                 </AnchorPane>
             </Tab>

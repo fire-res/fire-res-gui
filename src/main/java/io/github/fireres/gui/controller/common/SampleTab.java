@@ -3,6 +3,7 @@ package io.github.fireres.gui.controller.common;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.gui.annotation.ContextMenu;
 import io.github.fireres.gui.annotation.ContextMenu.Item;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
@@ -27,7 +28,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -86,11 +86,6 @@ public class SampleTab extends AbstractComponent<Tab>
     private final SampleService sampleService;
     private final FxmlLoadService fxmlLoadService;
     private final PresetService presetService;
-
-    @Override
-    public void postConstruct() {
-        refresh();
-    }
 
     @Override
     public void changePreset(Preset preset) {

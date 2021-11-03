@@ -1,6 +1,7 @@
 package io.github.fireres.gui.controller.common;
 
 import io.github.fireres.gui.FireResJavaFxApplication;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.modal.AboutProgramModalWindow;
 import io.github.fireres.gui.controller.modal.export.ExportModalWindow;
@@ -8,7 +9,6 @@ import io.github.fireres.gui.service.FxmlLoadService;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuBar;
 import lombok.RequiredArgsConstructor;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.stereotype.Component;
 
 @FxmlView("topMenuBar.fxml")

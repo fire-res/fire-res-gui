@@ -2,6 +2,7 @@ package io.github.fireres.gui.controller.excess.pressure;
 
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.excess.pressure.report.ExcessPressureReport;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.service.ChartsSynchronizationService;
@@ -9,7 +10,6 @@ import javafx.fxml.FXML;
 import javafx.scene.chart.LineChart;
 import javafx.scene.layout.StackPane;
 import lombok.RequiredArgsConstructor;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

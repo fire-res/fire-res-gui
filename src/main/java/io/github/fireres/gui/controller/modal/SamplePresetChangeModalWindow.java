@@ -1,20 +1,21 @@
 package io.github.fireres.gui.controller.modal;
 
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.ModalWindow;
+import io.github.fireres.gui.component.FireResChoiceBox;
 import io.github.fireres.gui.controller.AbstractComponent;
-import io.github.fireres.gui.controller.PresetChanger;
 import io.github.fireres.gui.controller.PresetContainer;
+import io.github.fireres.gui.controller.common.SampleTab;
 import io.github.fireres.gui.preset.Preset;
 import io.github.fireres.gui.service.AlertService;
 import io.github.fireres.gui.service.PresetService;
 import javafx.fxml.FXML;
-import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import io.github.fireres.gui.annotation.FxmlView;
+import lombok.val;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -32,7 +33,7 @@ public class SamplePresetChangeModalWindow extends AbstractComponent<Pane> {
     private Stage window;
 
     @FXML
-    public ChoiceBox<Preset> presets;
+    public FireResChoiceBox<Preset> presets;
 
     private final AlertService alertService;
     private final PresetService presetService;
@@ -58,7 +59,10 @@ public class SamplePresetChangeModalWindow extends AbstractComponent<Pane> {
     }
 
     private void handlePresetChangeConfirmed() {
-        ((PresetChanger) getParent()).changePreset(presets.getValue());
+        val sampleTab = (SampleTab) getParent();
+
+        sampleTab.getSample().removeAllReports();
+        sampleTab.changePreset(presets.getValue());
     }
 
     private void choosePreset(Preset preset) {

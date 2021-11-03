@@ -14,10 +14,8 @@ public interface ChartsSynchronizationService {
 
     void syncHeatFlowChart(LineChart<Number, Number> chart, HeatFlowReport report);
 
-    void syncFirstThermocoupleGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report);
+    void syncPrimaryGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report);
 
-    void syncSecondThermocoupleGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report);
-
-    void syncThirdThermocoupleGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report);
+    void syncSecondaryGroupChart(LineChart<Number, Number> chart, UnheatedSurfaceReport report);
 
 }

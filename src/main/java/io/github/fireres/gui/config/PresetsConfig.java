@@ -49,7 +49,7 @@ public class PresetsConfig {
                     try {
                         return objectMapper.readValue(presetFile, Preset.class);
                     } catch (IOException e) {
-                        throw new RuntimeException(e);
+                        throw new RuntimeException("Can't load preset: " + presetFile.getAbsolutePath(), e);
                     }
                 })
                 .collect(Collectors.toList());

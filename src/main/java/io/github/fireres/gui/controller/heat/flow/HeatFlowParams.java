@@ -1,6 +1,7 @@
 package io.github.fireres.gui.controller.heat.flow;
 
 import io.github.fireres.core.model.Sample;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.controller.AbstractReportUpdaterComponent;
 import io.github.fireres.gui.controller.ChartContainer;
 import io.github.fireres.gui.controller.ReportUpdater;
@@ -11,7 +12,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TitledPane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -66,7 +66,7 @@ public class HeatFlowParams extends AbstractReportUpdaterComponent<TitledPane>
     }
 
     @Override
-    public UUID getUpdatingElementId() {
-        return ((ReportUpdater) getParent()).getUpdatingElementId();
+    public UUID getReportId() {
+        return ((ReportUpdater) getParent()).getReportId();
     }
 }

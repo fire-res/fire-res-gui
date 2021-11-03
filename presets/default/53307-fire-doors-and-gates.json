@@ -1,11 +1,11 @@
 {
   "description": "Противопожарные двери и ворота (метод испытания на огнестойкость)",
   "applyingByDefault": true,
-  "properties": {
-    "io.github.fireres.firemode.properties.FireModeProperties" : {
+  "properties": [
+    {
       "thermocoupleCount": 3,
       "fireModeType": "LOG",
       "_class": "io.github.fireres.firemode.properties.FireModeProperties"
     }
-  }
+  ]
 }

@@ -1,5 +1,6 @@
 package io.github.fireres.gui.controller.modal;
 
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.ModalWindow;
 import io.github.fireres.gui.component.DataViewer;
 import io.github.fireres.gui.controller.AbstractComponent;
@@ -7,7 +8,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import lombok.Getter;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 

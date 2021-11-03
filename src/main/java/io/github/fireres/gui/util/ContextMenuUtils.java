@@ -12,8 +12,8 @@ import java.lang.reflect.Method;
 public class ContextMenuUtils {
 
     public static javafx.scene.control.ContextMenu buildContextMenu(ContextMenu annotation,
-                                                              ExtendedComponent<?> component,
-                                                              Object... invocationParameters) {
+                                                                    ExtendedComponent<?> component,
+                                                                    Object... invocationParameters) {
 
         val items = annotation.value();
         val contextMenu = new javafx.scene.control.ContextMenu();

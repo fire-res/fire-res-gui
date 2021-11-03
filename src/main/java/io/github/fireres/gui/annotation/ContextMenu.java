@@ -23,5 +23,6 @@ public @interface ContextMenu {
 
     @Target(ElementType.METHOD)
     @Retention(RetentionPolicy.RUNTIME)
-    @interface Handler {}
+    @interface Handler {
+    }
 }

@@ -1,16 +1,11 @@
 package io.github.fireres.gui.service.impl;
 
 import io.github.fireres.core.model.Sample;
-import io.github.fireres.core.properties.GenerationProperties;
 import io.github.fireres.core.properties.SampleProperties;
-import io.github.fireres.excess.pressure.properties.ExcessPressureProperties;
-import io.github.fireres.firemode.properties.FireModeProperties;
 import io.github.fireres.gui.controller.common.SampleTab;
 import io.github.fireres.gui.controller.common.SamplesTabPane;
 import io.github.fireres.gui.service.FxmlLoadService;
 import io.github.fireres.gui.service.SampleService;
-import io.github.fireres.heatflow.properties.HeatFlowProperties;
-import io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties;
 import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import lombok.RequiredArgsConstructor;
@@ -21,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
+import java.util.stream.Collectors;
 
 @Slf4j
 @Service
@@ -31,58 +27,43 @@ public class SampleServiceImpl implements SampleService {
 
     private final AtomicInteger sampleCounter = new AtomicInteger(0);
 
-    private final GenerationProperties generationProperties;
     private final FxmlLoadService fxmlLoadService;
 
-
     @Override
-    public void createNewSample(SamplesTabPane samplesTabPaneController) {
-        val samplesProperties = generationProperties.getSamples();
-        val samplesTabPane = samplesTabPaneController.getComponent();
+    public void createNewSample(SamplesTabPane samplesTabPane) {
+        val samplesTabPaneComponent = samplesTabPane.getComponent();
+        val sampleName = createSampleName(samplesTabPane);
 
-        val newSampleProperties = initializeProperties();
-
-        samplesProperties.add(newSampleProperties);
-
-        val sampleName = createSampleName(samplesProperties);
-        val newTab = createSampleTab(samplesTabPaneController, newSampleProperties, sampleName);
+        val newSampleProperties = new SampleProperties();
 
         newSampleProperties.setName(sampleName);
-        samplesTabPane.getTabs().add(samplesTabPane.getTabs().size() - 1, newTab);
-        samplesTabPane.getSelectionModel().select(newTab);
+
+        val newTab = createSampleTab(samplesTabPane, newSampleProperties, sampleName);
+
+        samplesTabPaneComponent.getTabs().add(samplesTabPaneComponent.getTabs().size() - 1, newTab);
+        samplesTabPaneComponent.getSelectionModel().select(newTab);
     }
 
-    private SampleProperties initializeProperties() {
-        val sampleProperties = new SampleProperties();
-
-        sampleProperties.putReportProperties(new FireModeProperties());
-        sampleProperties.putReportProperties(new ExcessPressureProperties());
-        sampleProperties.putReportProperties(new HeatFlowProperties());
-        sampleProperties.putReportProperties(new UnheatedSurfaceProperties());
-
-        return sampleProperties;
-    }
-
-    private String createSampleName(List<SampleProperties> samples) {
+    private String createSampleName(SamplesTabPane samplesTabPane) {
         var name = String.format(SAMPLE_NAME_TEMPLATE, sampleCounter.incrementAndGet());
+        val sampleNames = samplesTabPane.getSampleTabs().stream()
+                .map(tab -> tab.getSample().getSampleProperties().getName())
+                .collect(Collectors.toList());
 
-        while (sampleNameAlreadyExists(name, samples)) {
+        while (sampleNameAlreadyExists(name, sampleNames)) {
             name = String.format(SAMPLE_NAME_TEMPLATE, sampleCounter.incrementAndGet());
         }
 
         return name;
     }
 
-    private boolean sampleNameAlreadyExists(String name, List<SampleProperties> samples) {
-        return samples.stream().anyMatch(sample -> name.equals(sample.getName()));
+    private boolean sampleNameAlreadyExists(String name, List<String> samplesNames) {
+        return samplesNames.stream().anyMatch(name::equals);
     }
 
     @Override
     public void closeSample(SamplesTabPane samplesTabPane, SampleTab closedSampleTab) {
-        val sampleId = closedSampleTab.getSample().getId();
-
         samplesTabPane.getChildren().removeIf(tab -> tab.equals(closedSampleTab));
-        generationProperties.getSamples().removeIf(sample -> sample.getId().equals(sampleId));
 
         if (samplesTabPane.getComponent().getTabs().size() == 2) {
             samplesTabPane.getComponent().setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);

@@ -1,10 +1,11 @@
 package io.github.fireres.gui.controller.common;
 
-import io.github.fireres.core.properties.GenerationProperties;
+import io.github.fireres.core.properties.GeneralProperties;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.Initialize;
-import io.github.fireres.gui.initializer.general.GeneralParametersInitializer;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.ReportInclusionChanger;
+import io.github.fireres.gui.initializer.general.GeneralParametersInitializer;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.CheckMenuItem;
@@ -12,7 +13,6 @@ import javafx.scene.control.Spinner;
 import javafx.scene.control.TitledPane;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.stereotype.Component;
 
 import java.util.function.Function;
@@ -31,18 +31,18 @@ public class GeneralParams extends AbstractComponent<TitledPane> {
     @Getter
     private Spinner<Integer> environmentTemperature;
 
-    private final GenerationProperties generationProperties;
+    private final GeneralProperties generalProperties;
 
     @FXML
     public void handleTimeChanged() {
-        generationProperties.getGeneral().setTime(time.getValue() + 1);
+        generalProperties.setTime(time.getValue() + 1);
 
         findComponents(SampleTab.class).forEach(SampleTab::refresh);
     }
 
     @FXML
     public void handleEnvironmentTemperatureChanged() {
-        generationProperties.getGeneral().setEnvironmentTemperature(environmentTemperature.getValue());
+        generalProperties.setEnvironmentTemperature(environmentTemperature.getValue());
 
         findComponents(SampleTab.class).forEach(SampleTab::refresh);
     }

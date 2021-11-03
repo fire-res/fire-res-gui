@@ -17,10 +17,10 @@ import static java.util.Collections.singletonList;
 @Component
 @RequiredArgsConstructor
 public class FireModeInitializer implements Initializer<FireMode> {
-    
+
     private final FireModePresetApplier presetApplier;
     private final FireModeService fireModeService;
-    
+
     @Override
     public void initialize(FireMode fireMode) {
         applyDefaultPreset(fireMode);
@@ -34,11 +34,6 @@ public class FireModeInitializer implements Initializer<FireMode> {
 
     private void initializeFunctionParams(FireMode fireMode) {
         fireMode.getFunctionParams().setInterpolationService(fireModeService);
-
-        fireMode.getFunctionParams().setPropertiesMapper(props ->
-                props.getReportPropertiesByClass(FireModeProperties.class)
-                        .orElseThrow()
-                        .getFunctionForm());
 
         fireMode.getFunctionParams().setNodesToBlockOnUpdate(singletonList(fireMode.getParamsVbox()));
 

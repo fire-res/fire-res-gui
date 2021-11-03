@@ -17,7 +17,7 @@ import java.util.UUID;
 @Builder
 public class ReportTask {
 
-    private UUID updatingElementId;
+    private UUID reportId;
 
     private List<ChartContainer> chartContainers;
 

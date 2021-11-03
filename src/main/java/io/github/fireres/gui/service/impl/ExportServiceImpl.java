@@ -1,7 +1,6 @@
 package io.github.fireres.gui.service.impl;
 
 import io.github.fireres.core.model.Sample;
-import io.github.fireres.core.properties.GenerationProperties;
 import io.github.fireres.excel.ReportConstructor;
 import io.github.fireres.gui.service.ExportService;
 import lombok.RequiredArgsConstructor;
@@ -16,13 +15,12 @@ import java.util.List;
 public class ExportServiceImpl implements ExportService {
 
     private final ReportConstructor reportConstructor;
-    private final GenerationProperties generationProperties;
 
     @Override
     public void exportReports(Path path, String filename, List<Sample> samples) {
         val outputFile = path.resolve(filename + ".xlsx").toFile();
 
-        reportConstructor.construct(generationProperties.getGeneral(), samples, outputFile);
+        reportConstructor.construct(samples, outputFile);
     }
 
 }

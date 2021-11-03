@@ -2,6 +2,7 @@ package io.github.fireres.gui.controller.modal;
 
 import com.rits.cloning.Cloner;
 import io.github.fireres.core.model.Sample;
+import io.github.fireres.gui.annotation.FxmlView;
 import io.github.fireres.gui.annotation.ModalWindow;
 import io.github.fireres.gui.controller.AbstractComponent;
 import io.github.fireres.gui.controller.SampleContainer;
@@ -19,7 +20,6 @@ import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
 import lombok.extern.slf4j.Slf4j;
 import lombok.val;
-import io.github.fireres.gui.annotation.FxmlView;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -72,7 +72,7 @@ public class SampleSavePresetModalWindow extends AbstractComponent<Pane> impleme
             presetService.savePreset(Preset.builder()
                     .applyingByDefault(false)
                     .description(descriptionTextField.getText())
-                    .properties(cloner.deepClone(getSample().getSampleProperties().getPropertiesMap()))
+                    .properties(cloner.deepClone(getSample().getReportProperties()))
                     .build());
             closeWindow();
         }

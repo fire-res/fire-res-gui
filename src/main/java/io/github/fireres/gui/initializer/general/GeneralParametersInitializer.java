@@ -1,6 +1,6 @@
 package io.github.fireres.gui.initializer.general;
 
-import io.github.fireres.core.properties.GenerationProperties;
+import io.github.fireres.core.properties.GeneralProperties;
 import io.github.fireres.gui.config.properties.general.EnvTemperatureProperties;
 import io.github.fireres.gui.config.properties.general.TimeProperties;
 import io.github.fireres.gui.controller.common.GeneralParams;
@@ -13,10 +13,10 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class GeneralParametersInitializer implements Initializer<GeneralParams> {
-    
+
     private final EnvTemperatureProperties envTemperatureProperties;
     private final TimeProperties timeProperties;
-    private final GenerationProperties generationProperties;
+    private final GeneralProperties generalProperties;
 
     @Override
     public void initialize(GeneralParams generalParams) {
@@ -25,7 +25,7 @@ public class GeneralParametersInitializer implements Initializer<GeneralParams> 
     }
 
     private void initializeTime(Spinner<Integer> time) {
-        generationProperties.getGeneral().setTime(timeProperties.getDefaultValue() + 1);
+        generalProperties.setTime(timeProperties.getDefaultValue() + 1);
 
         time.setValueFactory(new IntegerSpinnerValueFactory(
                 timeProperties.getMinValue(),
@@ -34,8 +34,7 @@ public class GeneralParametersInitializer implements Initializer<GeneralParams> 
     }
 
     private void initializeEnvironmentTemperature(Spinner<Integer> environmentTemperature) {
-        generationProperties.getGeneral()
-                .setEnvironmentTemperature(envTemperatureProperties.getDefaultValue());
+        generalProperties.setEnvironmentTemperature(envTemperatureProperties.getDefaultValue());
 
         environmentTemperature.setValueFactory(new IntegerSpinnerValueFactory(
                 envTemperatureProperties.getMinValue(),

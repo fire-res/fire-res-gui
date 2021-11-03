@@ -13,6 +13,6 @@ public interface ReportUpdater {
 
     ChartContainer getChartContainer();
 
-    UUID getUpdatingElementId();
+    UUID getReportId();
 
 }

@@ -81,6 +81,7 @@ public class FireResSpinner<N extends Number> extends Spinner<N> {
         onLostFocusProperty().set(value);
 
     }
+
     public final EventHandler<ActionEvent> getOnLostFocus() {
         return onLostFocusProperty().get();
     }

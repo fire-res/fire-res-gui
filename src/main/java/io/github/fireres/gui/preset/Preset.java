@@ -1,15 +1,20 @@
 package io.github.fireres.gui.preset;
 
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.github.fireres.core.properties.ReportProperties;
+import io.github.fireres.excess.pressure.properties.ExcessPressureProperties;
+import io.github.fireres.firemode.properties.FireModeProperties;
+import io.github.fireres.heatflow.properties.HeatFlowProperties;
+import io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.SneakyThrows;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Data
 @NoArgsConstructor
@@ -22,25 +27,46 @@ public class Preset {
 
     private String description;
 
-    @JsonDeserialize(keyUsing = PresetPropertiesKeyDeserializer.class)
     @Builder.Default
-    private Map<Class<? extends ReportProperties>, ReportProperties> properties = new HashMap<>();
-
-    public <T extends ReportProperties> T getProperties(Class<T> propertiesClass) {
-        if (properties.containsKey(propertiesClass)) {
-            return (T) properties.get(propertiesClass);
-        } else {
-            return getDefaultProperties(propertiesClass);
-        }
-    }
-
-    @SneakyThrows
-    private <T extends ReportProperties> T getDefaultProperties(Class<T> propertiesClass) {
-        return propertiesClass.getDeclaredConstructor(new Class[]{}).newInstance();
-    }
+    private List<ReportProperties> properties = new ArrayList<>();
 
     @Override
     public String toString() {
         return getDescription();
     }
+
+    @JsonIgnore
+    public Optional<FireModeProperties> getFireModeProperties() {
+        return findFirst(FireModeProperties.class);
+    }
+
+    @JsonIgnore
+    public Optional<ExcessPressureProperties> getExcessPressureProperties() {
+        return findFirst(ExcessPressureProperties.class);
+    }
+
+    @JsonIgnore
+    public Optional<HeatFlowProperties> getHeatFlowProperties() {
+        return findFirst(HeatFlowProperties.class);
+    }
+
+    @JsonIgnore
+    public List<UnheatedSurfaceProperties> getUnheatedSurfaceProperties() {
+        return findAll(UnheatedSurfaceProperties.class);
+    }
+
+    private <P extends ReportProperties> List<P> findAll(Class<P> propertiesClass) {
+        return properties.stream()
+                .filter(p -> p.getClass().equals(propertiesClass))
+                .map(p -> (P) p)
+                .collect(Collectors.toList());
+    }
+
+    private <P extends ReportProperties> Optional<P> findFirst(Class<P> propertiesClass) {
+        return properties.stream()
+                .filter(p -> p.getClass().equals(propertiesClass))
+                .map(p -> (P) p)
+                .findFirst();
+    }
+
 }

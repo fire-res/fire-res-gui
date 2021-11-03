@@ -18,7 +18,7 @@ import java.util.Map;
 public class ReportCreatorsConfig {
 
     @Bean
-    public Map<Class<?>, ReportCreatorService<?>> reportCreators(
+    public Map<Class<?>, ReportCreatorService<?, ?>> reportCreators(
             FireModeService fireModeService,
             ExcessPressureService excessPressureService,
             HeatFlowService heatFlowService,

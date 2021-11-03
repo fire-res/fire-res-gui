@@ -14,6 +14,8 @@ public interface ExtendedComponent<N> extends Controller {
 
     <C extends ExtendedComponent<?>> List<C> getChildren(Class<C> childClass);
 
+    <C extends ExtendedComponent<?>> void removeChildren(Class<C> childClass);
+
     ComponentMetaData getMetaData();
 
 }
