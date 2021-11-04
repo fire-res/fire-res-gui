@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.TitledPane?>
+<?import javafx.scene.layout.VBox?>
+
+<CheckBox alignment="TOP_CENTER" contentDisplay="CENTER" mnemonicParsing="false" selected="true"
+          xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+          fx:id="component"
+          fx:controller="io.github.fireres.gui.framework.controller.modal.export.ExportSample"
+          onAction="#changeSampleInclusion">
+    <graphic>
+        <TitledPane fx:id="titledPane" expanded="false" text="Образец 1">
+            <VBox>
+                <Label alignment="CENTER" text="Имя файла">
+                    <VBox.margin>
+                        <Insets/>
+                    </VBox.margin>
+                </Label>
+                <TextField fx:id="fileName" prefHeight="25.0" prefWidth="224.0" text="Образец 1">
+                    <VBox.margin>
+                        <Insets top="2.0"/>
+                    </VBox.margin>
+                </TextField>
+                <MenuButton fx:id="groupSelector" mnemonicParsing="false" text="Добавить в группу">
+                    <VBox.margin>
+                        <Insets top="15.0"/>
+                    </VBox.margin>
+                </MenuButton>
+            </VBox>
+            <padding>
+                <Insets left="15.0"/>
+            </padding>
+        </TitledPane>
+    </graphic>
+    <VBox.margin>
+        <Insets left="15" right="15" top="15"/>
+    </VBox.margin>
+</CheckBox>

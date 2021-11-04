@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.framework.component.ScrollPaneWithoutFocus?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<Tab xmlns="http://javafx.com/javafx/10.0.2-internal"
+     xmlns:fx="http://javafx.com/fxml/1"
+     fx:id="component"
+     fx:controller="io.github.fireres.gui.unheated.surface.controller.UnheatedSurface">
+
+    <AnchorPane focusTraversable="true" prefHeight="625.0">
+        <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <ScrollPaneWithoutFocus fitToWidth="true"
+                                    fitToHeight="true" hbarPolicy="NEVER">
+
+                <VBox focusTraversable="true" fx:id="groups"/>
+            </ScrollPaneWithoutFocus>
+        </VBox>
+    </AnchorPane>
+</Tab>
+
+
+
+
+
