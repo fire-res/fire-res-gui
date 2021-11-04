@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            stylesheets="/io/github/fireres/gui/framework/css/style.css"
+            fx:controller="io.github.fireres.gui.framework.controller.modal.DataViewerModalWindow"
+            fx:id="component">
+
+</AnchorPane>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.framework.component.ScrollPaneWithoutFocus?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<Tab fx:id="component"
+     xmlns="http://javafx.com/javafx/10.0.2-internal"
+     xmlns:fx="http://javafx.com/fxml/1"
+     fx:controller="io.github.fireres.gui.excess.pressure.controller.ExcessPressure">
+
+    <AnchorPane focusTraversable="true" prefHeight="625.0">
+        <VBox prefHeight="625.0" prefWidth="950.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <VBox focusTraversable="true">
+
+                <fx:include fx:id="toolBar" source="/io/github/fireres/gui/framework/controller/common/reportToolBar.fxml"/>
+
+                <HBox prefHeight="5000.0">
+                    <ScrollPaneWithoutFocus fitToHeight="true" minWidth="-Infinity" prefWidth="360.0">
+                        <VBox fx:id="paramsVbox" focusTraversable="true">
+                            <fx:include fx:id="excessPressureParams" source="excessPressureParams.fxml"/>
+                            <fx:include fx:id="boundsShiftParams"
+                                        source="/io/github/fireres/gui/framework/controller/common/boundsShiftParams.fxml"/>
+                            <padding>
+                                <Insets left="15.0"/>
+                            </padding>
+                        </VBox>
+                    </ScrollPaneWithoutFocus>
+
+                    <fx:include fx:id="excessPressureChart" source="excessPressureChart.fxml"/>
+
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" top="15.0" right="15"/>
+                    </padding>
+                </HBox>
+            </VBox>
+        </VBox>
+    </AnchorPane>
+</Tab>

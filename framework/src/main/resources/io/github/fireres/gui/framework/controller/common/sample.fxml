@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+
+<Tab onClosed="#closeSample"
+     xmlns="http://javafx.com/javafx/10.0.2-internal"
+     xmlns:fx="http://javafx.com/fxml/1"
+     fx:id="component"
+     fx:controller="io.github.fireres.gui.framework.controller.common.SampleTab">
+
+    <TabPane fx:id="reportsTabPane" prefHeight="5000.0" side="BOTTOM" tabClosingPolicy="UNAVAILABLE"
+             xmlns="http://javafx.com/javafx/10.0.2-internal" xmlns:fx="http://javafx.com/fxml/1">
+    </TabPane>
+
+</Tab>
