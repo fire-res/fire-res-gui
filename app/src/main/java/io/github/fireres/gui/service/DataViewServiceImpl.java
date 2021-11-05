@@ -2,7 +2,7 @@ package io.github.fireres.gui.service;
 
 import io.github.fireres.core.model.Report;
 import io.github.fireres.core.model.ReportType;
-import io.github.fireres.excel.report.ExcelReportsBuilder;
+import io.github.fireres.excel.core.builder.ExcelReportsBuilder;
 import io.github.fireres.gui.component.DataViewer;
 import io.github.fireres.gui.framework.service.DataViewService;
 import lombok.RequiredArgsConstructor;
