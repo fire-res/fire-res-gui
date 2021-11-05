@@ -17,11 +17,14 @@
     </properties>
 
     <dependencies>
+
         <dependency>
             <groupId>io.github.fireres</groupId>
             <artifactId>fire-res-gui-core</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
+        <!--excess pressure-->
         <dependency>
             <groupId>io.github.fireres</groupId>
             <artifactId>fire-res-gui-excess-pressure</artifactId>
@@ -29,9 +32,23 @@
         </dependency>
         <dependency>
             <groupId>io.github.fireres</groupId>
+            <artifactId>fire-res-excel-excess-pressure</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--fire mode-->
+        <dependency>
+            <groupId>io.github.fireres</groupId>
             <artifactId>fire-res-gui-fire-mode</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>io.github.fireres</groupId>
+            <artifactId>fire-res-excel-fire-mode</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--heat flow-->
         <dependency>
             <groupId>io.github.fireres</groupId>
             <artifactId>fire-res-gui-heat-flow</artifactId>
@@ -39,14 +56,22 @@
         </dependency>
         <dependency>
             <groupId>io.github.fireres</groupId>
+            <artifactId>fire-res-excel-heat-flow</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <!--unheated surface-->
+        <dependency>
+            <groupId>io.github.fireres</groupId>
             <artifactId>fire-res-gui-unheated-surface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>io.github.fireres</groupId>
-            <artifactId>fire-res-excel</artifactId>
+            <artifactId>fire-res-excel-unheated-surface</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+
     </dependencies>
 
     <build>

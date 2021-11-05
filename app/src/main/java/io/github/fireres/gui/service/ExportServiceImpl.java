@@ -1,7 +1,7 @@
 package io.github.fireres.gui.service;
 
 import io.github.fireres.core.model.Sample;
-import io.github.fireres.excel.ReportConstructor;
+import io.github.fireres.excel.core.ReportConstructor;
 import io.github.fireres.gui.framework.service.ExportService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;

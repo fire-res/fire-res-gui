@@ -1,7 +1,7 @@
 package io.github.fireres.gui.component;
 
-import io.github.fireres.excel.column.Column;
-import io.github.fireres.excel.report.ExcelReport;
+import io.github.fireres.excel.core.model.Column;
+import io.github.fireres.excel.core.model.ExcelReport;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
