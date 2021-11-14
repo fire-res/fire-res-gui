@@ -54,7 +54,9 @@ public class ExportModalWindow extends AbstractComponent<AnchorPane> {
                 .map(SampleTab::getSample)
                 .collect(Collectors.toList());
 
-        initialSamples.forEach(this::addSample);
+        val group = addGroup();
+
+        initialSamples.forEach(group::addSample);
     }
 
     @FXML
@@ -109,7 +111,7 @@ public class ExportModalWindow extends AbstractComponent<AnchorPane> {
     }
 
     @FXML
-    public void addGroup() {
+    public ExportGroup addGroup() {
         if (exportGroupColumn == null) {
             addExportGroupColumn();
         }
@@ -121,6 +123,8 @@ public class ExportModalWindow extends AbstractComponent<AnchorPane> {
         }
 
         window.sizeToScene();
+
+        return group;
     }
 
     private void addExportSampleColumn() {
@@ -134,7 +138,7 @@ public class ExportModalWindow extends AbstractComponent<AnchorPane> {
         val exportGroupColumn = fxmlLoadService.loadComponent(ExportGroupColumn.class, this);
         this.exportGroupColumn = exportGroupColumn;
 
-        exportColumns.getChildren().add(1, exportGroupColumn.getComponent());
+        exportColumns.getChildren().add(exportGroupColumn.getComponent());
     }
 
     public void removeExportSampleColumn(ExportSampleColumn exportSampleColumn) {
