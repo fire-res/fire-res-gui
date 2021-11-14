@@ -1,12 +1,15 @@
 package io.github.fireres.gui.framework.service.impl;
 
+import com.rits.cloning.Cloner;
 import io.github.fireres.core.model.Sample;
+import io.github.fireres.core.properties.ReportProperties;
 import io.github.fireres.core.properties.SampleProperties;
+import io.github.fireres.gui.framework.controller.ReportTab;
 import io.github.fireres.gui.framework.controller.common.SampleTab;
 import io.github.fireres.gui.framework.controller.common.SamplesTabPane;
+import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.service.FxmlLoadService;
 import io.github.fireres.gui.framework.service.SampleService;
-import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -15,6 +18,7 @@ import lombok.val;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
@@ -28,9 +32,10 @@ public class SampleServiceImpl implements SampleService {
     private final AtomicInteger sampleCounter = new AtomicInteger(0);
 
     private final FxmlLoadService fxmlLoadService;
+    private final Cloner cloner;
 
     @Override
-    public void createNewSample(SamplesTabPane samplesTabPane) {
+    public SampleTab createNewSample(SamplesTabPane samplesTabPane) {
         val samplesTabPaneComponent = samplesTabPane.getComponent();
         val sampleName = createSampleName(samplesTabPane);
 
@@ -40,8 +45,70 @@ public class SampleServiceImpl implements SampleService {
 
         val newTab = createSampleTab(samplesTabPane, newSampleProperties, sampleName);
 
-        samplesTabPaneComponent.getTabs().add(samplesTabPaneComponent.getTabs().size() - 1, newTab);
-        samplesTabPaneComponent.getSelectionModel().select(newTab);
+        samplesTabPaneComponent.getTabs().add(samplesTabPaneComponent.getTabs().size() - 1, newTab.getComponent());
+        samplesTabPaneComponent.getSelectionModel().select(newTab.getComponent());
+
+        return newTab;
+    }
+
+    @Override
+    public void closeSample(SamplesTabPane samplesTabPane, SampleTab closedSampleTab) {
+        samplesTabPane.getChildren().removeIf(tab -> tab.equals(closedSampleTab));
+
+        if (samplesTabPane.getComponent().getTabs().size() == 2) {
+            samplesTabPane.getComponent().setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
+        }
+    }
+
+    @Override
+    public void copySample(SamplesTabPane samplesTabPane, SampleTab sampleTabToCopy) {
+        val newSampleTab = createNewSample(samplesTabPane);
+
+        mergeSampleTabs(newSampleTab, sampleTabToCopy);
+    }
+
+    @Override
+    public Preset mapSampleToPreset(Sample sample, String presetDescription) {
+        return Preset.builder()
+                .applyingByDefault(false)
+                .description(presetDescription)
+                .properties(copyReportProperties(sample))
+                .build();
+    }
+
+    private void mergeSampleTabs(SampleTab target, SampleTab source) {
+        target.setPreset(source.getPreset());
+
+        val presetToApply = mapSampleToPreset(source.getSample(), null);
+
+        target.getChildren(ReportTab.class).forEach(reportTab -> reportTab.changePreset(presetToApply));
+    }
+
+    private List<ReportProperties> copyReportProperties(Sample sample) {
+        return sample.getReportProperties().stream()
+                .map(props -> {
+                    val copy = cloner.deepClone(props);
+
+                    copy.setId(UUID.randomUUID());
+
+                    return copy;
+                })
+                .collect(Collectors.toList());
+    }
+
+    @SneakyThrows
+    private SampleTab createSampleTab(SamplesTabPane samplesTabPane,
+                                      SampleProperties sampleProperties,
+                                      String tabName) {
+
+        val sample = (SampleTab) fxmlLoadService.loadComponent(
+                SampleTab.class,
+                samplesTabPane,
+                sampleTab -> sampleTab.setSample(new Sample(sampleProperties)));
+
+        sample.getComponent().setText(tabName);
+
+        return sample;
     }
 
     private String createSampleName(SamplesTabPane samplesTabPane) {
@@ -59,30 +126,6 @@ public class SampleServiceImpl implements SampleService {
 
     private boolean sampleNameAlreadyExists(String name, List<String> samplesNames) {
         return samplesNames.stream().anyMatch(name::equals);
-    }
-
-    @Override
-    public void closeSample(SamplesTabPane samplesTabPane, SampleTab closedSampleTab) {
-        samplesTabPane.getChildren().removeIf(tab -> tab.equals(closedSampleTab));
-
-        if (samplesTabPane.getComponent().getTabs().size() == 2) {
-            samplesTabPane.getComponent().setTabClosingPolicy(TabPane.TabClosingPolicy.UNAVAILABLE);
-        }
-    }
-
-    @SneakyThrows
-    private Tab createSampleTab(SamplesTabPane samplesTabPane,
-                                SampleProperties sampleProperties,
-                                String tabName) {
-
-        val sample = (SampleTab) fxmlLoadService.loadComponent(
-                SampleTab.class,
-                samplesTabPane,
-                sampleTab -> sampleTab.setSample(new Sample(sampleProperties)));
-
-        sample.getComponent().setText(tabName);
-
-        return sample.getComponent();
     }
 
 }

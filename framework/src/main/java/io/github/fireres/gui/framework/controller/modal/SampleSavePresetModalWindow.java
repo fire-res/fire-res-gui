@@ -1,6 +1,5 @@
 package io.github.fireres.gui.framework.controller.modal;
 
-import com.rits.cloning.Cloner;
 import io.github.fireres.core.model.Sample;
 import io.github.fireres.gui.framework.annotation.FxmlView;
 import io.github.fireres.gui.framework.annotation.ModalWindow;
@@ -10,6 +9,7 @@ import io.github.fireres.gui.framework.controller.common.SampleTab;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.service.AlertService;
 import io.github.fireres.gui.framework.service.PresetService;
+import io.github.fireres.gui.framework.service.SampleService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
@@ -42,7 +42,7 @@ public class SampleSavePresetModalWindow extends AbstractComponent<Pane> impleme
 
     private final AlertService alertService;
     private final PresetService presetService;
-    private final Cloner cloner;
+    private final SampleService sampleService;
 
     @Override
     protected void initialize() {
@@ -69,11 +69,10 @@ public class SampleSavePresetModalWindow extends AbstractComponent<Pane> impleme
         log.info("Save sample button pressed");
 
         if (validateSampleNamePreset()) {
-            presetService.savePreset(Preset.builder()
-                    .applyingByDefault(false)
-                    .description(descriptionTextField.getText())
-                    .properties(cloner.deepClone(getSample().getReportProperties()))
-                    .build());
+            val preset = sampleService.mapSampleToPreset(getSample(), descriptionTextField.getText());
+
+            presetService.savePreset(preset);
+
             closeWindow();
         }
     }
