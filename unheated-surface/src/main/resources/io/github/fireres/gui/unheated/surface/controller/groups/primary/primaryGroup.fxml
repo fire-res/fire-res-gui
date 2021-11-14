@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import io.github.fireres.gui.framework.component.FireResTitledPane?>
 <?import io.github.fireres.gui.framework.component.ScrollPaneWithoutFocus?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.TitledPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-<TitledPane fx:id="component"
-            expanded="false"
-            xmlns="http://javafx.com/javafx/10.0.2-internal"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="io.github.fireres.gui.unheated.surface.controller.groups.primary.PrimaryGroup"
-            styleClass="unheatedSurfaceGroupTitledPane">
+<FireResTitledPane fx:id="component"
+                   expanded="false"
+                   xmlns="http://javafx.com/javafx/10.0.2-internal"
+                   xmlns:fx="http://javafx.com/fxml/1"
+                   fx:controller="io.github.fireres.gui.unheated.surface.controller.groups.primary.PrimaryGroup"
+                   styleClass="unheatedSurfaceGroupTitledPane"
+                   onExpandChanged="#handleExpandChanged">
 
     <VBox>
         <fx:include fx:id="toolBar" source="/io/github/fireres/gui/framework/controller/common/reportToolBar.fxml"/>
@@ -20,7 +21,8 @@
             <ScrollPaneWithoutFocus fitToHeight="true" minWidth="-Infinity" prefWidth="360.0">
                 <VBox fx:id="paramsVbox" focusTraversable="true">
                     <fx:include fx:id="primaryGroupParams" source="primaryGroupParams.fxml"/>
-                    <fx:include fx:id="functionParams" source="/io/github/fireres/gui/framework/controller/common/functionParams.fxml"/>
+                    <fx:include fx:id="functionParams"
+                                source="/io/github/fireres/gui/framework/controller/common/functionParams.fxml"/>
                     <fx:include fx:id="boundsShiftParams"
                                 source="/io/github/fireres/gui/framework/controller/common/boundsShiftParams.fxml"/>
                     <padding>
@@ -37,4 +39,4 @@
         </HBox>
     </VBox>
 
-</TitledPane>
+</FireResTitledPane>

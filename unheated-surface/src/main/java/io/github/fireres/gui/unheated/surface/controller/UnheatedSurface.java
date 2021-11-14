@@ -6,6 +6,7 @@ import io.github.fireres.core.properties.GeneralProperties;
 import io.github.fireres.gui.framework.annotation.FxmlView;
 import io.github.fireres.gui.framework.annotation.Initialize;
 import io.github.fireres.gui.framework.controller.ChartContainer;
+import io.github.fireres.gui.framework.controller.ExtendedComponent;
 import io.github.fireres.gui.framework.controller.ReportTab;
 import io.github.fireres.gui.framework.controller.SampleContainer;
 import io.github.fireres.gui.framework.controller.common.SampleTab;
@@ -111,6 +112,16 @@ public class UnheatedSurface extends ReportTab implements SampleContainer {
         getSample().getReports().removeIf(report -> report instanceof UnheatedSurfaceReport);
         removeChildren(PrimaryGroup.class);
         removeChildren(SecondaryGroup.class);
+    }
+
+    public void collapseGroupsExcept(ExtendedComponent<?> group) {
+        getPrimaryGroups().stream()
+                .filter(g -> g != group)
+                .forEach(g -> g.getComponent().setExpanded(false));
+
+        getSecondaryGroups().stream()
+                .filter(g -> g != group)
+                .forEach(g -> g.getComponent().setExpanded(false));
     }
 
     @Override

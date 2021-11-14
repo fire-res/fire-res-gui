@@ -99,6 +99,13 @@ public class SecondaryGroup extends AbstractReportUpdaterComponent<TitledPane> i
                 getParamsVbox());
     }
 
+    @FXML
+    public void handleExpandChanged() {
+        if (getComponent().isExpanded()) {
+            ((UnheatedSurface) getParent()).collapseGroupsExcept(this);
+        }
+    }
+
     @Override
     public TableView<Map<String, Number>> getReportData() {
         return dataViewService.getDataViewer(report);
