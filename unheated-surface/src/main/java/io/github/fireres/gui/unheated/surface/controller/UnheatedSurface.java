@@ -12,7 +12,7 @@ import io.github.fireres.gui.framework.controller.SampleContainer;
 import io.github.fireres.gui.framework.controller.common.SampleTab;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.service.FxmlLoadService;
-import io.github.fireres.gui.framework.service.TabService;
+import io.github.fireres.gui.framework.service.ReportTabService;
 import io.github.fireres.gui.unheated.surface.controller.groups.primary.PrimaryGroup;
 import io.github.fireres.gui.unheated.surface.controller.groups.secondary.SecondaryGroup;
 import io.github.fireres.gui.unheated.surface.initializer.UnheatedSurfaceInitializer;
@@ -45,12 +45,10 @@ public class UnheatedSurface extends ReportTab implements SampleContainer {
     private final GeneralProperties generationProperties;
     private final FxmlLoadService fxmlLoadService;
     private final UnheatedSurfacePresetApplier presetApplier;
-    private final TabService tabService;
+    private final ReportTabService tabService;
 
     @Override
     public void excludeReport() {
-        getPrimaryGroups().forEach(group -> getSample().removeReport(group.getReport()));
-        getSecondaryGroups().forEach(group -> getSample().removeReport(group.getReport()));
         tabService.disableTab(getComponent());
         generationProperties.getIncludedReports().removeIf(UNHEATED_SURFACE::equals);
     }
@@ -59,8 +57,6 @@ public class UnheatedSurface extends ReportTab implements SampleContainer {
     public void includeReport() {
         val parent = ((SampleTab) getParent());
 
-        getPrimaryGroups().forEach(group -> getSample().addReport(group.getReport()));
-        getSecondaryGroups().forEach(group -> getSample().addReport(group.getReport()));
         tabService.enableTab(getComponent(), parent.getReportsTabPane());
         generationProperties.getIncludedReports().add(UNHEATED_SURFACE);
     }

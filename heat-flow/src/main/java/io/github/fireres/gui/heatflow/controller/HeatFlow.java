@@ -17,7 +17,7 @@ import io.github.fireres.gui.framework.controller.common.ReportToolBar;
 import io.github.fireres.gui.framework.controller.common.SampleTab;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.service.DataViewService;
-import io.github.fireres.gui.framework.service.TabService;
+import io.github.fireres.gui.framework.service.ReportTabService;
 import io.github.fireres.gui.heatflow.initializer.HeatFlowInitializer;
 import io.github.fireres.gui.heatflow.preset.HeatFlowPresetApplier;
 import io.github.fireres.heatflow.properties.HeatFlowProperties;
@@ -77,7 +77,7 @@ public class HeatFlow extends ReportTab
     private final GeneralProperties generalProperties;
     private final DataViewService dataViewService;
     private final HeatFlowPresetApplier presetApplier;
-    private final TabService tabService;
+    private final ReportTabService tabService;
 
     @Override
     public void refresh() {
@@ -110,7 +110,6 @@ public class HeatFlow extends ReportTab
 
     @Override
     public void excludeReport() {
-        getSample().removeReport(report);
         tabService.disableTab(getComponent());
         generalProperties.getIncludedReports().removeIf(HEAT_FLOW::equals);
     }
@@ -119,7 +118,6 @@ public class HeatFlow extends ReportTab
     public void includeReport() {
         val parent = ((SampleTab) getParent());
 
-        getSample().addReport(report);
         tabService.enableTab(getComponent(), parent.getReportsTabPane());
         generalProperties.getIncludedReports().add(HEAT_FLOW);
     }

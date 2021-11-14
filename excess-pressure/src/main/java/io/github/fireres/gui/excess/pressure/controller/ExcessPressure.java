@@ -21,7 +21,7 @@ import io.github.fireres.gui.framework.controller.common.ReportToolBar;
 import io.github.fireres.gui.framework.controller.common.SampleTab;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.service.DataViewService;
-import io.github.fireres.gui.framework.service.TabService;
+import io.github.fireres.gui.framework.service.ReportTabService;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableView;
@@ -75,7 +75,7 @@ public class ExcessPressure extends ReportTab
     private final GeneralProperties generalProperties;
     private final DataViewService dataViewService;
     private final ExcessPressurePresetApplier presetApplier;
-    private final TabService tabService;
+    private final ReportTabService tabService;
 
     @Override
     public void refresh() {
@@ -108,7 +108,6 @@ public class ExcessPressure extends ReportTab
 
     @Override
     public void excludeReport() {
-        getSample().removeReport(report);
         tabService.disableTab(getComponent());
         generalProperties.getIncludedReports().removeIf(EXCESS_PRESSURE::equals);
     }
@@ -117,7 +116,6 @@ public class ExcessPressure extends ReportTab
     public void includeReport() {
         val parent = (SampleTab) getParent();
 
-        getSample().addReport(report);
         tabService.enableTab(getComponent(), parent.getReportsTabPane());
         generalProperties.getIncludedReports().add(EXCESS_PRESSURE);
     }

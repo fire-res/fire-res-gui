@@ -4,6 +4,7 @@ import io.github.fireres.gui.framework.controller.ReportTab;
 import io.github.fireres.gui.framework.controller.common.SampleTab;
 import io.github.fireres.gui.framework.initializer.Initializer;
 import io.github.fireres.gui.framework.service.FxmlLoadService;
+import io.github.fireres.gui.framework.service.ReportTabService;
 import lombok.RequiredArgsConstructor;
 import lombok.val;
 import org.springframework.stereotype.Component;
@@ -16,6 +17,7 @@ public class SampleTabInitializer implements Initializer<SampleTab> {
 
     private final List<Class<? extends ReportTab>> reportTabsClasses;
     private final FxmlLoadService fxmlLoadService;
+    private final ReportTabService reportTabService;
 
     @Override
     public void initialize(SampleTab sampleTab) {
@@ -26,6 +28,8 @@ public class SampleTabInitializer implements Initializer<SampleTab> {
                 sampleTab.getReportsTabPane().getTabs().add(reportTab.getComponent());
             }
         });
+
+        reportTabService.sortTabs(sampleTab.getReportsTabPane());
     }
 
 }
