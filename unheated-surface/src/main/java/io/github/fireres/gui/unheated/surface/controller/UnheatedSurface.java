@@ -16,6 +16,7 @@ import io.github.fireres.gui.unheated.surface.controller.groups.primary.PrimaryG
 import io.github.fireres.gui.unheated.surface.controller.groups.secondary.SecondaryGroup;
 import io.github.fireres.gui.unheated.surface.initializer.UnheatedSurfaceInitializer;
 import io.github.fireres.gui.unheated.surface.preset.UnheatedSurfacePresetApplier;
+import io.github.fireres.unheated.surface.report.UnheatedSurfaceReport;
 import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
@@ -107,6 +108,7 @@ public class UnheatedSurface extends ReportTab implements SampleContainer {
 
     private void clearGroups() {
         groups.getChildren().clear();
+        getSample().getReports().removeIf(report -> report instanceof UnheatedSurfaceReport);
         removeChildren(PrimaryGroup.class);
         removeChildren(SecondaryGroup.class);
     }

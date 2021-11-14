@@ -9,6 +9,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity"
             xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            stylesheets="/io/github/fireres/gui/framework/css/style.css"
             fx:id="component"
             fx:controller="io.github.fireres.gui.framework.controller.modal.export.ExportModalWindow">
     <VBox>

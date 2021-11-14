@@ -40,7 +40,8 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 @ContextMenu({
         @ContextMenu.Item(text = "Переименовать", handler = "handleRenamePressed"),
         @ContextMenu.Item(text = "Изменить пресет", handler = "handleChangePresetPressed"),
-        @ContextMenu.Item(text = "Сохранить как пресет", handler = "handleSavePressed")
+        @ContextMenu.Item(text = "Сохранить как пресет", handler = "handleSavePressed"),
+        @ContextMenu.Item(text = "Копировать", handler = "handleCopyPressed")
 })
 @Initialize(SampleTabInitializer.class)
 public class SampleTab extends AbstractComponent<Tab>
@@ -51,8 +52,11 @@ public class SampleTab extends AbstractComponent<Tab>
     public TabPane reportsTabPane;
 
     @Setter
+    @Getter
     private Sample sample;
 
+    @Setter
+    @Getter
     private Preset preset;
 
     private final SampleService sampleService;
@@ -77,11 +81,6 @@ public class SampleTab extends AbstractComponent<Tab>
     }
 
     @Override
-    public Sample getSample() {
-        return sample;
-    }
-
-    @Override
     public void refresh() {
         getChildren(ReportTab.class).forEach(Refreshable::refresh);
     }
@@ -99,6 +98,11 @@ public class SampleTab extends AbstractComponent<Tab>
     @ContextMenu.Handler
     public void handleSavePressed() {
         fxmlLoadService.loadComponent(SampleSavePresetModalWindow.class, this).getWindow().show();
+    }
+
+    @ContextMenu.Handler
+    public void handleCopyPressed() {
+        sampleService.copySample((SamplesTabPane) getParent(), this);
     }
 
     public ReportTab getReportTabByType(ReportType reportType) {
