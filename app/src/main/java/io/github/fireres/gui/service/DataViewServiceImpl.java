@@ -6,9 +6,10 @@ import io.github.fireres.excel.core.builder.ExcelReportsBuilder;
 import io.github.fireres.gui.component.DataViewer;
 import io.github.fireres.gui.framework.service.DataViewService;
 import lombok.RequiredArgsConstructor;
+import lombok.val;
 import org.springframework.stereotype.Component;
 
-import java.util.Map;
+import java.util.List;
 
 import static java.util.Collections.singletonList;
 
@@ -16,15 +17,20 @@ import static java.util.Collections.singletonList;
 @RequiredArgsConstructor
 public class DataViewServiceImpl implements DataViewService {
 
-    private final Map<ReportType, ExcelReportsBuilder> reportBuilders;
+    private final List<ExcelReportsBuilder> reportsBuilders;
 
     @Override
     public DataViewer getDataViewer(Report<?> report) {
-        return new DataViewer(
-                reportBuilders.get(report.getType())
-                        .build(singletonList(report))
-                        .get(0)
-        );
+        val reportBuilder = lookupReportBuilder(report.getType());
+
+        return new DataViewer(reportBuilder.build(singletonList(report)).get(0));
+    }
+
+    private ExcelReportsBuilder lookupReportBuilder(ReportType reportType) {
+        return reportsBuilders.stream()
+                .filter(builder -> builder.supportedReportType().equals(reportType))
+                .findFirst()
+                .orElseThrow();
     }
 
 }
