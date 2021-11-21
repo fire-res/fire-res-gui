@@ -23,7 +23,7 @@
             <FontIcon iconLiteral="eli-trash" iconSize="15"/>
         </graphic>
     </Button>
-    <Button mnemonicParsing="false" styleClass="ikonliButton">
+    <Button mnemonicParsing="false" styleClass="ikonliButton" onAction="#handleRenamePresetPressed">
         <HBox.margin>
             <Insets right="5.0" top="5.0"/>
         </HBox.margin>
