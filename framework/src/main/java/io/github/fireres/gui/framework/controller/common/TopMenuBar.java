@@ -5,6 +5,7 @@ import io.github.fireres.gui.framework.config.properties.general.GeneralProperti
 import io.github.fireres.gui.framework.controller.AbstractComponent;
 import io.github.fireres.gui.framework.controller.modal.AboutProgramModalWindow;
 import io.github.fireres.gui.framework.controller.modal.export.ExportModalWindow;
+import io.github.fireres.gui.framework.controller.modal.preset.management.PresetManagementModalWindow;
 import io.github.fireres.gui.framework.service.FxmlLoadService;
 import io.github.fireres.gui.framework.service.HostServicesProvider;
 import javafx.fxml.FXML;
@@ -16,7 +17,6 @@ import org.springframework.stereotype.Component;
 @Component
 @RequiredArgsConstructor
 public class TopMenuBar extends AbstractComponent<MenuBar> {
-
 
     private final FxmlLoadService fxmlLoadService;
     private final HostServicesProvider hostServicesProvider;
@@ -37,4 +37,8 @@ public class TopMenuBar extends AbstractComponent<MenuBar> {
         hostServicesProvider.get().showDocument(generalProperties.getUserGuideLink());
     }
 
+    @FXML
+    public void openPresetManagementModalWindow() {
+        fxmlLoadService.loadComponent(PresetManagementModalWindow.class, getParent()).getWindow().show();
+    }
 }

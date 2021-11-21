@@ -23,6 +23,8 @@ public class Preset {
 
     private String description;
 
+    private String filename;
+
     @Builder.Default
     private List<ReportProperties> properties = new ArrayList<>();
 

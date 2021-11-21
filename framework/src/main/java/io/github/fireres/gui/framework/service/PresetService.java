@@ -2,7 +2,7 @@ package io.github.fireres.gui.framework.service;
 
 import io.github.fireres.gui.framework.preset.Preset;
 
-import java.io.IOException;
+import java.io.File;
 import java.util.List;
 
 public interface PresetService {
@@ -11,5 +11,8 @@ public interface PresetService {
 
     Preset getDefaultPreset();
 
-    void savePreset(Preset preset) throws IOException;
+    void savePreset(Preset preset);
+
+    void loadPreset(File preset);
+
 }

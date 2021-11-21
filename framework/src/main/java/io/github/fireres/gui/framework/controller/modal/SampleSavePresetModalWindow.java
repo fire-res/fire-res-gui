@@ -64,7 +64,6 @@ public class SampleSavePresetModalWindow extends AbstractComponent<Pane> impleme
         window.close();
     }
 
-    @SneakyThrows
     public void savePresetSample() {
         log.info("Save sample button pressed");
 

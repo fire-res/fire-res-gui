@@ -9,8 +9,7 @@ fire-res:
     user-guide-link: https://github.com/fire-res/fire-res-core/wiki
     repository-link: https://github.com/fire-res
   presets:
-    default-presets-path: ./presets/default/
-    custom-presets-path: ./presets/custom/
+    path: ./presets
   primary-stage:
     title: Генератор отчетов о тестировании на огнестойкость
     min-width: 600

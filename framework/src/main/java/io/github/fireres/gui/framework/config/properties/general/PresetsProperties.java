@@ -7,7 +7,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "fire-res.presets")
 public class PresetsProperties {
 
-    private String defaultPresetsPath;
-    private String customPresetsPath;
+    private String path;
 
 }
