@@ -2,11 +2,6 @@ package io.github.fireres.gui.config;
 
 import io.github.fireres.core.model.ReportType;
 import io.github.fireres.core.service.ReportCreatorService;
-import io.github.fireres.excel.core.builder.ExcelReportsBuilder;
-import io.github.fireres.excel.excess.pressure.builder.ExcessPressureExcelReportsBuilder;
-import io.github.fireres.excel.fire.mode.builder.FireModeExcelReportsBuilder;
-import io.github.fireres.excel.heat.flow.builder.HeatFlowExcelReportsBuilder;
-import io.github.fireres.excel.unheated.surface.builder.UnheatedSurfaceExcelReportsBuilder;
 import io.github.fireres.excess.pressure.report.ExcessPressureReport;
 import io.github.fireres.excess.pressure.service.ExcessPressureService;
 import io.github.fireres.firemode.report.FireModeReport;
@@ -76,21 +71,6 @@ public class ReportsConfig {
                 EXCESS_PRESSURE.getDescription(), 1,
                 HEAT_FLOW.getDescription(), 2,
                 UNHEATED_SURFACE.getDescription(), 3
-        );
-    }
-
-    @Bean
-    public Map<ReportType, ExcelReportsBuilder> reportsBuilders(
-            ExcessPressureExcelReportsBuilder excessPressureExcelReportsBuilder,
-            FireModeExcelReportsBuilder fireModeExcelReportsBuilder,
-            HeatFlowExcelReportsBuilder heatFlowExcelReportsBuilder,
-            UnheatedSurfaceExcelReportsBuilder unheatedSurfaceExcelReportsBuilder
-    ) {
-        return Map.of(
-                EXCESS_PRESSURE, excessPressureExcelReportsBuilder,
-                FIRE_MODE, fireModeExcelReportsBuilder,
-                HEAT_FLOW, heatFlowExcelReportsBuilder,
-                UNHEATED_SURFACE, unheatedSurfaceExcelReportsBuilder
         );
     }
 
