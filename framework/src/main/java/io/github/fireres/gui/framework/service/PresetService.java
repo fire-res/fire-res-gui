@@ -15,4 +15,8 @@ public interface PresetService {
 
     void loadPreset(File preset);
 
+    void changePresetDescription(Preset preset, String description);
+
+    void changePresetFilename(Preset preset, String filename);
+
 }

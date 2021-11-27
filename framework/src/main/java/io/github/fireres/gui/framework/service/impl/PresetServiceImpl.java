@@ -61,12 +61,9 @@ public class PresetServiceImpl implements PresetService {
     @Override
     @SneakyThrows
     public void savePreset(Preset preset) {
-        val path = presetsProperties.getPath() + "/custom_preset_" + UUID.randomUUID() + ".json";
+        val filename = "custom_preset_" + UUID.randomUUID() + ".json";
 
-        try (val bufferedWriter = new BufferedWriter(new FileWriter(path))) {
-            bufferedWriter.write(objectMapper.writeValueAsString(preset));
-            getAvailablePresets().add(preset);
-        }
+        savePresetToFile(preset, filename);
     }
 
     @Override
@@ -86,6 +83,46 @@ public class PresetServiceImpl implements PresetService {
             throw new RuntimeException("Can't load preset: " + preset.getAbsolutePath(), e);
         }
 
+    }
+
+    @Override
+    public void changePresetDescription(Preset preset, String description) {
+        preset.setDescription(description);
+        updatePresetFile(preset);
+    }
+
+    @Override
+    public void changePresetFilename(Preset preset, String filename) {
+        val currentFile = new File(resolveAbsolutePath(preset.getFilename()));
+
+        if (!currentFile.delete()) {
+            throw new RuntimeException("Can't rename preset: can't delete file " + currentFile);
+        }
+
+        savePresetToFile(preset, filename);
+    }
+
+    private void updatePresetFile(Preset preset) {
+        savePresetToFile(preset, preset.getFilename());
+    }
+
+    @SneakyThrows
+    private void savePresetToFile(Preset preset, String filename) {
+        val path = resolveAbsolutePath(filename);
+
+        try (val bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+            bufferedWriter.write(objectMapper.writeValueAsString(preset));
+
+            if (!availablePresets.contains(preset)) {
+                availablePresets.add(preset);
+            }
+        }
+
+        preset.setFilename(filename);
+    }
+
+    private String resolveAbsolutePath(String filename) {
+        return presetsProperties.getPath() + "/" + filename;
     }
 
 }

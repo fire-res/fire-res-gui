@@ -3,6 +3,7 @@ package io.github.fireres.gui.framework.controller.modal.preset.management;
 import io.github.fireres.gui.framework.annotation.FxmlView;
 import io.github.fireres.gui.framework.annotation.ModalWindow;
 import io.github.fireres.gui.framework.controller.AbstractComponent;
+import io.github.fireres.gui.framework.service.PresetService;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -35,6 +36,8 @@ public class PresetRenameModalWindow extends AbstractComponent<Pane> {
     @Getter
     private Stage window;
 
+    private final PresetService presetService;
+
     @Override
     public void postConstruct() {
         val preset = ((PresetItem) getParent()).getPreset();
@@ -45,6 +48,12 @@ public class PresetRenameModalWindow extends AbstractComponent<Pane> {
 
     @FXML
     public void renamePreset() {
+        val preset = ((PresetItem) getParent()).getPreset();
+
+        presetService.changePresetDescription(preset, description.getText());
+        presetService.changePresetFilename(preset, filename.getText());
+
+        ((PresetManagementModalWindow) getParent().getParent()).reloadPresets();
     }
 
     @FXML

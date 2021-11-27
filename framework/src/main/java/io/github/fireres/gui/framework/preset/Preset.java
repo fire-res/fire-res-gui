@@ -23,6 +23,7 @@ public class Preset {
 
     private String description;
 
+    @JsonIgnore
     private String filename;
 
     @Builder.Default
