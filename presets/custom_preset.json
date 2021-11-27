@@ -3,7 +3,7 @@
   "description" : "Кастомный пресет",
   "properties" : [ {
     "_class" : "io.github.fireres.excess.pressure.properties.ExcessPressureProperties",
-    "id" : "e8409998-b17f-45c9-b1b8-06bf7eb3fdcc",
+    "id" : "50966e6f-6e27-49b4-b905-a466f3ef8f5a",
     "delta" : 2.0,
     "basePressure" : 10.0,
     "dispersionCoefficient" : 0.9999,
@@ -17,7 +17,7 @@
     }
   }, {
     "_class" : "io.github.fireres.heatflow.properties.HeatFlowProperties",
-    "id" : "66bbb76e-aa5e-4d81-a970-e54df5ede29d",
+    "id" : "9c622d71-ac4c-44fc-b870-fab3c5dcd102",
     "sensorCount" : 3,
     "bound" : 3.5,
     "functionForm" : {
@@ -33,7 +33,7 @@
     }
   }, {
     "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
-    "id" : "65e82a64-5a1f-4560-939b-6638f805e6b3",
+    "id" : "afe66480-058d-4258-8307-dfc9a6109168",
     "thermocoupleCount" : 3,
     "bound" : 300,
     "functionForm" : {
@@ -53,7 +53,7 @@
     "type" : "PRIMARY"
   }, {
     "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
-    "id" : "a554e7fd-448d-4faf-97a4-e04b03864ce2",
+    "id" : "88cc0fe2-a7b4-4c46-a21e-dc33f3f30fdd",
     "thermocoupleCount" : 3,
     "bound" : 300,
     "functionForm" : {
@@ -73,7 +73,7 @@
     "type" : "SECONDARY"
   }, {
     "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
-    "id" : "64b0fb6d-ee8e-4dbd-92e7-ba8196199f8e",
+    "id" : "fbb32710-8480-402f-8ebc-cce068a41d05",
     "thermocoupleCount" : 3,
     "bound" : 300,
     "functionForm" : {
@@ -93,7 +93,7 @@
     "type" : "SECONDARY"
   }, {
     "_class" : "io.github.fireres.firemode.properties.FireModeProperties",
-    "id" : "1c9271c7-a605-4d4d-a842-748405bf39f2",
+    "id" : "417360ee-4123-45ed-95ec-bb8c4f5781f6",
     "thermocoupleCount" : 3,
     "functionForm" : {
       "interpolationPoints" : [ ],

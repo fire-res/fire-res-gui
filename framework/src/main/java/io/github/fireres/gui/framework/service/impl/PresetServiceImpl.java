@@ -96,10 +96,21 @@ public class PresetServiceImpl implements PresetService {
         val currentFile = new File(resolveAbsolutePath(preset.getFilename()));
 
         if (!currentFile.delete()) {
-            throw new RuntimeException("Can't rename preset: can't delete file " + currentFile);
+            throw new RuntimeException("Can't change preset filename: can't delete file " + currentFile);
         }
 
         savePresetToFile(preset, filename);
+    }
+
+    @Override
+    public void deletePreset(Preset preset) {
+        val fileToDelete = new File(resolveAbsolutePath(preset.getFilename()));
+
+        if (!fileToDelete.delete()) {
+            throw new RuntimeException("Can't delete file: " + fileToDelete);
+        }
+
+        availablePresets.remove(preset);
     }
 
     private void updatePresetFile(Preset preset) {

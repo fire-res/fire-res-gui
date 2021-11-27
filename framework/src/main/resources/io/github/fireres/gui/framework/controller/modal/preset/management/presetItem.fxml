@@ -12,7 +12,7 @@
       fx:id="component"
       fx:controller="io.github.fireres.gui.framework.controller.modal.preset.management.PresetItem">
 
-    <Button mnemonicParsing="false" styleClass="ikonliButton">
+    <Button mnemonicParsing="false" styleClass="ikonliButton" onAction="#handleDeletePresetPressed">
         <HBox.margin>
             <Insets left="5.0" right="5.0" top="5.0"/>
         </HBox.margin>

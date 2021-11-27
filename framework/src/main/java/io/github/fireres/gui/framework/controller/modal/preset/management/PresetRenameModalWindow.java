@@ -54,6 +54,8 @@ public class PresetRenameModalWindow extends AbstractComponent<Pane> {
         presetService.changePresetFilename(preset, filename.getText());
 
         ((PresetManagementModalWindow) getParent().getParent()).reloadPresets();
+
+        closeWindow();
     }
 
     @FXML

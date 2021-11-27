@@ -19,4 +19,5 @@ public interface PresetService {
 
     void changePresetFilename(Preset preset, String filename);
 
+    void deletePreset(Preset preset);
 }
