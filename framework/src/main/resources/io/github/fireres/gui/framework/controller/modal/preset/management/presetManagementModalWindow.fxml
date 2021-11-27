@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import io.github.fireres.gui.framework.component.ScrollPaneWithoutFocus?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane fx:id="component" maxHeight="-Infinity" maxWidth="-Infinity"
+            stylesheets="/io/github/fireres/gui/framework/css/style.css" xmlns="http://javafx.com/javafx/17"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="io.github.fireres.gui.framework.controller.modal.preset.management.PresetManagementModalWindow">
+
+    <ScrollPaneWithoutFocus fitToWidth="true">
+        <VBox fx:id="presetsVbox" prefHeight="500.0"/>
+    </ScrollPaneWithoutFocus>
+
+</AnchorPane>

@@ -11,6 +11,7 @@
         <Menu mnemonicParsing="false" text="Файл">
             <items>
                 <MenuItem mnemonicParsing="false" text="Экспорт" onAction="#openExportModalWindow"/>
+                <MenuItem mnemonicParsing="false" text="Управление пересетами" onAction="#openPresetManagementModalWindow"/>
             </items>
         </Menu>
         <Menu mnemonicParsing="false" text="Помощь">

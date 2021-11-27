@@ -15,7 +15,7 @@
         <AnchorPane prefWidth="200.0" BorderPane.alignment="TOP_LEFT">
             <VBox AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
                   AnchorPane.topAnchor="0.0">
-                <fx:include fx:id="topMenuBar" source="../../menu/topMenuBar.fxml"/>
+                <fx:include fx:id="topMenuBar" source="topMenuBar.fxml"/>
                 <Pane fx:id="mainSceneSeparator" prefHeight="7.0"/>
             </VBox>
         </AnchorPane>

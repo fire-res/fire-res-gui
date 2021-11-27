@@ -1,0 +1,41 @@
+{
+  "applyingByDefault" : false,
+  "description" : "Дымовые клапаны",
+  "properties" : [ {
+    "_class" : "io.github.fireres.firemode.properties.FireModeProperties",
+    "id" : "51466462-61d2-4278-8cae-7673c53697f7",
+    "thermocoupleCount" : 3,
+    "functionForm" : {
+      "interpolationPoints" : [ ],
+      "linearityCoefficient" : 1.0,
+      "dispersionCoefficient" : 0.0,
+      "childFunctionsDeltaCoefficient" : 0.25
+    },
+    "boundsShift" : {
+      "maxAllowedTemperatureShift" : {
+        "points" : [ ]
+      },
+      "minAllowedTemperatureShift" : {
+        "points" : [ ]
+      }
+    },
+    "fireModeType" : "TANH",
+    "temperaturesMaintaining" : 0,
+    "showBounds" : true,
+    "showMeanTemperature" : true
+  }, {
+    "_class" : "io.github.fireres.excess.pressure.properties.ExcessPressureProperties",
+    "id" : "d8835e48-f3c5-44cb-9104-3863e1c81426",
+    "delta" : 6.0,
+    "basePressure" : 300.0,
+    "dispersionCoefficient" : 0.9999,
+    "boundsShift" : {
+      "maxAllowedPressureShift" : {
+        "points" : [ ]
+      },
+      "minAllowedPressureShift" : {
+        "points" : [ ]
+      }
+    }
+  } ]
+}

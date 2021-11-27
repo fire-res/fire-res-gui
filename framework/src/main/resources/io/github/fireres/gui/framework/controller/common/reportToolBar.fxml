@@ -13,7 +13,7 @@
          prefHeight="40.0"
          fx:controller="io.github.fireres.gui.framework.controller.common.ReportToolBar">
     <items>
-        <Button minWidth="30" onAction="#refreshReport" prefHeight="30" styleClass="reportToolBarButton">
+        <Button minWidth="30" onAction="#refreshReport" prefHeight="30" styleClass="ikonliButton">
             <tooltip>
                 <Tooltip text="Обновить график"/>
             </tooltip>
@@ -21,7 +21,7 @@
                 <FontIcon iconLiteral="eli-refresh" iconSize="15"/>
             </graphic>
         </Button>
-        <Button minWidth="30" prefHeight="30" onAction="#resetSettings" styleClass="reportToolBarButton">
+        <Button minWidth="30" prefHeight="30" onAction="#resetSettings" styleClass="ikonliButton">
             <tooltip>
                 <Tooltip text="Сбросить параметры"/>
             </tooltip>
@@ -30,7 +30,7 @@
             </graphic>
         </Button>
         <ToggleButton fx:id="legendVisibilityButton" onAction="#changeLegendVisibility"
-                      minWidth="30" prefHeight="30" styleClass="reportToolBarButton">
+                      minWidth="30" prefHeight="30" styleClass="ikonliButton">
             <tooltip>
                 <Tooltip text="Показать легенду"/>
             </tooltip>
@@ -38,7 +38,7 @@
                 <FontIcon iconLiteral="eli-list" iconSize="15"/>
             </graphic>
         </ToggleButton>
-        <Button onAction="#showReportData" minWidth="30" prefHeight="30" styleClass="reportToolBarButton">
+        <Button onAction="#showReportData" minWidth="30" prefHeight="30" styleClass="ikonliButton">
             <tooltip>
                 <Tooltip text="Просмотреть данные"/>
             </tooltip>

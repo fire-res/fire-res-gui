@@ -84,15 +84,15 @@
     -fx-padding: 0px;
 }
 
-.reportToolBarButton {
+.ikonliButton {
     -fx-background-color: transparent;
 }
 
-.reportToolBarButton:hover {
+.ikonliButton:hover {
     -fx-background-color: #C8C8C8;
 }
 
-.reportToolBarButton:pressed {
+.ikonliButton:pressed {
     -fx-background-color: #DDDDDD;
 }
 

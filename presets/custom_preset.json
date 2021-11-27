@@ -1,0 +1,117 @@
+{
+  "applyingByDefault" : false,
+  "description" : "Кастомный пресет",
+  "properties" : [ {
+    "_class" : "io.github.fireres.excess.pressure.properties.ExcessPressureProperties",
+    "id" : "50966e6f-6e27-49b4-b905-a466f3ef8f5a",
+    "delta" : 2.0,
+    "basePressure" : 10.0,
+    "dispersionCoefficient" : 0.9999,
+    "boundsShift" : {
+      "maxAllowedPressureShift" : {
+        "points" : [ ]
+      },
+      "minAllowedPressureShift" : {
+        "points" : [ ]
+      }
+    }
+  }, {
+    "_class" : "io.github.fireres.heatflow.properties.HeatFlowProperties",
+    "id" : "9c622d71-ac4c-44fc-b870-fab3c5dcd102",
+    "sensorCount" : 3,
+    "bound" : 3.5,
+    "functionForm" : {
+      "interpolationPoints" : [ ],
+      "linearityCoefficient" : 1.0,
+      "dispersionCoefficient" : 0.0,
+      "childFunctionsDeltaCoefficient" : 0.25
+    },
+    "boundsShift" : {
+      "maxAllowedFlowShift" : {
+        "points" : [ ]
+      }
+    }
+  }, {
+    "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
+    "id" : "afe66480-058d-4258-8307-dfc9a6109168",
+    "thermocoupleCount" : 3,
+    "bound" : 300,
+    "functionForm" : {
+      "interpolationPoints" : [ ],
+      "linearityCoefficient" : 1.0,
+      "dispersionCoefficient" : 0.0,
+      "childFunctionsDeltaCoefficient" : 0.25
+    },
+    "boundsShift" : {
+      "maxAllowedMeanTemperatureShift" : {
+        "points" : [ ]
+      },
+      "maxAllowedThermocoupleTemperatureShift" : {
+        "points" : [ ]
+      }
+    },
+    "type" : "PRIMARY"
+  }, {
+    "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
+    "id" : "88cc0fe2-a7b4-4c46-a21e-dc33f3f30fdd",
+    "thermocoupleCount" : 3,
+    "bound" : 300,
+    "functionForm" : {
+      "interpolationPoints" : [ ],
+      "linearityCoefficient" : 1.0,
+      "dispersionCoefficient" : 0.0,
+      "childFunctionsDeltaCoefficient" : 0.25
+    },
+    "boundsShift" : {
+      "maxAllowedMeanTemperatureShift" : {
+        "points" : [ ]
+      },
+      "maxAllowedThermocoupleTemperatureShift" : {
+        "points" : [ ]
+      }
+    },
+    "type" : "SECONDARY"
+  }, {
+    "_class" : "io.github.fireres.unheated.surface.properties.UnheatedSurfaceProperties",
+    "id" : "fbb32710-8480-402f-8ebc-cce068a41d05",
+    "thermocoupleCount" : 3,
+    "bound" : 300,
+    "functionForm" : {
+      "interpolationPoints" : [ ],
+      "linearityCoefficient" : 1.0,
+      "dispersionCoefficient" : 0.0,
+      "childFunctionsDeltaCoefficient" : 0.25
+    },
+    "boundsShift" : {
+      "maxAllowedMeanTemperatureShift" : {
+        "points" : [ ]
+      },
+      "maxAllowedThermocoupleTemperatureShift" : {
+        "points" : [ ]
+      }
+    },
+    "type" : "SECONDARY"
+  }, {
+    "_class" : "io.github.fireres.firemode.properties.FireModeProperties",
+    "id" : "417360ee-4123-45ed-95ec-bb8c4f5781f6",
+    "thermocoupleCount" : 3,
+    "functionForm" : {
+      "interpolationPoints" : [ ],
+      "linearityCoefficient" : 1.0,
+      "dispersionCoefficient" : 0.0,
+      "childFunctionsDeltaCoefficient" : 0.25
+    },
+    "boundsShift" : {
+      "maxAllowedTemperatureShift" : {
+        "points" : [ ]
+      },
+      "minAllowedTemperatureShift" : {
+        "points" : [ ]
+      }
+    },
+    "fireModeType" : "LOG",
+    "temperaturesMaintaining" : 54,
+    "showBounds" : true,
+    "showMeanTemperature" : true
+  } ]
+}

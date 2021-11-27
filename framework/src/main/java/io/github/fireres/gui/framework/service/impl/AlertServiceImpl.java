@@ -24,7 +24,7 @@ public class AlertServiceImpl implements AlertService {
 
         alert.setTitle("Ошибка");
         alert.setHeaderText(null);
-        alert.getDialogPane().getStylesheets().add("/io/github/fireres/gui/controller/css/style.css");
+        alert.getDialogPane().getStylesheets().add("/io/github/fireres/gui/framework/css/style.css");
         alert.getDialogPane().getStyleClass().add("alert");
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(logos.getLogo512());
 
@@ -37,7 +37,7 @@ public class AlertServiceImpl implements AlertService {
 
         alert.setTitle("Подтверждение");
         alert.setHeaderText(null);
-        alert.getDialogPane().getStylesheets().add("/io/github/fireres/gui/controller/css/style.css");
+        alert.getDialogPane().getStylesheets().add("/io/github/fireres/gui/framework/css/style.css");
         alert.getDialogPane().getStyleClass().add("confirmation");
         ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(logos.getLogo512());
 
