@@ -1,6 +1,6 @@
 package io.github.fireres.gui.framework.service.impl;
 
-import io.github.fireres.gui.framework.model.Logos;
+import io.github.fireres.gui.framework.model.Icons;
 import io.github.fireres.gui.framework.service.AlertService;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
@@ -16,7 +16,7 @@ public class AlertServiceImpl implements AlertService {
     public static final ButtonType OK = new ButtonType("ОК");
     public static final ButtonType CANCEL = new ButtonType("Отмена");
 
-    private final Logos logos;
+    private final Icons icons;
 
     @Override
     public void showError(String text) {
@@ -26,7 +26,7 @@ public class AlertServiceImpl implements AlertService {
         alert.setHeaderText(null);
         alert.getDialogPane().getStylesheets().add("/io/github/fireres/gui/framework/css/style.css");
         alert.getDialogPane().getStyleClass().add("alert");
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(logos.getLogo512());
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(icons.getLogo512());
 
         alert.showAndWait();
     }
@@ -39,7 +39,7 @@ public class AlertServiceImpl implements AlertService {
         alert.setHeaderText(null);
         alert.getDialogPane().getStylesheets().add("/io/github/fireres/gui/framework/css/style.css");
         alert.getDialogPane().getStyleClass().add("confirmation");
-        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(logos.getLogo512());
+        ((Stage) alert.getDialogPane().getScene().getWindow()).getIcons().add(icons.getLogo512());
 
         alert.getDialogPane().getScene().getWindow().setOnCloseRequest(event ->
                 ((Stage) alert.getDialogPane().getScene().getWindow()).close());

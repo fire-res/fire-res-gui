@@ -2,7 +2,7 @@ package io.github.fireres.gui.framework.annotation.processor;
 
 import io.github.fireres.gui.framework.annotation.ModalWindow;
 import io.github.fireres.gui.framework.controller.ExtendedComponent;
-import io.github.fireres.gui.framework.model.Logos;
+import io.github.fireres.gui.framework.model.Icons;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -17,7 +17,7 @@ import java.lang.reflect.Field;
 @RequiredArgsConstructor
 public class ModalWindowAnnotationProcessor implements AnnotationProcessor {
 
-    private final Logos logos;
+    private final Icons icons;
 
     @Override
     public void process(ExtendedComponent<?> component) {
@@ -30,7 +30,7 @@ public class ModalWindowAnnotationProcessor implements AnnotationProcessor {
             window.setTitle(modalWindowAnnotation.title());
             window.setResizable(modalWindowAnnotation.resizable());
             window.initModality(modalWindowAnnotation.modality());
-            window.getIcons().add(logos.getLogo512());
+            window.getIcons().add(icons.getLogo512());
             window.setAlwaysOnTop(modalWindowAnnotation.isAlwaysOnTop());
 
             setWindowField(component, window);

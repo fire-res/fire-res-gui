@@ -2,7 +2,7 @@ package io.github.fireres.gui.framework.initializer.general;
 
 import io.github.fireres.gui.framework.config.properties.general.PrimaryStageProperties;
 import io.github.fireres.gui.framework.initializer.Initializer;
-import io.github.fireres.gui.framework.model.Logos;
+import io.github.fireres.gui.framework.model.Icons;
 import javafx.stage.Stage;
 import lombok.RequiredArgsConstructor;
 import lombok.SneakyThrows;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class PrimaryStageInitializer implements Initializer<Stage> {
 
-    private final Logos logos;
+    private final Icons icons;
     private final PrimaryStageProperties properties;
 
     @SneakyThrows
@@ -24,7 +24,7 @@ public class PrimaryStageInitializer implements Initializer<Stage> {
         stage.setResizable(properties.getResizable());
         stage.setMaximized(properties.getMaximized());
         stage.requestFocus();
-        stage.getIcons().add(logos.getLogo512());
+        stage.getIcons().add(icons.getLogo512());
     }
 
 }
