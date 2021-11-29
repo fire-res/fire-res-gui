@@ -33,6 +33,11 @@ public class TopMenuBar extends AbstractComponent<MenuBar> {
     }
 
     @FXML
+    public void runTestException() {
+        throw new RuntimeException("Вызвана тестовая ошибка");
+    }
+
+    @FXML
     public void openUserGuideLink() {
         hostServicesProvider.get().showDocument(generalProperties.getUserGuideLink());
     }

@@ -23,8 +23,8 @@
                                 <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
                             </HBox.margin>
                         </ImageView>
-                        <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="194.0"
-                               styleClass="aboutProgramHeaderFont" text="Произошла ошибка!">
+                        <Label fx:id="windowTitle" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="400.0"
+                               styleClass="aboutProgramHeaderFont" text="Внимание! Произошла ошибка">
                             <font>
                                 <Font size="18.0"/>
                             </font>
@@ -36,7 +36,7 @@
         <HBox layoutY="89.0" prefHeight="69.0" prefWidth="500.0" AnchorPane.bottomAnchor="52.0"
               AnchorPane.topAnchor="89.0">
             <children>
-                <Label fx:id="errorMessage" alignment="TOP_LEFT" prefHeight="75.0" prefWidth="491.0"
+                <Label fx:id="windowMessage" alignment="TOP_LEFT" prefHeight="75.0" prefWidth="491.0"
                        text="&lt;errorMessage&gt;" wrapText="true"/>
             </children>
             <padding>
@@ -46,7 +46,7 @@
         <HBox alignment="CENTER_RIGHT" layoutY="158.0" prefHeight="54.0" prefWidth="500.0"
               AnchorPane.bottomAnchor="-2.0">
             <children>
-                <Button mnemonicParsing="false" text="Закрыть" onAction="#closeWindow">
+                <Button fx:id="windowButton" mnemonicParsing="false" text="Закрыть" onAction="#closeWindow">
                     <HBox.margin>
                         <Insets/>
                     </HBox.margin>
