@@ -15,6 +15,7 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.nio.charset.StandardCharsets;
 import java.util.List;
 import java.util.UUID;
 
@@ -121,7 +122,7 @@ public class PresetServiceImpl implements PresetService {
     private void savePresetToFile(Preset preset, String filename) {
         val path = resolveAbsolutePath(filename);
 
-        try (val bufferedWriter = new BufferedWriter(new FileWriter(path))) {
+        try (val bufferedWriter = new BufferedWriter(new FileWriter(path, StandardCharsets.UTF_8))) {
             bufferedWriter.write(objectMapper.writeValueAsString(preset));
 
             if (!availablePresets.contains(preset)) {

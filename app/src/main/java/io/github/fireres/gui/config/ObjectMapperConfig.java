@@ -21,10 +21,6 @@ public class ObjectMapperConfig {
             UnheatedSurfaceProperties.class
     };
 
-    static {
-        System.setProperty("file.encoding", "UTF-8");
-    }
-
     @Bean
     public ObjectMapper getObjectMapper() {
         val mapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
