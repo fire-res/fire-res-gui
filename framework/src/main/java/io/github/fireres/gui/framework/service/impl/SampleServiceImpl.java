@@ -65,6 +65,7 @@ public class SampleServiceImpl implements SampleService {
         val newSampleTab = createNewSample(samplesTabPane);
 
         mergeSampleTabs(newSampleTab, sampleTabToCopy);
+        samplesTabPane.getComponent().setTabClosingPolicy(TabPane.TabClosingPolicy.SELECTED_TAB);
     }
 
     @Override
