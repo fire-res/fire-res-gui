@@ -2,6 +2,7 @@ package io.github.fireres.gui.excess.pressure.preset;
 
 import com.rits.cloning.Cloner;
 import io.github.fireres.excess.pressure.properties.ExcessPressureProperties;
+import io.github.fireres.gui.framework.preset.BoundsShiftApplier;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.preset.PresetApplier;
 import io.github.fireres.gui.excess.pressure.config.properties.ExcessPressureBasePressureProperties;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Component;
 public class ExcessPressurePresetApplier implements PresetApplier<ExcessPressure> {
 
     private final Cloner cloner;
+    private final BoundsShiftApplier boundsShiftApplier;
     private final ExcessPressureBasePressureProperties basePressureProperties;
     private final ExcessPressureDispersionCoefficientProperties dispersionCoefficientProperties;
     private final ExcessPressureDeltaProperties deltaProperties;
@@ -34,6 +36,8 @@ public class ExcessPressurePresetApplier implements PresetApplier<ExcessPressure
         setBasePressure(excessPressureParams.getBasePressure(), presetProperties);
         setDispersionCoefficient(excessPressureParams.getDispersionCoefficient(), presetProperties);
         setDelta(excessPressureParams.getDelta(), presetProperties);
+
+        boundsShiftApplier.apply(excessPressure.getBoundsShiftParams(), presetProperties.getBoundsShift());
 
         excessPressure.createReport(presetProperties);
     }
