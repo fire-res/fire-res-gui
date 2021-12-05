@@ -5,7 +5,6 @@ import io.github.fireres.gui.framework.annotation.ModalWindow;
 import io.github.fireres.gui.framework.controller.AbstractComponent;
 import io.github.fireres.gui.framework.model.Icons;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -26,13 +25,7 @@ import static org.springframework.beans.factory.config.ConfigurableBeanFactory.S
 public class HandledExceptionModalWindow extends AbstractComponent<AnchorPane> {
 
     @FXML
-    private Label windowTitle;
-
-    @FXML
     private Label windowMessage;
-
-    @FXML
-    private Button windowButton;
 
     @FXML
     private ImageView imageView;
@@ -48,15 +41,13 @@ public class HandledExceptionModalWindow extends AbstractComponent<AnchorPane> {
 
     @Override
     public void postConstruct() {
-        windowTitle.setText("Внимание! Произошла ошибка");
         windowMessage.setText(exception.getClass().getCanonicalName() + ": " + exception.getMessage());
-        windowButton.setText("Закрыть");
-
         imageView.setImage(icons.getWarning48());
     }
 
     @FXML
     public void closeWindow() {
+        window.getOnCloseRequest().handle(null);
         window.close();
     }
 }

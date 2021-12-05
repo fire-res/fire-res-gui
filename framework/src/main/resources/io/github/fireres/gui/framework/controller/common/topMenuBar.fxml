@@ -20,8 +20,6 @@
                           text="Руководство пользователя"/>
                 <MenuItem fx:id="aboutProgramMenuItem" onAction="#openAboutProgramModalWindow" mnemonicParsing="false"
                           text="О программе"/>
-                <MenuItem fx:id="testException" onAction="#runTestException" mnemonicParsing="false"
-                          text="Тестовая ошибка"/>
             </items>
         </Menu>
     </menus>

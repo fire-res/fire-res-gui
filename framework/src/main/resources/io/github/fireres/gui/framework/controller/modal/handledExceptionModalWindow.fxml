@@ -13,48 +13,38 @@
             prefHeight="210.0" prefWidth="500.0" stylesheets="/io/github/fireres/gui/framework/css/style.css"
             xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="io.github.fireres.gui.framework.controller.modal.HandledExceptionModalWindow">
-    <children>
-        <VBox alignment="TOP_CENTER" prefHeight="89.0" prefWidth="500.0">
-            <children>
-                <HBox alignment="CENTER_LEFT" prefHeight="89.0" prefWidth="500.0">
-                    <children>
-                        <ImageView fx:id="imageView" fitHeight="48.0" fitWidth="48.0">
-                            <HBox.margin>
-                                <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
-                            </HBox.margin>
-                        </ImageView>
-                        <Label fx:id="windowTitle" alignment="TOP_LEFT" prefHeight="18.0" prefWidth="400.0"
-                               styleClass="aboutProgramHeaderFont" text="Внимание! Произошла ошибка">
-                            <font>
-                                <Font size="18.0"/>
-                            </font>
-                        </Label>
-                    </children>
-                </HBox>
-            </children>
-        </VBox>
-        <HBox layoutY="89.0" prefHeight="69.0" prefWidth="500.0" AnchorPane.bottomAnchor="52.0"
-              AnchorPane.topAnchor="89.0">
-            <children>
-                <Label fx:id="windowMessage" alignment="TOP_LEFT" prefHeight="75.0" prefWidth="491.0"
-                       text="&lt;errorMessage&gt;" wrapText="true"/>
-            </children>
-            <padding>
-                <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
-            </padding>
+    <VBox alignment="TOP_CENTER" prefHeight="89.0" prefWidth="500.0">
+        <HBox alignment="CENTER_LEFT" prefHeight="89.0" prefWidth="500.0">
+            <ImageView fx:id="imageView" fitHeight="48.0" fitWidth="48.0">
+                <HBox.margin>
+                    <Insets bottom="15.0" left="20.0" right="20.0" top="15.0"/>
+                </HBox.margin>
+            </ImageView>
+            <Label alignment="TOP_LEFT" prefHeight="18.0" prefWidth="400.0"
+                   styleClass="aboutProgramHeaderFont" text="Внимание! Произошла ошибка">
+                <font>
+                    <Font size="18.0"/>
+                </font>
+            </Label>
         </HBox>
-        <HBox alignment="CENTER_RIGHT" layoutY="158.0" prefHeight="54.0" prefWidth="500.0"
-              AnchorPane.bottomAnchor="-2.0">
-            <children>
-                <Button fx:id="windowButton" mnemonicParsing="false" text="Закрыть" onAction="#closeWindow">
-                    <HBox.margin>
-                        <Insets/>
-                    </HBox.margin>
-                </Button>
-            </children>
-            <padding>
-                <Insets bottom="9.0" left="9.0" right="9.0" top="9.0"/>
-            </padding>
-        </HBox>
-    </children>
+    </VBox>
+    <HBox layoutY="89.0" prefHeight="69.0" prefWidth="500.0" AnchorPane.bottomAnchor="52.0"
+          AnchorPane.topAnchor="89.0">
+        <padding>
+            <Insets bottom="10.0" left="20.0" right="20.0" top="10.0"/>
+        </padding>
+        <Label fx:id="windowMessage" alignment="TOP_LEFT" prefHeight="75.0" prefWidth="491.0"
+               text="&lt;errorMessage&gt;" wrapText="true"/>
+    </HBox>
+    <HBox alignment="CENTER_RIGHT" layoutY="158.0" prefHeight="54.0" prefWidth="500.0"
+          AnchorPane.bottomAnchor="-2.0">
+        <padding>
+            <Insets bottom="9.0" left="9.0" right="9.0" top="9.0"/>
+        </padding>
+        <Button mnemonicParsing="false" text="Закрыть" onAction="#closeWindow">
+            <HBox.margin>
+                <Insets/>
+            </HBox.margin>
+        </Button>
+    </HBox>
 </AnchorPane>

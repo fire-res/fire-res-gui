@@ -5,9 +5,10 @@ import io.github.fireres.gui.framework.controller.modal.HandledExceptionModalWin
 import io.github.fireres.gui.framework.service.FxmlLoadService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import lombok.val;
 import org.springframework.stereotype.Component;
 
-import java.util.Arrays;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 @Slf4j
 @Component
@@ -17,15 +18,33 @@ public class ExceptionHandler implements Thread.UncaughtExceptionHandler {
     private final FxmlLoadService fxmlLoadService;
     private final MainScene mainScene;
 
+    private final AtomicBoolean windowIsShown = new AtomicBoolean(false);
+
     @Override
     public void uncaughtException(Thread t, Throwable e) {
-        log.info("Exception handled: " + e.getMessage() + " | " + Arrays.toString(e.getStackTrace()));
+        log.error("Uncaught exception has been acquired: ", e);
 
-        fxmlLoadService.loadComponent(
-                HandledExceptionModalWindow.class,
-                mainScene,
-                handledExceptionModalWindow -> handledExceptionModalWindow.setException(e)
-        ).getWindow().show();
+        if (!windowIsShown.get()) {
+            val modalWindow = fxmlLoadService.loadComponent(
+                    HandledExceptionModalWindow.class,
+                    mainScene,
+                    w -> w.setException(getRootCause(e))
+            );
+
+            windowIsShown.set(true);
+            modalWindow.getWindow().setOnCloseRequest(event -> windowIsShown.set(false));
+            modalWindow.getWindow().show();
+        }
+    }
+
+    private Throwable getRootCause(Throwable e) {
+        var cause = e;
+
+        while (cause.getCause() != null) {
+            cause = cause.getCause();
+        }
+
+        return cause;
     }
 
 }
