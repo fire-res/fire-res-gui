@@ -1,6 +1,7 @@
 package io.github.fireres.gui.unheated.surface.preset;
 
 import com.rits.cloning.Cloner;
+import io.github.fireres.gui.framework.preset.BoundsShiftApplier;
 import io.github.fireres.gui.framework.preset.FunctionFormApplier;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.preset.PresetApplier;
@@ -27,6 +28,7 @@ public class UnheatedSurfaceSecondaryGroupPresetApplier implements PresetApplier
 
     private final Cloner cloner;
     private final FunctionFormApplier functionFormApplier;
+    private final BoundsShiftApplier boundsShiftApplier;
 
     @Override
     public void apply(SecondaryGroup secondaryGroup, Preset preset) {
@@ -41,6 +43,7 @@ public class UnheatedSurfaceSecondaryGroupPresetApplier implements PresetApplier
                 properties.getBound());
 
         functionFormApplier.apply(secondaryGroup.getFunctionParams(), properties.getFunctionForm());
+        boundsShiftApplier.apply(secondaryGroup.getBoundsShiftParams(), properties.getBoundsShift());
 
         secondaryGroup.createReport(properties);
     }

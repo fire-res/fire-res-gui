@@ -5,6 +5,7 @@ import io.github.fireres.gui.firemode.config.properties.FireModeTemperatureMaint
 import io.github.fireres.gui.firemode.config.properties.FireModeThermocoupleCountProperties;
 import io.github.fireres.gui.firemode.controller.FireMode;
 import io.github.fireres.gui.framework.component.FireResChoiceBox;
+import io.github.fireres.gui.framework.preset.BoundsShiftApplier;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.firemode.model.FireModeType;
 import io.github.fireres.firemode.properties.FireModeProperties;
@@ -23,6 +24,7 @@ public class FireModePresetApplier implements PresetApplier<FireMode> {
 
     private final Cloner cloner;
     private final FunctionFormApplier functionFormApplier;
+    private final BoundsShiftApplier boundsShiftApplier;
     private final FireModeThermocoupleCountProperties thermocoupleCountProperties;
     private final FireModeTemperatureMaintainingProperties temperatureMaintainingProperties;
 
@@ -41,6 +43,7 @@ public class FireModePresetApplier implements PresetApplier<FireMode> {
         setShowMeanTemperature(fireModeParams.getShowMeanTemperature(), presetProperties);
 
         functionFormApplier.apply(fireMode.getFunctionParams(), presetProperties.getFunctionForm());
+        boundsShiftApplier.apply(fireMode.getBoundsShiftParams(), presetProperties.getBoundsShift());
 
         fireMode.createReport(presetProperties);
     }

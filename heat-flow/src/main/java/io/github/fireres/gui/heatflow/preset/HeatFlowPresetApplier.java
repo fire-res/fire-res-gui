@@ -1,6 +1,7 @@
 package io.github.fireres.gui.heatflow.preset;
 
 import com.rits.cloning.Cloner;
+import io.github.fireres.gui.framework.preset.BoundsShiftApplier;
 import io.github.fireres.gui.framework.preset.FunctionFormApplier;
 import io.github.fireres.gui.framework.preset.Preset;
 import io.github.fireres.gui.framework.preset.PresetApplier;
@@ -20,6 +21,7 @@ public class HeatFlowPresetApplier implements PresetApplier<HeatFlow> {
 
     private final Cloner cloner;
     private final FunctionFormApplier functionFormApplier;
+    private final BoundsShiftApplier boundsShiftApplier;
     private final HeatFlowSensorsProperties sensorsProperties;
     private final HeatFlowBoundProperties boundProperties;
 
@@ -35,6 +37,7 @@ public class HeatFlowPresetApplier implements PresetApplier<HeatFlow> {
         setHeatFlowBound(heatFlowParameters.getBound(), presetProperties);
 
         functionFormApplier.apply(heatFlow.getFunctionParams(), presetProperties.getFunctionForm());
+        boundsShiftApplier.apply(heatFlow.getBoundsShiftParams(), presetProperties.getBoundsShift());
 
         heatFlow.createReport(presetProperties);
     }
