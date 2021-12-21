@@ -6,9 +6,10 @@ import lombok.RequiredArgsConstructor;
 
 @Getter
 @RequiredArgsConstructor
-public class Logos {
+public class Icons {
 
     private final Image logo512;
     private final Image logo50;
+    private final Image warning48;
 
 }
